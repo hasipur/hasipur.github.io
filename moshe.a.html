@@ -2,18 +2,124 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>דף זיכרון</title>
+  <title>הסיפור של סבא אליאס ז"ל</title>
+
+  <!-- פונט Open Sans מגוגל -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
   <style>
-    body { max-width: 650px; margin: auto; font-family: Arial; line-height: 1.7; padding: 20px; }
-    img { width: 100%; border-radius: 12px; margin: 15px 0; }
-    h1 { text-align: center; margin-bottom: 20px; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Open Sans', sans-serif;
+      background: #f5f5f5;
+    }
+
+    .page-wrapper {
+      max-width: 750px;
+      margin: 30px auto;
+      padding: 0 15px;
+    }
+
+    .memorial-card {
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+      padding: 24px 20px 28px;
+      border-top: 5px solid #c08ae6; /* פס קטן לקישוט */
+    }
+
+    .brand-title {
+      text-align: center;
+      font-weight: 700;
+      font-size: 26px;
+      letter-spacing: 2px;
+      margin-bottom: 4px;
+    }
+
+    .brand-sub {
+      text-align: center;
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 18px;
+    }
+
+    .name-title {
+      text-align: center;
+      font-size: 30px;
+      font-weight: 700; /* BOLD */
+      margin: 0 0 8px;
+    }
+
+    .story-title {
+      text-align: center;
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0 0 20px;
+    }
+
+    .main-image {
+      width: 100%;
+      border-radius: 14px;
+      margin: 0 0 18px;
+      display: block;
+    }
+
+    .story-text {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #333;
+      margin: 0;
+      white-space: pre-line; /* שומר על ירידות שורה אם תרצה */
+    }
+
+    .divider {
+      width: 80px;
+      height: 2px;
+      background: #e0c5ff;
+      margin: 0 auto 18px;
+      border-radius: 999px;
+    }
   </style>
 </head>
 <body>
-  <h1>שם הנפטר</h1>
-  <img src="https://via.placeholder.com/600x400" alt="תמונה">
-  <p>
-    כאן תוכל להוסיף טקסט, זיכרונות, תמונות, ותוכן שקשור לדף הזיכרון.
-  </p>
+  <div class="page-wrapper">
+    <div class="memorial-card">
+
+      <!-- כותרת עליונה של המותג -->
+      <div class="brand-title">הסיפור</div>
+      <div class="brand-sub">דף זיכרון אישי ומכובד</div>
+
+      <div class="divider"></div>
+
+      <!-- שם הנפטר -->
+      <h1 class="name-title">סבא אליאס ז"ל</h1>
+
+      <!-- כותרת הסיפור -->
+      <h2 class="story-title">הסיפור של סבא אליאס ז"ל ❤️</h2>
+
+      <!-- תמונה ראשית (תחליף לקובץ האמיתי שלך) -->
+      <img
+        class="main-image"
+        src="https://via.placeholder.com/900x600"
+        alt="תמונה של סבא אליאס"
+      >
+
+      <!-- טקסט הסיפור – רק דוגמה, 10 משפטים -->
+      <p class="story-text">
+סבא אליאס נולד למשפחה חמה וצנועה, וגדל על ערכים של נתינה וכבוד לאחר.  
+כל מי שהכיר אותו זוכר קודם כל את החיוך השקט שהיה לו כשהיה נכנס לחדר.  
+הוא אהב לפתוח כל בוקר בקפה שחור קטן וסיפור ישן מהילדות, שלא נגמר אף פעם אותו הדבר.  
+סבא אליאס היה הראשון להתקשר בכל יום הולדת, ותמיד זכר לברך לפני כולם.  
+בחגים הוא היה יושב בראש השולחן, שוזר ברכות ובדיחות שהחזיקו את כולם סביבו מרותקים.  
+הידיים שלו היו תמיד עסוקות – או בבישולים, או בתיקונים קטנים בבית של כולם.  
+הוא האמין שמילה טובה יכולה להציל יום שלם, ולא החמיץ הזדמנות לפרגן.  
+לנכדים היה אומר שמה שחשוב באמת זה להיות אנשים טובים, לפני כל דבר אחר.  
+גם ברגעים הקשים הוא מצא דרך להרגיע ולהזכיר שהמשפחה היא הכוח הכי גדול שיש.  
+הזיכרון של סבא אליאס נשאר איתנו בכל צחוק משפחתי, בכל סיפור מסופר מחדש, ובכל רגע קטן של טוב לב.
+      </p>
+
+    </div>
+  </div>
 </body>
 </html>
