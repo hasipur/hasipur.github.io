@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>דף זיכרון</title>
+  <style>
+    body { max-width: 650px; margin: auto; font-family: Arial; line-height: 1.7; padding: 20px; }
+    img { width: 100%; border-radius: 12px; margin: 15px 0; }
+    h1 { text-align: center; margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+  <h1>שם הנפטר</h1>
+  <img src="https://via.placeholder.com/600x400" alt="תמונה">
+  <p>
+    כאן תוכל להוסיף טקסט, זיכרונות, תמונות, ותוכן שקשור לדף הזיכרון.
+  </p>
+</body>
+</html>
