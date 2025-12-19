@@ -6,7 +6,6 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- פונט Open Sans -->
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
@@ -104,6 +103,7 @@
       border-radius: 999px;
     }
 
+    /* === תמונת פרופיל עגולה === */
     .portrait-wrapper {
       display: flex;
       justify-content: center;
@@ -123,6 +123,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center top;
     }
 
     .story-title {
@@ -140,7 +141,7 @@
 
     .story-text p { margin-bottom: 10px; }
 
-    /* === שורת 3 תמונות === */
+    /* === שורת תמונות === */
     .images-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -156,12 +157,16 @@
       box-shadow: 0 6px 16px rgba(0,0,0,0.12);
     }
 
+    /* תיקון חיתוך לתמונה השמאלית */
+    .images-row img:first-child {
+      object-position: left center;
+    }
+
     @media (max-width: 600px) {
       .images-row { grid-template-columns: 1fr; }
       .images-row img { height: 220px; }
     }
 
-    /* === מלבן אפשרות לסרטון === */
     .video-placeholder {
       margin: 22px auto 0;
       width: 220px;
@@ -220,33 +225,16 @@
 
 <div class="divider"></div>
 
+<!-- תמונת פרופיל -->
 <section class="portrait-wrapper">
   <div class="portrait-circle">
-    <img src="https://via.placeholder.com/500x500" alt="תמונה">
+    <img src="img4.jpg.png" alt="סבא אליאס">
   </div>
 </section>
 
 <h2 class="story-title">הסיפור של סבא אליאס ❤️</h2>
 
 <section class="story-text">
-  <p>סבא שלי, שנולד בשנת 1935 בעיר בגדד, היה אדם יוצא דופן – אדם עם לב רחב, נשמה גדולה ואהבה אינסופית למדינת ישראל ולעמו. הוא נולד למשפחה חמה ומלוכדת, עם שישה אחים, וגדל בבית פשוט אך מלא באהבה, שמחה ומוזיקה עיראקית.</p>
-
-  <p>כבר בילדותו התגלה בו חוש אחריות נדיר – בגיל 11 בלבד יצא לעבוד כחייט. בעזרת העבודה הוא למד את מקצועו, והצליח לפרנס את משפחתו.</p>
-
-  <p>מלבד עבודתו, סבא אהב לשחק שש-בש – והוא היה פשוט תותח בזה! שעות על גבי שעות היה יושב עם חברים, מחייך את החיוך הרחב שלו ומנצח אחד אחרי השני. הצבע האהוב עליו היה צהוב – צבע של אור, שמחה ואופטימיות, ממש כמו האישיות שלו.</p>
-
-  <p>בשנת 1951, כשהיה בן 16, עלה לארץ ישראל יחד עם משפחתו. עם הגיעם, שיכנו אותם באוהלים בעלייה – שם חיו בתנאים קשים, ללא חשמל, כשהם מדליקים פנס שעובד על נפט כדי להאיר את הלילות הארוכים.</p>
-
-  <p>משם נדדו מפרדס חנה לכפר סבא, וגם שם חיו באוהלים, עד שבסופו של דבר הגיעו לשכונת התקווה בתל אביב – המקום שבו סוף סוף מצאו בית אמיתי.</p>
-
-  <p>במהלך השנים סבא למד נהיגה, והחל לעבוד כנהג מונית – מקצוע שאהב מאוד, ושאפשר לו לפגוש אנשים, לשוחח, ולחלוק את חוכמת החיים שלו עם כל נוסע.</p>
-
-  <p>לאחר שעלָה לארץ, סבא גם פגש והתאהב באישה מדהימה – סבתא שלי – שגם היא עלתה מעיראק. יחד הם הקימו בית חם ומלא אור, גידלו ילדים לתפארת, והניחו יסודות למשפחה גדולה, גאה וישראלית.</p>
-
-  <p>סבא השתתף בכל מלחמות ישראל, ובכל פעם שנדרש – עמד בגאווה לצד חבריו לנשק, מתוך תחושת שליחות עמוקה ואמונה בצדקת הדרך.</p>
-
-  <p>מי שזכה להכיר את סבא, ידע שמדובר באדם נדיר.</p>
-
   <p><strong>יהי זכרו ברוך ❤️</strong></p>
 </section>
 
@@ -257,7 +245,6 @@
   <img src="img3.jpg.jpeg" alt="שמחה וחיים">
 </div>
 
-<!-- מלבן אפשרות לסרטון -->
 <div class="video-placeholder">
   אפשרות לסרטון
 </div>
@@ -265,7 +252,7 @@
 <p class="dedication">לזכרו באהבה – המשפחה</p>
 
 <div class="footer-link">
-  <a href="https://www.hasipur-il.com/products/%D7%91%D7%A8%D7%A7%D7%95%D7%93-%D7%A9%D7%9C-%D7%94%D7%A1%D7%99%D7%A4%D7%95%D7%A8" target="_blank">מעבר לאתר החנות</a>
+  <a href="https://www.hasipur-il.com/products/%D7%91%D7%A8%D7%A7%D7%95%D7%93-%D7%A9%D7%9C-%D7%94%D7%A4%D7%99%D7%A8" target="_blank">מעבר לאתר החנות</a>
 </div>
 
 </main>
