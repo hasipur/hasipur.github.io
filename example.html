@@ -1,64 +1,303 @@
-<section class="story-text">
-  <p>
-    סבא שלי, שנולד בשנת 1935 בעיר בגדד, היה אדם יוצא דופן – אדם עם לב רחב, נשמה גדולה ואהבה אינסופית למדינת ישראל ולעמו.
-    הוא נולד למשפחה חמה ומלוכדת, עם שישה אחים, וגדל בבית פשוט אך מלא באהבה, שמחה ומוזיקה עיראקית.
-  </p>
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>הסיפור - דף זיכרון 1</title>
 
-  <p>
-    כבר בילדותו התגלה בו חוש אחריות נדיר – בגיל 11 בלבד יצא לעבוד כחייט.
-    בעזרת העבודה הוא למד את המקצוע, והצליח לפרנס את משפחתו.
-  </p>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <p>
-    מלבד עבודתו, סבא אהב לשחק שש-בש – והוא היה פשוט תותח בזה.
-    שעות על גבי שעות היה יושב עם חברים, מחייך את החיוך הרחב שלו ומנצח אחד אחרי השני.
-    הצבע האהוב עליו היה צהוב – צבע של אור, שמחה ואופטימיות, ממש כמו האישיות שלו.
-  </p>
+  <!-- פונט Open Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  <p>
-    בשנת 1951, כשהיה בן 16, עלה לארץ ישראל יחד עם משפחתו.
-    עם הגיעם, שיכנו אותם באוהלים בעלייה – שם חיו בתנאים קשים, ללא חשמל,
-    כשהם מדליקים פנס שעבד על נפט כדי להאיר את הלילות הארוכים.
-  </p>
+  <style>
+    :root {
+      --brand-main: #ff5757;
+      --brand-soft: #ffdede;
+      --text-main: #222;
+      --text-soft: #777;
+      --card-bg: rgba(255, 255, 255, 0.96);
+    }
 
-  <p>
-    משם נדדו מפרדס חנה לכפר סבא, וגם שם חיו באוהלים,
-    עד שבסופו של דבר הגיעו לשכונת התקווה בתל אביב – המקום שבו סוף סוף מצאו בית אמיתי.
-  </p>
+    * {
+      box-sizing: border-box;
+    }
 
-  <p>
-    במהלך השנים סבא למד נהיגה, והחל לעבוד כנהג מונית – מקצוע שאהב מאוד,
-    ושאפשר לו לפגוש אנשים, לשוחח, ולחלוק את חוכמת החיים שלו עם כל נוסע.
-  </p>
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      font-family: 'Open Sans', sans-serif;
+      background: radial-gradient(circle at top, #ffe3e3, #f2f2f2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-  <p>
-    לאחר שעלה לארץ, סבא גם פגש והתאהב באישה מדהימה – סבתא שלי – שגם היא עלתה מעיראק.
-    יחד הם הקימו בית חם ומלא אור, גידלו ילדים לתפארת,
-    והניחו יסודות למשפחה גדולה, גאה וישראלית.
-  </p>
+    .page-wrapper {
+      width: 100%;
+      max-width: 840px;
+      padding: 20px 12px 30px;
+    }
 
-  <p>
-    סבא השתתף בכל מלחמות ישראל, ובכל פעם שנדרש – עמד בגאווה לצד חבריו לנשק,
-    מתוך תחושת שליחות עמוקה ואמונה בצדקת הדרך.
-    הוא היה פטריוט אמיתי – כזה שלא רק דיבר על אהבת הארץ,
-    אלא חי אותה, נשם אותה, ונתן לה את כל כולו.
-  </p>
+    /* כותרת עליונה */
+    .brand-header {
+      text-align: center;
+      margin-bottom: 12px;
+    }
 
-  <p>
-    מי שזכה להכיר את סבא, ידע שמדובר באדם נדיר:
-    איש של ערכים, של יושר, של עבודה קשה, ושל אהבה עצומה למשפחתו.
-    הוא תמיד היה שם בשביל כולם – עם חיוך, עצה טובה, ולב רחב שלא ידע גבולות.
-  </p>
+    .brand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: #ffffffaa;
+      border: 1px solid var(--brand-soft);
+      font-size: 13px;
+      color: var(--text-soft);
+    }
 
-  <p>
-    סבא שלי נפטר בתאריך כ״ד בתשרי תשפ״א,
-    ונקבר בבית העלמין ירקון שבתל אביב.
-    גם היום, כשהוא כבר לא איתנו בגוף,
-    הרוח שלו מלווה אותנו בכל יום מחדש –
-    ברגעים הקטנים, בצחוק של הנכדים,
-    בשירים של יום העצמאות,
-    ובאהבה האינסופית לארץ הזאת שהוא כה אהב.
-  </p>
+    .brand-badge span.icon {
+      font-size: 15px;
+    }
 
-  <p><strong>יהי זכרו ברוך ❤️</strong></p>
-</section>
+    .brand-title {
+      margin-top: 10px;
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--text-main);
+    }
+
+    /* שינוי צבע האות ס בלבד */
+    .brand-title span.red {
+      color: var(--brand-main);
+    }
+
+    .brand-subtitle {
+      margin-top: 4px;
+      font-size: 13px;
+      color: var(--text-soft);
+    }
+
+    /* כרטיס הזיכרון */
+    .memorial-card {
+      margin-top: 18px;
+      background: var(--card-bg);
+      border-radius: 22px;
+      padding: 26px 22px 26px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--brand-soft);
+      backdrop-filter: blur(8px);
+    }
+
+    .name-block {
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .name-block h1 {
+      margin: 0 0 6px;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .name-block .dates {
+      margin: 0;
+      font-size: 14px;
+      color: var(--text-soft);
+    }
+
+    .divider {
+      width: 90px;
+      height: 2px;
+      margin: 18px auto 18px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ffabab, #ff7777, #ff5757);
+    }
+
+    .portrait-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .portrait-circle {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid var(--brand-soft);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+    }
+
+    .portrait-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .story-title {
+      text-align: center;
+      font-size: 19px;
+      font-weight: 600;
+      margin: 0 0 14px;
+      color: var(--text-main);
+    }
+
+    .story-text {
+      font-size: 16px;
+      line-height: 1.9;
+      color: var(--text-main);
+      margin: 0 0 18px;
+    }
+
+    .story-text p {
+      margin: 0 0 10px;
+    }
+
+    .gallery {
+      margin-top: 8px;
+    }
+
+    .gallery-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--text-soft);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid #eee;
+    }
+
+    .dedication {
+      margin-top: 20px;
+      font-size: 14px;
+      text-align: center;
+      color: var(--text-soft);
+    }
+
+    .footer-link {
+      margin-top: 18px;
+      text-align: center;
+    }
+
+    .footer-link a {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 999px;
+      background: var(--brand-main);
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      box-shadow: 0 8px 18px rgba(255, 87, 87, 0.35);
+    }
+
+    .footer-link a:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 600px) {
+      body {
+        align-items: flex-start;
+      }
+      .memorial-card {
+        padding: 18px 15px 20px;
+        border-radius: 18px;
+      }
+      .portrait-circle {
+        width: 130px;
+        height: 130px;
+      }
+      .gallery-grid img {
+        height: 80px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-wrapper">
+
+    <!-- כותרת עליונה -->
+    <header class="brand-header">
+
+      <div class="brand-badge">
+        <span class="icon">🕯️</span>
+        <span>דף זיכרון אישי מאת "הסיפור"</span>
+      </div>
+
+      <!-- כאן שמתי את האות ס בצבע האדום -->
+      <div class="brand-title">
+        ה<span class="red">ס</span>יפור
+      </div>
+
+      <div class="brand-subtitle">מקום אחד לסיפור החיים ולזיכרון שנשאר</div>
+    </header>
+
+    <!-- כרטיס -->
+    <main class="memorial-card">
+
+      <section class="name-block">
+        <h1>1 סבא אליאס ז"ל</h1>
+        <p class="dates">1929 – 2023</p>
+      </section>
+
+      <div class="divider"></div>
+
+      <section class="portrait-wrapper">
+        <div class="portrait-circle">
+          <img src="https://via.placeholder.com/500x500" alt="תמונה של סבא אליאס">
+        </div>
+      </section>
+
+      <h2 class="story-title">הסיפור של סבא אליאס ז"ל ❤️</h2>
+
+      <section class="story-text">
+        <p>סבא אליאס היה אדם מלא חום, שתמיד ידע להפוך רגע קטן לזיכרון גדול.</p>
+        <p>הוא נולד למשפחה צנועה, אך עשירה בערכים של כבוד, עזרה הדדית ואהבה ללא תנאי.</p>
+        <p>כל בוקר היה פותח בקפה שחור קטן ובברכה ליום טוב יותר.</p>
+        <p>את הנכדים היה מקבל עם חיוך גדול וחיבוק שממלא את הלב.</p>
+        <p>הוא סיפר סיפורים ישנים מהכפר, וסיפורים אלה עברו מדור לדור.</p>
+        <p>בחגים היה יושב בראש השולחן ושומר על המנהגים המשפחתיים.</p>
+        <p>הוא תמיד היה עוזר, מתקן, מבשל ונותן מעצמו בלי לבקש דבר.</p>
+        <p>האמין שמילה טובה משנה יום שלם, ולא פספס הזדמנות לתת אחת.</p>
+        <p>גם בזמנים קשים שמר על שקט פנימי ועל אהבת אדם עמוקה.</p>
+        <p>זכרו ממשיך ללוות אותנו בכל מפגש, צחוק וסיפור משפחתי.</p>
+      </section>
+
+      <section class="gallery">
+        <div class="gallery-title">רגעים מהדרך</div>
+        <div class="gallery-grid">
+          <img src="https://via.placeholder.com/300x200" alt="תמונה 1">
+          <img src="https://via.placeholder.com/300x200" alt="תמונה 2">
+          <img src="https://via.placeholder.com/300x200" alt="תמונה 3">
+        </div>
+      </section>
+
+      <p class="dedication">
+        לזכרו באהבה – המשפחה שזוכרת ומספרת את הסיפור שלו.
+      </p>
+
+      <div class="footer-link">
+        <a href="https://www.hasipur-il.com/" target="_blank">מעבר לאתר החנות</a>
+      </div>
+
+    </main>
+  </div>
+</body>
+</html>
