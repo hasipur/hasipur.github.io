@@ -37,7 +37,6 @@
       padding: 20px 12px 30px;
     }
 
-    /* כותרת עליונה */
     .brand-header {
       text-align: center;
       margin-bottom: 12px;
@@ -71,7 +70,6 @@
       color: var(--text-soft);
     }
 
-    /* כרטיס */
     .memorial-card {
       margin-top: 18px;
       background: var(--card-bg);
@@ -125,7 +123,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center top;
+      object-position: center center;
     }
 
     .story-title {
@@ -143,7 +141,6 @@
 
     .story-text p { margin-bottom: 10px; }
 
-    /* === שורת 3 תמונות מתחת לסיפור === */
     .images-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -155,34 +152,14 @@
       width: 100%;
       height: 180px;
       object-fit: cover;
+      object-position: center center;
       border-radius: 14px;
       box-shadow: 0 6px 16px rgba(0,0,0,0.12);
-    }
-
-    /* תיקון חיתוך לתמונה השמאלית (הראשונה) */
-    .images-row img:first-child {
-      object-position: left center;
     }
 
     @media (max-width: 600px) {
       .images-row { grid-template-columns: 1fr; }
       .images-row img { height: 220px; }
-    }
-
-    /* === מלבן אפשרות לסרטון === */
-    .video-placeholder {
-      margin: 22px auto 0;
-      width: 220px;
-      height: 220px;
-      border-radius: 18px;
-      border: 2px dashed var(--brand-soft);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text-soft);
-      background: #fff;
     }
 
     .dedication {
@@ -249,10 +226,6 @@
   <img src="1.jpeg" alt="זיכרון משפחתי">
   <img src="2.jpeg" alt="שמחה וחיים">
   <img src="3.jpeg" alt="רגעים יקרים">
-</div>
-
-<div class="video-placeholder">
-  אפשרות לסרטון
 </div>
 
 <p class="dedication">לזכרו באהבה – המשפחה</p>
