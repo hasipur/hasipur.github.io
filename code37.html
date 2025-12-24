@@ -2,7 +2,7 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>2 הסיפור - דף זיכרון</title>
+  <title>הסיפור - דף זיכרון</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -18,9 +18,7 @@
       --card-bg: rgba(255, 255, 255, 0.96);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -39,7 +37,6 @@
       padding: 20px 12px 30px;
     }
 
-    /* כותרת עליונה */
     .brand-header {
       text-align: center;
       margin-bottom: 12px;
@@ -57,10 +54,6 @@
       color: var(--text-soft);
     }
 
-    .brand-badge span.icon {
-      font-size: 15px;
-    }
-
     .brand-title {
       margin-top: 10px;
       font-size: 30px;
@@ -69,10 +62,7 @@
       color: var(--text-main);
     }
 
-    /* שינוי צבע האות ס בלבד */
-    .brand-title span.red {
-      color: var(--brand-main);
-    }
+    .brand-title span.red { color: var(--brand-main); }
 
     .brand-subtitle {
       margin-top: 4px;
@@ -80,15 +70,13 @@
       color: var(--text-soft);
     }
 
-    /* כרטיס הזיכרון */
     .memorial-card {
       margin-top: 18px;
       background: var(--card-bg);
       border-radius: 22px;
-      padding: 26px 22px 26px;
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+      padding: 26px 22px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.08);
       border: 1px solid var(--brand-soft);
-      backdrop-filter: blur(8px);
     }
 
     .name-block {
@@ -104,7 +92,6 @@
     }
 
     .name-block .dates {
-      margin: 0;
       font-size: 14px;
       color: var(--text-soft);
     }
@@ -112,9 +99,9 @@
     .divider {
       width: 90px;
       height: 2px;
-      margin: 18px auto 18px;
-      border-radius: 999px;
+      margin: 18px auto;
       background: linear-gradient(90deg, #ffabab, #ff7777, #ff5757);
+      border-radius: 999px;
     }
 
     .portrait-wrapper {
@@ -142,23 +129,19 @@
       text-align: center;
       font-size: 19px;
       font-weight: 600;
-      margin: 0 0 14px;
-      color: var(--text-main);
+      margin-bottom: 14px;
     }
 
     .story-text {
       font-size: 16px;
       line-height: 1.9;
       color: var(--text-main);
-      margin: 0 0 18px;
     }
 
-    .story-text p {
-      margin: 0 0 10px;
-    }
+    .story-text p { margin-bottom: 14px; }
 
     .gallery {
-      margin-top: 8px;
+      margin-top: 18px;
     }
 
     .gallery-title {
@@ -166,11 +149,12 @@
       font-weight: 600;
       margin-bottom: 10px;
       color: var(--text-soft);
+      text-align: center;
     }
 
     .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 8px;
     }
 
@@ -183,7 +167,7 @@
     }
 
     .dedication {
-      margin-top: 20px;
+      margin-top: 22px;
       font-size: 14px;
       text-align: center;
       color: var(--text-soft);
@@ -199,33 +183,10 @@
       padding: 10px 20px;
       border-radius: 999px;
       background: var(--brand-main);
-      color: #ffffff;
+      color: #fff;
       text-decoration: none;
       font-weight: 600;
       font-size: 14px;
-      box-shadow: 0 8px 18px rgba(255, 87, 87, 0.35);
-    }
-
-    .footer-link a:hover {
-      opacity: 0.95;
-      transform: translateY(-1px);
-    }
-
-    @media (max-width: 600px) {
-      body {
-        align-items: flex-start;
-      }
-      .memorial-card {
-        padding: 18px 15px 20px;
-        border-radius: 18px;
-      }
-      .portrait-circle {
-        width: 130px;
-        height: 130px;
-      }
-      .gallery-grid img {
-        height: 80px;
-      }
     }
   </style>
 </head>
@@ -233,15 +194,9 @@
 <body>
   <div class="page-wrapper">
 
-    <!-- כותרת עליונה -->
     <header class="brand-header">
+      <div class="brand-badge">🕯️ דף זיכרון אישי מאת "הסיפור"</div>
 
-      <div class="brand-badge">
-        <span class="icon">🕯️</span>
-        <span>דף זיכרון אישי מאת "הסיפור"</span>
-      </div>
-
-      <!-- כאן שמתי את האות ס בצבע האדום -->
       <div class="brand-title">
         ה<span class="red">ס</span>יפור
       </div>
@@ -249,48 +204,61 @@
       <div class="brand-subtitle">מקום אחד לסיפור החיים ולזיכרון שנשאר</div>
     </header>
 
-    <!-- כרטיס -->
     <main class="memorial-card">
 
       <section class="name-block">
-        <h1>2 סבא אליאס ז"ל</h1>
+        <h1>סבא אליאס ז"ל</h1>
         <p class="dates">1929 – 2023</p>
       </section>
 
       <div class="divider"></div>
 
+      <!-- תמונת פרופיל -->
       <section class="portrait-wrapper">
         <div class="portrait-circle">
-          <img src="https://via.placeholder.com/500x500" alt="תמונה של סבא אליאס">
+          <img src="1.jpeg" alt="תמונה של סבא אליאס">
         </div>
       </section>
 
-      <h2 class="story-title">הסיפור של סבא אליאס ז"ל ❤️</h2>
+      <h2 class="story-title">הסיפור שלו ❤️</h2>
 
       <section class="story-text">
-        <p>סבא אליאס היה אדם מלא חום, שתמיד ידע להפוך רגע קטן לזיכרון גדול.</p>
-        <p>הוא נולד למשפחה צנועה, אך עשירה בערכים של כבוד, עזרה הדדית ואהבה ללא תנאי.</p>
-        <p>כל בוקר היה פותח בקפה שחור קטן ובברכה ליום טוב יותר.</p>
-        <p>את הנכדים היה מקבל עם חיוך גדול וחיבוק שממלא את הלב.</p>
-        <p>הוא סיפר סיפורים ישנים מהכפר, וסיפורים אלה עברו מדור לדור.</p>
-        <p>בחגים היה יושב בראש השולחן ושומר על המנהגים המשפחתיים.</p>
-        <p>הוא תמיד היה עוזר, מתקן, מבשל ונותן מעצמו בלי לבקש דבר.</p>
-        <p>האמין שמילה טובה משנה יום שלם, ולא פספס הזדמנות לתת אחת.</p>
-        <p>גם בזמנים קשים שמר על שקט פנימי ועל אהבת אדם עמוקה.</p>
-        <p>זכרו ממשיך ללוות אותנו בכל מפגש, צחוק וסיפור משפחתי.</p>
+        <p>אבא יקר,</p>
+
+        <p>
+          שנתיים עברו — שנתיים שבהן העולם ממשיך להסתובב, ואתה כל־כך חסר.
+          ובכל זאת, אנחנו כאן. משפחה מלוכדת, אוהבת, מחזיקה אחד את השני בדיוק כמו שלימדת אותנו.
+        </p>
+
+        <p>
+          אתה נוכח בכל פעימת לב שלנו, בכל מחשבה שקטה, בכל רגע של געגוע.
+          הזיכרון שלך מלווה אותנו יום־יום, וממשיך לחיות דרכנו.
+        </p>
+
+        <p>
+          תנוח על משכבך בשלום.
+          אנחנו מדמיינים אותך חופשי, רוקד ושמח שם למעלה,
+          עטוף באור ובשקט שמגיעים לך.
+        </p>
+
+        <p>
+          אוהבים וזוכרים אותך לנצח,<br>
+          המשפחה האוהבת.
+        </p>
       </section>
 
+      <!-- גלריה -->
       <section class="gallery">
         <div class="gallery-title">רגעים מהדרך</div>
         <div class="gallery-grid">
-          <img src="https://via.placeholder.com/300x200" alt="תמונה 1">
-          <img src="https://via.placeholder.com/300x200" alt="תמונה 2">
-          <img src="https://via.placeholder.com/300x200" alt="תמונה 3">
+          <img src="2.jpeg" alt="זיכרון 1">
+          <img src="3.jpeg" alt="זיכרון 2">
+          <img src="4.jpeg" alt="זיכרון 3">
         </div>
       </section>
 
       <p class="dedication">
-        לזכרו באהבה – המשפחה שזוכרת ומספרת את הסיפור שלו. 37
+        לזכרו באהבה – המשפחה שתמיד תזכור ותספר.
       </p>
 
       <div class="footer-link">
