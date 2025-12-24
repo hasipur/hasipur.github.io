@@ -6,7 +6,6 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- פונט Open Sans -->
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
@@ -44,7 +43,6 @@
 
     .brand-badge {
       display: inline-flex;
-      align-items: center;
       gap: 8px;
       padding: 6px 14px;
       border-radius: 999px;
@@ -59,13 +57,11 @@
       font-size: 30px;
       font-weight: 700;
       letter-spacing: 3px;
-      color: var(--text-main);
     }
 
     .brand-title span.red { color: var(--brand-main); }
 
     .brand-subtitle {
-      margin-top: 4px;
       font-size: 13px;
       color: var(--text-soft);
     }
@@ -77,7 +73,6 @@
       padding: 26px 22px;
       box-shadow: 0 18px 40px rgba(0,0,0,0.08);
       border: 1px solid var(--brand-soft);
-      backdrop-filter: blur(8px);
     }
 
     .name-block {
@@ -86,9 +81,8 @@
     }
 
     .name-block h1 {
-      margin: 0 0 6px;
       font-size: 28px;
-      font-weight: 700;
+      margin: 0;
     }
 
     .dates {
@@ -123,23 +117,18 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center center;
     }
 
     .story-title {
       text-align: center;
       font-size: 19px;
-      font-weight: 600;
       margin-bottom: 14px;
     }
 
     .story-text {
       font-size: 16px;
       line-height: 1.9;
-      margin-bottom: 18px;
     }
-
-    .story-text p { margin-bottom: 10px; }
 
     .images-row {
       display: grid;
@@ -152,19 +141,23 @@
       width: 100%;
       height: 180px;
       object-fit: cover;
-      object-position: center center;
       border-radius: 14px;
       box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+      background: #fff;
     }
 
-    /* 🎯 תיקון חיתוך רק לתמונה 2 */
+    /* ✅ תיקון אמיתי – רק לתמונה 2 */
     .images-row img:nth-child(2) {
-      object-position: center top;
+      object-fit: contain;
     }
 
     @media (max-width: 600px) {
-      .images-row { grid-template-columns: 1fr; }
-      .images-row img { height: 220px; }
+      .images-row {
+        grid-template-columns: 1fr;
+      }
+      .images-row img {
+        height: 220px;
+      }
     }
 
     .dedication {
@@ -180,14 +173,12 @@
     }
 
     .footer-link a {
-      display: inline-block;
       padding: 10px 20px;
       border-radius: 999px;
       background: var(--brand-main);
       color: #fff;
       text-decoration: none;
       font-weight: 600;
-      font-size: 14px;
     }
   </style>
 </head>
@@ -228,15 +219,15 @@
 </section>
 
 <div class="images-row">
-  <img src="1.jpeg" alt="זיכרון משפחתי">
-  <img src="2.jpeg" alt="שמחה וחיים">
-  <img src="3.jpeg" alt="רגעים יקרים">
+  <img src="1.jpeg" alt="">
+  <img src="2.jpeg" alt="">
+  <img src="3.jpeg" alt="">
 </div>
 
 <p class="dedication">לזכרו באהבה – המשפחה</p>
 
 <div class="footer-link">
-  <a href="https://www.hasipur-il.com/products/%D7%91%D7%A8%D7%A7%D7%95%D7%93-%D7%A9%D7%9C-%D7%94%D7%A4%D7%99%D7%A4%D7%95%D7%A8" target="_blank">מעבר לאתר החנות</a>
+  <a href="https://www.hasipur-il.com/products/%D7%91%D7%A8%D7%95%D7%A7%D7%95%D7%93-%D7%A9%D7%9C-%D7%94%D7%A1%D7%99%D7%A4%D7%95%D7%A8" target="_blank">מעבר לאתר החנות</a>
 </div>
 
 </main>
