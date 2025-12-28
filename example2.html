@@ -315,19 +315,6 @@
       grid-template-columns: repeat(2, 1fr);
       gap:12px;
     }
-    .videoPh{
-      border:2px dashed var(--brand-soft);
-      border-radius:18px;
-      min-height: 180px;
-      background:#fff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:800;
-      color:#666;
-      text-align:center;
-      padding:16px;
-    }
 
     /* iframe responsive */
     .iframeWrap{
@@ -502,7 +489,7 @@
       .meta .name{ font-size:24px; }
     }
     @media (max-width: 420px){
-      .grid{ grid-template-columns: 1fr; }
+      .grid{ grid-template-columns: 1fr); }
       .avatar{ width:96px; height:96px; top:-48px; }
       .meta{ padding-top: 58px; }
       .tabs{ gap:0; }
@@ -588,7 +575,6 @@
         <!-- Photos -->
         <section class="section" id="photos">
           <div class="h2">תמונות</div>
-
           <div class="grid">
             <div class="media"><img src="img1.jpg.jpeg" alt="תמונה 1"></div>
             <div class="media"><img src="img3.jpg.jpeg" alt="תמונה 2"></div>
@@ -600,7 +586,6 @@
           <div class="h2">סרטונים</div>
 
           <div class="videoBox">
-            <!-- YouTube Shorts (לא תופס לך מקום בגיטהאב) -->
             <div class="iframeWrap" aria-label="סרטון מיוטיוב">
               <iframe
                 src="https://www.youtube.com/embed/HCodwcl2VjA"
@@ -609,19 +594,15 @@
                 allowfullscreen></iframe>
             </div>
 
-            <!-- MP4 מהגיטהאב (כן נחשב משקל בריפו) -->
             <div class="media" style="min-height: 360px;">
               <video controls playsinline preload="metadata">
-                <!-- אם הקובץ באותה תיקייה של ה-HTML בגיטהאב פייג'ס, זה יעבוד: -->
                 <source src="סיומת%20שיווק.mp4" type="video/mp4">
-                <!-- אופציה חלופית (אם תרצה לשים URL מלא של GitHub Pages):
-                <source src="https://hasipur.github.io/%D7%A1%D7%99%D7%95%D7%9E%D7%AA%20%D7%A9%D7%99%D7%95%D7%95%D7%A7.mp4" type="video/mp4">
-                -->
                 הדפדפן לא תומך בניגון וידאו.
               </video>
             </div>
           </div>
-
+        </section>
+        <!-- ✅ כאן היה חסר הסגירה של סרטונים -->
 
         <!-- Memories -->
         <section class="section" id="memories">
@@ -697,9 +678,9 @@
             </div>
           </div>
         </section>
-      </div>
-    </div>
-  </div>
+      </div><!-- /content -->
+    </div><!-- /card -->
+  </div><!-- /wrap -->
 
   <!-- Modal: Add Memory -->
   <div class="modalBg" id="modalBg" aria-hidden="true">
@@ -727,17 +708,9 @@
       </div>
 
       <div class="modalFoot">
-        <button class="btn primary" type="button" id="saveLocal">
-          שמירה כאן
-        </button>
-
-        <button class="btn secondary" type="button" id="sendWhatsapp">
-          שליחה לוואטסאפ
-        </button>
-
-        <button class="btn secondary" type="button" id="cancelModal">
-          ביטול
-        </button>
+        <button class="btn primary" type="button" id="saveLocal">שמירה כאן</button>
+        <button class="btn secondary" type="button" id="sendWhatsapp">שליחה לוואטסאפ</button>
+        <button class="btn secondary" type="button" id="cancelModal">ביטול</button>
       </div>
     </div>
   </div>
