@@ -553,15 +553,6 @@
       font-weight:900;
       margin-bottom: 8px;
     }
-
-    /* ===== added only for the requested grey line under "שיר אהוב" ===== */
-    .audioItem .subline{
-      color: var(--text-soft);
-      font-size: 13px;
-      font-weight: 600;
-      margin: -4px 0 10px;
-    }
-
     audio{ width:100%; }
 
     /* Modal */
@@ -778,6 +769,7 @@
           <div class="videoGrid">
             <!-- Video 1 -->
             <div class="ytCard" data-yt="IJWlQbHfGf8" aria-label="סרטון מיוטיוב">
+              <!-- thumbnail (sharp) -->
               <img
                 src="https://i.ytimg.com/vi/IJWlQbHfGf8/hqdefault.jpg"
                 alt="תמונה מקדימה של הסרטון">
@@ -866,9 +858,11 @@
             שליחה לוואטסאפ
           </button>
 
-          <!-- changed only: remove audio element to avoid "error" when there's no recording -->
           <div class="audioList">
-            <div class="note" style="margin-top:8px;">אין הקלטות כרגע.</div>
+            <div class="audioItem">
+              <div class="title">הקלטה 1</div>
+              <audio controls src="audio1.mp3"></audio>
+            </div>
           </div>
         </section>
 
@@ -889,10 +883,6 @@
           <div class="audioList">
             <div class="audioItem">
               <div class="title">שיר אהוב</div>
-
-              <!-- added only: grey text line under the title -->
-              <div class="subline">אייל גולן - דרך לחיים</div>
-
               <audio controls src="song1.mp3"></audio>
             </div>
           </div>
