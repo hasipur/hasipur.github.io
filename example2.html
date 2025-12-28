@@ -47,7 +47,7 @@
       font-weight:900;            /* יותר bold */
       letter-spacing:2px;
       font-size:22px;             /* יותר גדול */
-      order:3;                    /* בצד ימין */
+      order:1;                    /* הוחלף: עכשיו בצד שמאל */
       text-align:right;
       white-space:nowrap;
     }
@@ -63,7 +63,7 @@
       color:var(--text-soft);
       font-size:13px;
       white-space:nowrap;
-      order:1;                    /* בצד שמאל */
+      order:3;                    /* הוחלף: עכשיו בצד ימין */
     }
     .topbar .spacer{
       flex:1;
@@ -546,7 +546,8 @@
         <button class="tab" data-target="photos">תמונות</button>
         <button class="tab" data-target="videos">סרטונים</button>
         <button class="tab" data-target="memories">זיכרונות</button>
-        <button class="tab" data-target="audio">הקלטות ושירים</button>
+        <button class="tab" data-target="recordings">הקלטות</button>
+        <button class="tab" data-target="songs">שירים</button>
       </div>
 
       <!-- Content -->
@@ -634,22 +635,50 @@
           </div>
         </section>
 
-        <!-- Audio -->
-        <section class="section" id="audio">
-          <div class="h2">הקלטות ושירים</div>
+        <!-- Recordings -->
+        <section class="section" id="recordings">
+          <div class="h2">הקלטות</div>
+
+          <div class="note" style="margin-top:-4px;">
+            כדי להוסיף שיר או הקלטה:
+          </div>
+
+          <button class="btn secondary" type="button" id="sendWhatsappRecordings" style="margin-top:10px;">
+            <span class="icon">💬</span>
+            שליחה לוואטסאפ
+          </button>
 
           <div class="audioList">
             <div class="audioItem">
               <div class="title">הקלטה 1</div>
               <audio controls src="audio1.mp3"></audio>
             </div>
+          </div>
+        </section>
 
+        <!-- Songs -->
+        <section class="section" id="songs">
+          <div class="h2">שירים</div>
+
+          <div class="note" style="margin-top:-4px;">
+            כדי להוסיף שיר או הקלטה:
+          </div>
+
+          <button class="btn secondary" type="button" id="sendWhatsappSongs" style="margin-top:10px;">
+            <span class="icon">💬</span>
+            שליחה לוואטסאפ
+          </button>
+
+          <div class="audioList">
             <div class="audioItem">
               <div class="title">שיר אהוב</div>
               <audio controls src="song1.mp3"></audio>
             </div>
           </div>
-
+        </section>
+      </div>
+    </div>
+  </div>
 
   <!-- Modal: Add Memory -->
   <div class="modalBg" id="modalBg" aria-hidden="true">
@@ -857,7 +886,7 @@
       alert("נשמר! (במכשיר הזה). אם תרצו שזה יופיע לכולם — שלחו אליכם לוואטסאפ.");
     });
 
-    // ===== WhatsApp send =====
+    // ===== WhatsApp send (Memories) =====
     const sendWhatsapp = document.getElementById("sendWhatsapp");
     sendWhatsapp.addEventListener("click", () => {
       const name = (memName.value || "").trim();
@@ -878,6 +907,29 @@
         `זיכרון: ${text}\n\n` +
         `קישור לדף: ${window.location.href}`;
 
+      const url = `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
+      window.open(url, "_blank");
+    });
+
+    // ===== WhatsApp send (Recordings & Songs) =====
+    const PHONE = "972584869014"; // <-- אותו מספר כמו בזיכרונות (לשנות כאן אם צריך)
+
+    const sendWhatsappRecordings = document.getElementById("sendWhatsappRecordings");
+    sendWhatsappRecordings.addEventListener("click", () => {
+      const msg =
+        `שלום, אני רוצה להוסיף הקלטה לדף ההנצחה.\n` +
+        `אנא כתבו לי כאן את שם ההקלטה + צרפו את הקובץ (MP3) או קישור.\n\n` +
+        `קישור לדף: ${window.location.href}`;
+      const url = `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
+      window.open(url, "_blank");
+    });
+
+    const sendWhatsappSongs = document.getElementById("sendWhatsappSongs");
+    sendWhatsappSongs.addEventListener("click", () => {
+      const msg =
+        `שלום, אני רוצה להוסיף שיר לדף ההנצחה.\n` +
+        `אנא כתבו לי כאן את שם השיר + קישור (יוטיוב/ספוטיפיי) או קובץ (MP3).\n\n` +
+        `קישור לדף: ${window.location.href}`;
       const url = `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
       window.open(url, "_blank");
     });
