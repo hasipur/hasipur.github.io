@@ -44,9 +44,12 @@
       padding:10px 4px 14px;
     }
     .topbar .logo{
-      font-weight:700;
+      font-weight:900;            /* יותר bold */
       letter-spacing:2px;
-      font-size:18px;
+      font-size:22px;             /* יותר גדול */
+      order:3;                    /* בצד ימין */
+      text-align:right;
+      white-space:nowrap;
     }
     .topbar .logo span{ color:var(--brand-main); }
     .topbar .pill{
@@ -60,9 +63,11 @@
       color:var(--text-soft);
       font-size:13px;
       white-space:nowrap;
-
-      /* ✅ העברת "דף זיכרון אישי" לצד שמאל */
-      margin-inline-start:auto; /* ב-RTL זה דוחף לשמאל */
+      order:1;                    /* בצד שמאל */
+    }
+    .topbar .spacer{
+      flex:1;
+      order:2;
     }
 
     /* Profile card */
@@ -101,12 +106,11 @@
       background: #fff;
     }
 
-    /* ✅ תמונת פרופיל חצי על הבאנר חצי על הלבן + באמצע */
     .avatar{
       position:absolute;
       left:50%;
       right:auto;
-      top:-52px;
+      top:-52px;                 /* חצי על הבאנר חצי על הלבן */
       transform: translateX(-50%);
       width:104px;
       height:104px;
@@ -124,11 +128,11 @@
     }
 
     .meta{
-      padding-top: 44px;
+      padding-top: 62px;         /* כדי לפנות מקום לאווטאר במרכז */
       display:flex;
       flex-direction:column;
       gap:6px;
-      align-items:center; /* שומר על מראה נקי ומסודר */
+      text-align:center;         /* פרופיל יותר מסודר */
     }
 
     .meta .small{
@@ -136,6 +140,7 @@
       font-size:13px;
       display:flex;
       align-items:center;
+      justify-content:center;
       gap:8px;
     }
     .meta .name{
@@ -143,37 +148,29 @@
       font-weight:800;
       margin:0;
       line-height:1.15;
-      text-align:center;
     }
     .meta .dates{
       color:#222;
       font-size:15px;
       font-weight:600;
       opacity:.85;
-      text-align:center;
     }
-
-    /* ✅ "הסיפור" העליון (המוטו) ימינה + גדול יותר + בולד יותר */
     .meta .quote{
-      margin-top:10px;
-      color:#222;
-      font-size:15px;
-      line-height:1.8;
+      margin-top:8px;
+      color:#333;
+      font-size:14px;
+      line-height:1.7;
       display:flex;
       gap:10px;
       align-items:flex-start;
-      align-self:stretch;
-      justify-content:flex-end;
-      text-align:right;
-      font-weight:800;
+      justify-content:center;
     }
     .meta .quote .qmark{
-      font-size:24px;
+      font-size:22px;
       line-height:1;
       color:var(--brand-main);
       font-weight:900;
       margin-top:2px;
-      flex:0 0 auto;
     }
 
     /* Actions row */
@@ -382,21 +379,6 @@
       white-space:pre-wrap;
     }
 
-    /* ✅ מדיה לזיכרון (תמונה/וידאו) */
-    .memMedia{
-      margin-top:10px;
-      border-radius:14px;
-      overflow:hidden;
-      border:1px solid #eee;
-      background:#fafafa;
-    }
-    .memMedia img, .memMedia video{
-      width:100%;
-      display:block;
-      max-height: 320px;
-      object-fit:cover;
-    }
-
     /* Audio & Songs */
     .audioList{
       display:flex;
@@ -493,30 +475,6 @@
       flex-wrap:wrap;
     }
 
-    /* ✅ תצוגה מקדימה לקובץ בזיכרון */
-    .fileHint{
-      margin-top:-6px;
-      font-size:12px;
-      color:#666;
-      line-height:1.4;
-    }
-    .previewBox{
-      border:1px dashed var(--brand-soft);
-      border-radius:14px;
-      padding:10px;
-      background:#fff;
-      display:none;
-      margin-top:8px;
-    }
-    .previewBox.show{ display:block; }
-    .previewBox img, .previewBox video{
-      width:100%;
-      border-radius:12px;
-      display:block;
-      max-height:260px;
-      object-fit:cover;
-    }
-
     /* Responsive */
     @media (max-width: 720px){
       .cover{ height: 230px; }
@@ -527,7 +485,7 @@
     @media (max-width: 420px){
       .grid{ grid-template-columns: 1fr; }
       .avatar{ width:96px; height:96px; top:-48px; }
-      .meta{ padding-top: 40px; }
+      .meta{ padding-top: 58px; }
       .tabs{ gap:0; }
     }
   </style>
@@ -537,21 +495,22 @@
   <div class="wrap">
     <div class="topbar">
       <div class="pill">🕯️ דף זיכרון אישי</div>
+      <div class="spacer"></div>
       <div class="logo">ה<span>ס</span>יפור</div>
-      <div style="width:42px;"></div>
     </div>
 
     <div class="card" id="card">
 
       <!-- Cover -->
       <div class="cover">
-        <!-- ✅ החזרת תמונת הבאנר שהייתה -->
-        <img src="cover.jpg" alt="באנר משפחתי">
+        <!-- החזרתי באנר לתמונה אמיתית (כמו שהיה) -->
+        <img src="img1.jpg.jpeg" alt="באנר משפחתי">
       </div>
 
       <!-- Profile head -->
       <div class="profileHead">
         <div class="avatar">
+          <!-- תמונת פרופיל עגולה -->
           <img src="img4.jpg.png" alt="תמונת פרופיל">
         </div>
 
@@ -575,6 +534,8 @@
               <span class="icon">✍️</span>
               הוספת זיכרון
             </button>
+
+            <!-- כפתור "פרטי" הוסר כי אי אפשר לעשות אותו אמיתי בלי מערכת -->
           </div>
         </div>
       </div>
@@ -626,6 +587,7 @@
             <div class="media"><img src="img1.jpg.jpeg" alt="תמונה 1"></div>
             <div class="media"><img src="img3.jpg.jpeg" alt="תמונה 2"></div>
             <div class="media"><img src="img2.jpg.jpeg" alt="תמונה 3"></div>
+            <!-- תוסיף עוד כרטיסים לפי הצורך -->
           </div>
         </section>
 
@@ -633,6 +595,7 @@
         <section class="section" id="videos">
           <div class="h2">סרטונים</div>
 
+          <!-- אם אין סרטונים כרגע - פלייסהולדר -->
           <div class="videoBox">
             <div class="videoPh">אפשרות לסרטון<br><span style="font-weight:700;color:#888;font-size:13px;">(תוכל לשים כאן וידאו או קישור ליוטיוב)</span></div>
             <div class="videoPh">אפשרות לסרטון</div>
@@ -657,10 +620,10 @@
           </div>
 
           <div class="memList" id="memList">
-            <!-- ✅ כותרת מעל הזיכרונות הציבוריים -->
+            <!-- כותרת לזיכרונות הציבוריים -->
             <div class="note" style="margin-top:10px;">זיכרונות שנשמרו לכולם:</div>
 
-            <!-- דוגמת זיכרון סטטי (ציבורי) -->
+            <!-- דוגמת זיכרון סטטי -->
             <div class="memItem">
               <div class="top">
                 <div>משפחת כהן</div>
@@ -714,14 +677,6 @@
           <textarea id="memText" placeholder="כתבו כמה מילים מהלב..."></textarea>
         </div>
 
-        <!-- ✅ הוספת תמונה/סרטון (שמירה מקומית בלבד) -->
-        <div class="field">
-          <label for="memFile">הוספת תמונה / סרטון (לא חובה)</label>
-          <input id="memFile" type="file" accept="image/*,video/*">
-          <div class="fileHint">הקובץ נשמר רק במכשיר הזה (Local). מומלץ קובץ קטן.</div>
-          <div class="previewBox" id="previewBox"></div>
-        </div>
-
         <div class="note" style="margin-top:-4px;">
           ✳️ בעמוד סטטי: שמירה מקומית = הזיכרון יוצג במכשיר הזה.  
           אם תרצו שהזיכרון יתווסף לדף לכולם – שלחו אלינו לוואטסאפ.
@@ -757,6 +712,7 @@
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
         activateTab(tab.dataset.target);
+        // smooth scroll to tabs top
         document.getElementById("tabs").scrollIntoView({behavior:"smooth", block:"start"});
       });
     });
@@ -766,6 +722,7 @@
     btnShare.addEventListener("click", async () => {
       const url = window.location.href;
 
+      // Web Share API (mobile)
       if (navigator.share) {
         try{
           await navigator.share({
@@ -777,6 +734,7 @@
         } catch(e){}
       }
 
+      // fallback: copy to clipboard
       try{
         await navigator.clipboard.writeText(url);
         alert("הקישור הועתק ללוח!");
@@ -792,11 +750,6 @@
     const cancelModal = document.getElementById("cancelModal");
     const memName = document.getElementById("memName");
     const memText = document.getElementById("memText");
-    const memFile = document.getElementById("memFile");
-    const previewBox = document.getElementById("previewBox");
-
-    let pickedFileDataUrl = ""; // נשמר זמנית עד שמירה
-    let pickedFileType = "";    // "image" / "video"
 
     function openModal(){
       modalBg.classList.add("open");
@@ -808,15 +761,8 @@
       modalBg.setAttribute("aria-hidden", "true");
     }
 
-    function resetFile(){
-      pickedFileDataUrl = "";
-      pickedFileType = "";
-      previewBox.classList.remove("show");
-      previewBox.innerHTML = "";
-      if(memFile) memFile.value = "";
-    }
-
     openers.forEach(btn => btn.addEventListener("click", () => {
+      // move to memories tab and open modal
       activateTab("memories");
       document.getElementById("tabs").scrollIntoView({behavior:"smooth", block:"start"});
       setTimeout(openModal, 220);
@@ -826,39 +772,6 @@
     cancelModal.addEventListener("click", closeModal);
     modalBg.addEventListener("click", (e) => { if(e.target === modalBg) closeModal(); });
     document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeModal(); });
-
-    // ===== File preview (local only) =====
-    memFile.addEventListener("change", () => {
-      const file = memFile.files && memFile.files[0];
-      resetFile();
-      if(!file) return;
-
-      // LocalStorage לרוב מוגבל (~5MB). כדי לא לשבור, נשים מגבלה.
-      const MAX_BYTES = 2 * 1024 * 1024; // 2MB
-      if(file.size > MAX_BYTES){
-        alert("הקובץ גדול מדי לשמירה מקומית. נסו קובץ קטן יותר (עד ~2MB).");
-        return;
-      }
-
-      const isImg = file.type.startsWith("image/");
-      const isVid = file.type.startsWith("video/");
-      if(!isImg && !isVid){
-        alert("אפשר להעלות רק תמונה או סרטון.");
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        pickedFileDataUrl = String(reader.result || "");
-        pickedFileType = isImg ? "image" : "video";
-
-        previewBox.classList.add("show");
-        previewBox.innerHTML = isImg
-          ? `<img src="${pickedFileDataUrl}" alt="תצוגה מקדימה">`
-          : `<video controls src="${pickedFileDataUrl}"></video>`;
-      };
-      reader.readAsDataURL(file);
-    });
 
     // ===== Memories (LocalStorage) =====
     const memList = document.getElementById("memList");
@@ -874,22 +787,12 @@
     function renderMemoryItem(item){
       const box = document.createElement("div");
       box.className = "memItem";
-
-      const mediaHtml = item.mediaDataUrl
-        ? `<div class="memMedia">${
-            item.mediaType === "video"
-              ? `<video controls src="${item.mediaDataUrl}"></video>`
-              : `<img src="${item.mediaDataUrl}" alt="זיכרון - תמונה">`
-          }</div>`
-        : "";
-
       box.innerHTML = `
         <div class="top">
           <div>${escapeHtml(item.name || "אורח/ת")}</div>
           <div class="date">${escapeHtml(item.date)}</div>
         </div>
         <div class="text">${escapeHtml(item.text)}</div>
-        ${mediaHtml}
       `;
       return box;
     }
@@ -925,6 +828,7 @@
       const arr = loadMemories();
       if(!arr.length) return;
 
+      // Add a separator note (optional)
       const sep = document.createElement("div");
       sep.className = "note";
       sep.style.marginTop = "10px";
@@ -947,14 +851,7 @@
         return;
       }
 
-      const item = {
-        name,
-        text,
-        date: formatDate(new Date()),
-        mediaDataUrl: pickedFileDataUrl || "",
-        mediaType: pickedFileType || ""
-      };
-
+      const item = { name, text, date: formatDate(new Date()) };
       const arr = loadMemories();
       arr.unshift(item);
       saveMemories(arr);
@@ -963,7 +860,6 @@
 
       memName.value = "";
       memText.value = "";
-      resetFile();
       closeModal();
 
       alert("נשמר! (במכשיר הזה). אם תרצו שזה יופיע לכולם — שלחו אליכם לוואטסאפ.");
@@ -980,16 +876,14 @@
         return;
       }
 
+      // ❗ החלף למספר שלך בפורמט בינלאומי (ישראל: 972 ואז בלי 0 בהתחלה)
+      // לדוגמה: 972501234567
       const PHONE = "972584869014"; // <-- לשנות כאן
-
-      const hasMedia = !!pickedFileDataUrl;
-      const mediaNote = hasMedia ? "\nיש לי גם תמונה/סרטון מצורף — אצרף ידנית בוואטסאפ." : "";
 
       const msg =
         `שלום, אני רוצה להוסיף זיכרון לדף ההנצחה:\n` +
         `שם: ${name || "ללא"}\n` +
-        `זיכרון: ${text}` +
-        `${mediaNote}\n\n` +
+        `זיכרון: ${text}\n\n` +
         `קישור לדף: ${window.location.href}`;
 
       const url = `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
