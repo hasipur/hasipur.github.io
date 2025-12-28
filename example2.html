@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>הסיפור - דף הנצחה</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -35,25 +35,17 @@
       padding: 14px 12px 50px;
     }
 
-    /* Top app header (simple) */
+    /* Top bar */
     .topbar{
+      position:relative;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
       padding:10px 4px 14px;
-      position:relative;
     }
-    .topbar .logo{
-      font-weight:900;              /* יותר bold */
-      letter-spacing:2px;
-      font-size:22px;
-      text-align:center;            /* באמצע */
-      white-space:nowrap;
-      flex:1;                       /* כדי להיות במרכז */
-    }
-    .topbar .logo span{ color:var(--brand-main); }
 
+    /* pill on the LEFT (visual left) */
     .topbar .pill{
       display:inline-flex;
       align-items:center;
@@ -66,45 +58,55 @@
       font-size:13px;
       white-space:nowrap;
 
-      /* להזיז לצד שמאל (כמו שביקשת) */
-      margin-right:auto;
+      /* forces it visually to the left side */
+      order:3;
+      margin-right:auto;   /* in RTL this pushes it to the left visually */
     }
 
-    /* Menu button (top-right) */
+    /* centered logo */
+    .topbar .logo{
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
+      font-weight:900;
+      letter-spacing:2px;
+      font-size:24px;      /* a bit bolder/stronger */
+      text-align:center;
+      white-space:nowrap;
+      pointer-events:none; /* so it won't block clicks */
+    }
+    .topbar .logo span{ color:var(--brand-main); }
+
+    /* menu button on the RIGHT */
     .menuBtn{
-      appearance:none;
-      border:none;
-      cursor:pointer;
-      width:44px;
-      height:44px;
-      border-radius:14px;
-      background:#ffffffcc;
-      border:1px solid #f0f0f0;
+      order:1;
+      margin-left:auto;
+      width:46px;
+      height:46px;
+      border-radius:16px;
+      border:1px solid #ececec;
+      background:#fff;
       box-shadow: 0 10px 24px rgba(0,0,0,.10);
       display:flex;
       align-items:center;
       justify-content:center;
-      flex:0 0 auto;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
     }
-    .menuBtn .bars{
-      width:18px;
-      height:12px;
-      position:relative;
+    .menuIcon{
+      width:22px;
+      height:22px;
       display:block;
     }
-    .menuBtn .bars::before,
-    .menuBtn .bars::after,
-    .menuBtn .bars span{
-      content:"";
-      position:absolute;
-      left:0; right:0;
+    .menuIcon span{
+      display:block;
       height:2px;
-      background:#333;
+      background:#222;
       border-radius:999px;
+      margin:5px 0;
+      width:100%;
     }
-    .menuBtn .bars::before{ top:0; }
-    .menuBtn .bars span{ top:5px; }
-    .menuBtn .bars::after{ bottom:0; }
 
     /* Drawer */
     .drawerBg{
@@ -112,7 +114,7 @@
       inset:0;
       background: rgba(0,0,0,.35);
       display:none;
-      z-index:1200;
+      z-index:2000;
     }
     .drawerBg.open{ display:block; }
 
@@ -121,62 +123,65 @@
       top:0;
       right:0;
       height:100%;
-      width:min(320px, 86vw);
+      width:min(86vw, 360px);
       background:#fff;
-      box-shadow: -20px 0 60px rgba(0,0,0,.22);
+      border-left:1px solid #eee;
+      box-shadow: -20px 0 60px rgba(0,0,0,.18);
       transform: translateX(100%);
       transition: transform .22s ease;
-      z-index:1300;
-      padding:14px 14px 18px;
-    }
-    .drawer.open{ transform: translateX(0); }
-
-    .drawerHead{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      padding:6px 4px 10px;
-      border-bottom:1px solid #eee;
-      margin-bottom:10px;
-    }
-    .drawerTitle{
-      font-weight:900;
-      font-size:15px;
-      color:#111;
-    }
-    .drawerClose{
-      border:none;
-      background:transparent;
-      cursor:pointer;
-      font-size:20px;
-      font-weight:900;
-      opacity:.8;
-    }
-    .drawerLinks{
+      z-index:2001;
       display:flex;
       flex-direction:column;
-      gap:10px;
-      padding-top:8px;
     }
-    .drawerLinks a{
+    .drawerBg.open + .drawer{
+      transform: translateX(0);
+    }
+    .drawerHead{
+      padding:14px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      border-bottom:1px solid #eee;
+    }
+    .drawerHead .title{
+      font-weight:900;
+      color:#111;
+      font-size:14px;
+    }
+    .drawerClose{
+      width:40px;
+      height:40px;
+      border-radius:12px;
+      border:1px solid #eee;
+      background:#fff;
+      cursor:pointer;
+      font-size:18px;
+      font-weight:900;
+      color:#111;
+    }
+    .drawerList{
+      padding:10px 10px 16px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .drawerItem{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
-      padding:12px 12px;
-      border:1px solid #eee;
+      padding:14px 12px;
       border-radius:14px;
+      border:1px solid #f0f0f0;
+      background:#fff;
       text-decoration:none;
       color:#111;
       font-weight:800;
-      background:#fff;
     }
-    .drawerLinks a:active{ transform: scale(.99); }
-    .drawerLinks .hint{
-      color:#777;
+    .drawerItem .sub{
       font-weight:700;
-      font-size:12.5px;
+      color:#888;
+      font-size:12px;
     }
 
     /* Profile card */
@@ -399,7 +404,7 @@
     /* Media grids */
     .grid{
       display:grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr); /* 2 per row */
       gap:10px;
     }
     .media{
@@ -418,26 +423,61 @@
       display:block;
     }
 
-    /* Videos grid (2 per row) */
+    /* Videos: 2 per row */
     .videoGrid{
       display:grid;
       grid-template-columns: repeat(2, 1fr);
       gap:12px;
-      align-items:start;
     }
 
-    /* iframe responsive */
-    .iframeWrap{
-      position:relative;
-      width:100%;
-      aspect-ratio: 9 / 16;
+    /* YouTube clickable thumbnail (not blurry, has play) */
+    .ytCard{
       border-radius:16px;
       overflow:hidden;
       border:1px solid #eee;
       box-shadow: 0 8px 18px rgba(0,0,0,.08);
       background:#000;
+      position:relative;
+      aspect-ratio: 9 / 16;
+      cursor:pointer;
+      user-select:none;
     }
-    .iframeWrap iframe{
+    .ytCard img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      filter:none;
+      transform:none;
+    }
+    .ytPlay{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      pointer-events:none;
+    }
+    .ytPlay .btnPlay{
+      width:68px;
+      height:48px;
+      border-radius:14px;
+      background: rgba(0,0,0,.55);
+      border:1px solid rgba(255,255,255,.35);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .ytPlay .triangle{
+      width:0;
+      height:0;
+      border-top:10px solid transparent;
+      border-bottom:10px solid transparent;
+      border-left:16px solid #fff;
+      margin-right:-2px;
+    }
+    .ytFrame{
       position:absolute;
       inset:0;
       width:100%;
@@ -594,15 +634,13 @@
     /* Responsive */
     @media (max-width: 720px){
       .cover{ height: 230px; }
-      .grid{ grid-template-columns: repeat(2, 1fr); } /* 2 בכל שורה */
       .meta .name{ font-size:24px; }
     }
     @media (max-width: 420px){
-      .grid{ grid-template-columns: repeat(2, 1fr); } /* להשאיר 2 בכל שורה גם במובייל */
-      .videoGrid{ grid-template-columns: repeat(2, 1fr); } /* 2 בשורה גם כאן */
       .avatar{ width:96px; height:96px; top:-48px; }
       .meta{ padding-top: 58px; }
-      .tabs{ gap:0; }
+      .grid{ grid-template-columns: repeat(2, 1fr); }       /* keep 2 per row */
+      .videoGrid{ grid-template-columns: repeat(2, 1fr); } /* keep 2 per row */
     }
   </style>
 </head>
@@ -610,14 +648,42 @@
 <body>
   <div class="wrap">
     <div class="topbar">
+      <button class="menuBtn" id="menuBtn" type="button" aria-label="תפריט">
+        <span class="menuIcon" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+
       <div class="pill">🕯️ דף זיכרון אישי</div>
 
       <div class="logo">ה<span>ס</span>יפור</div>
-
-      <button class="menuBtn" id="menuBtn" type="button" aria-label="תפריט">
-        <span class="bars"><span></span></span>
-      </button>
     </div>
+
+    <!-- Drawer -->
+    <div class="drawerBg" id="drawerBg" aria-hidden="true"></div>
+    <aside class="drawer" id="drawer" aria-label="תפריט צד">
+      <div class="drawerHead">
+        <div class="title">אפשרויות</div>
+        <button class="drawerClose" id="drawerClose" type="button" aria-label="סגירה">✕</button>
+      </div>
+      <div class="drawerList">
+        <a class="drawerItem" href="https://www.hasipur-il.com/products/%D7%91%D7%A8%D7%A7%D7%95%D7%93-%D7%A9%D7%9C-%D7%94%D7%A1%D7%99%D7%A4%D7%95%D7%A8" target="_blank" rel="noopener">
+          <div>
+            לרכישת ברקוד
+            <div class="sub">מעבר לעמוד רכישה</div>
+          </div>
+          <div>↗</div>
+        </a>
+
+        <a class="drawerItem" href="https://www.hasipur-il.com/pages/contact" target="_blank" rel="noopener">
+          <div>
+            צרו קשר
+            <div class="sub">וואטסאפ / טופס</div>
+          </div>
+          <div>↗</div>
+        </a>
+      </div>
+    </aside>
 
     <div class="card" id="card">
 
@@ -700,25 +766,26 @@
         <section class="section" id="videos">
           <div class="h2">סרטונים</div>
 
-          <!-- רק יוטיוב + להציג 2 בשורה -->
           <div class="videoGrid">
-            <div class="iframeWrap" aria-label="סרטון מיוטיוב">
-              <iframe
-                src="https://www.youtube.com/embed/HCodwcl2VjA?playsinline=1&rel=0&modestbranding=1&vq=hd1080"
-                title="YouTube video player"
-                loading="lazy"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen></iframe>
+            <!-- Video 1 -->
+            <div class="ytCard" data-yt="HCodwcl2VjA" aria-label="סרטון מיוטיוב">
+              <!-- thumbnail (sharp) -->
+              <img
+                src="https://i.ytimg.com/vi/HCodwcl2VjA/hqdefault.jpg"
+                alt="תמונה מקדימה של הסרטון">
+              <div class="ytPlay" aria-hidden="true">
+                <div class="btnPlay"><div class="triangle"></div></div>
+              </div>
             </div>
 
-            <!-- אותו סרטון לידו -->
-            <div class="iframeWrap" aria-label="סרטון מיוטיוב">
-              <iframe
-                src="https://www.youtube.com/embed/HCodwcl2VjA?playsinline=1&rel=0&modestbranding=1&vq=hd1080"
-                title="YouTube video player"
-                loading="lazy"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen></iframe>
+            <!-- Video 2 (same video next to it) -->
+            <div class="ytCard" data-yt="HCodwcl2VjA" aria-label="סרטון מיוטיוב">
+              <img
+                src="https://i.ytimg.com/vi/HCodwcl2VjA/hqdefault.jpg"
+                alt="תמונה מקדימה של הסרטון">
+              <div class="ytPlay" aria-hidden="true">
+                <div class="btnPlay"><div class="triangle"></div></div>
+              </div>
             </div>
           </div>
         </section>
@@ -801,25 +868,6 @@
     </div>
   </div>
 
-  <!-- Drawer -->
-  <div class="drawerBg" id="drawerBg" aria-hidden="true"></div>
-  <aside class="drawer" id="drawer" aria-label="תפריט">
-    <div class="drawerHead">
-      <div class="drawerTitle">אפשרויות</div>
-      <button class="drawerClose" id="drawerClose" type="button" aria-label="סגירה">✕</button>
-    </div>
-    <div class="drawerLinks">
-      <a href="https://www.hasipur-il.com/products/%D7%91%D7%A8%D7%A7%D7%95%D7%93-%D7%A9%D7%9C-%D7%94%D7%A1%D7%99%D7%A4%D7%95%D7%A8" target="_blank" rel="noopener">
-        <span>לרכישת ברקוד</span>
-        <span class="hint">↗</span>
-      </a>
-      <a href="https://www.hasipur-il.com/pages/contact" target="_blank" rel="noopener">
-        <span>צרו קשר</span>
-        <span class="hint">↗</span>
-      </a>
-    </div>
-  </aside>
-
   <!-- Modal: Add Memory -->
   <div class="modalBg" id="modalBg" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-label="הוספת זיכרון">
@@ -846,17 +894,9 @@
       </div>
 
       <div class="modalFoot">
-        <button class="btn primary" type="button" id="saveLocal">
-          שמירה כאן
-        </button>
-
-        <button class="btn secondary" type="button" id="sendWhatsapp">
-          שליחה לוואטסאפ
-        </button>
-
-        <button class="btn secondary" type="button" id="cancelModal">
-          ביטול
-        </button>
+        <button class="btn primary" type="button" id="saveLocal">שמירה כאן</button>
+        <button class="btn secondary" type="button" id="sendWhatsapp">שליחה לוואטסאפ</button>
+        <button class="btn secondary" type="button" id="cancelModal">ביטול</button>
       </div>
     </div>
   </div>
@@ -878,6 +918,29 @@
       });
     });
 
+    // ===== Drawer =====
+    const menuBtn = document.getElementById("menuBtn");
+    const drawerBg = document.getElementById("drawerBg");
+    const drawerClose = document.getElementById("drawerClose");
+
+    function openDrawer(){
+      drawerBg.classList.add("open");
+      drawerBg.setAttribute("aria-hidden","false");
+      document.body.style.overflow = "hidden";
+    }
+    function closeDrawer(){
+      drawerBg.classList.remove("open");
+      drawerBg.setAttribute("aria-hidden","true");
+      document.body.style.overflow = "";
+    }
+
+    menuBtn.addEventListener("click", openDrawer);
+    drawerClose.addEventListener("click", closeDrawer);
+    drawerBg.addEventListener("click", closeDrawer);
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape") closeDrawer();
+    });
+
     // ===== Share =====
     const btnShare = document.getElementById("btnShare");
     btnShare.addEventListener("click", async () => {
@@ -897,27 +960,6 @@
         prompt("העתיקו את הקישור:", url);
       }
     });
-
-    // ===== Drawer =====
-    const menuBtn = document.getElementById("menuBtn");
-    const drawer = document.getElementById("drawer");
-    const drawerBg = document.getElementById("drawerBg");
-    const drawerClose = document.getElementById("drawerClose");
-
-    function openDrawer(){
-      drawer.classList.add("open");
-      drawerBg.classList.add("open");
-      drawerBg.setAttribute("aria-hidden","false");
-    }
-    function closeDrawer(){
-      drawer.classList.remove("open");
-      drawerBg.classList.remove("open");
-      drawerBg.setAttribute("aria-hidden","true");
-    }
-
-    menuBtn.addEventListener("click", openDrawer);
-    drawerClose.addEventListener("click", closeDrawer);
-    drawerBg.addEventListener("click", closeDrawer);
 
     // ===== Modal =====
     const modalBg = document.getElementById("modalBg");
@@ -946,12 +988,7 @@
     modalClose.addEventListener("click", closeModal);
     cancelModal.addEventListener("click", closeModal);
     modalBg.addEventListener("click", (e) => { if(e.target === modalBg) closeModal(); });
-    document.addEventListener("keydown", (e) => {
-      if(e.key === "Escape"){
-        closeModal();
-        closeDrawer();
-      }
-    });
+    document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeModal(); });
 
     // ===== Memories (LocalStorage) =====
     const memList = document.getElementById("memList");
@@ -1091,6 +1128,22 @@
         `קישור לדף: ${window.location.href}`;
       const url = `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
       window.open(url, "_blank");
+    });
+
+    // ===== YouTube: sharp thumbnail + play button -> loads iframe on click =====
+    document.querySelectorAll(".ytCard").forEach(card => {
+      card.addEventListener("click", () => {
+        const id = card.getAttribute("data-yt");
+        if(!id) return;
+
+        card.innerHTML = `
+          <iframe class="ytFrame"
+            src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0&playsinline=1"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        `;
+      }, { once:true });
     });
   </script>
 </body>
