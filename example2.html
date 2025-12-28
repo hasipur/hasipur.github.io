@@ -94,27 +94,20 @@
     /* Header section under cover */
     .profileHead{
       position:relative;
-      padding: 16px 16px 12px;
-      background: #fff;
+      padding: 0 16px 14px;
+      background:#fff;
+      text-align:center;
     }
 
     .avatar{
-      position:absolute;
-      left:16px; /* RTL: keep on left like your screenshot circle on right? */
-      right:auto;
-      top:-52px;
-      width:104px;
-      height:104px;
+      width:112px;
+      height:112px;
       border-radius:50%;
       overflow:hidden;
       border:4px solid #fff;
       box-shadow: 0 10px 26px rgba(0,0,0,.18);
       background:#eee;
-    }
-    /* In RTL, put avatar on the right like screenshot */
-    [dir="rtl"] .avatar{
-      right:16px;
-      left:auto;
+      margin: -56px auto 10px; /* overlap over cover + center */
     }
 
     .avatar img{
@@ -124,16 +117,17 @@
     }
 
     .meta{
-      padding-top: 44px;
       display:flex;
       flex-direction:column;
       gap:6px;
+      align-items:center;
+      padding-bottom: 6px;
     }
 
     .meta .small{
       color:var(--text-soft);
       font-size:13px;
-      display:flex;
+      display:inline-flex;
       align-items:center;
       gap:8px;
     }
@@ -157,6 +151,8 @@
       display:flex;
       gap:10px;
       align-items:flex-start;
+      justify-content:center;
+      max-width: 680px;
     }
     .meta .quote .qmark{
       font-size:22px;
@@ -172,6 +168,7 @@
       display:flex;
       gap:10px;
       flex-wrap:wrap;
+      justify-content:center;
     }
     .btn{
       appearance:none;
@@ -476,8 +473,7 @@
     }
     @media (max-width: 420px){
       .grid{ grid-template-columns: 1fr; }
-      .avatar{ width:96px; height:96px; top:-48px; }
-      .meta{ padding-top: 40px; }
+      .avatar{ width:104px; height:104px; margin-top:-52px; }
       .tabs{ gap:0; }
     }
   </style>
@@ -495,14 +491,13 @@
 
       <!-- Cover -->
       <div class="cover">
-        <!-- החלף לתמונת הבאנר שלך -->
-        <img src="cover.jpg" alt="באנר משפחתי">
+        <!-- הבאנר: אחת התמונות מהתמונות -->
+        <img src="img1.jpg.jpeg" alt="באנר משפחתי">
       </div>
 
       <!-- Profile head -->
       <div class="profileHead">
         <div class="avatar">
-          <!-- תמונת פרופיל עגולה -->
           <img src="img4.jpg.png" alt="תמונת פרופיל">
         </div>
 
@@ -547,10 +542,26 @@
         <section class="section active" id="life">
           <div class="h2">סיפור החיים</div>
           <div class="story">
-            <!-- הטקסט שלך -->
-            <p>סבא שלי, שנולד בשנת 1935 בעיר בגדד, היה אדם יוצא דופן – אדם עם לב רחב, נשמה גדולה ואהבה אינסופית למדינת ישראל ולעמו.</p>
+            <p>סבא שלי, שנולד בשנת 1935 בעיר בגדד, היה אדם יוצא דופן – אדם עם לב רחב, נשמה גדולה ואהבה אינסופית למדינת ישראל ולעמו. הוא נולד למשפחה חמה ומלוכדת, עם שישה אחים, וגדל בבית פשוט אך מלא באהבה, שמחה ומוזיקה עיראקית.</p>
+
             <p>כבר בילדותו התגלה בו חוש אחריות נדיר – בגיל 11 בלבד יצא לעבוד כחייט. בעזרת העבודה הוא למד את מקצועו, והצליח לפרנס את משפחתו.</p>
-            <p>... (תמשיך פה את כל הטקסט שלך) ...</p>
+
+            <p>מלבד עבודתו, סבא אהב לשחק שש-בש – והוא היה פשוט תותח בזה! שעות על גבי שעות היה יושב עם חברים, מחייך את החיוך הרחב שלו ומנצח אחד אחרי השני. הצבע האהוב עליו היה צהוב – צבע של אור, שמחה ואופטימיות, ממש כמו האישיות שלו.</p>
+
+            <p>בשנת 1951, כשהיה בן 16, עלה לארץ ישראל יחד עם משפחתו. עם הגיעם, שיכנו אותם באוהלים בעלייה – שם חיו בתנאים קשים, ללא חשמל, כשהם מדליקים פנס שעובד על נפט כדי להאיר את הלילות הארוכים.</p>
+
+            <p>משם נדדו מפרדס חנה לכפר סבא, וגם שם חיו באוהלים, עד שבסופו של דבר הגיעו לשכונת התקווה בתל אביב – המקום שבו סוף סוף מצאו בית אמיתי.</p>
+
+            <p>במהלך השנים סבא למד נהיגה, והחל לעבוד כנהג מונית – מקצוע שאהב מאוד, ושאפשר לו לפגוש אנשים, לשוחח, ולחלוק את חוכמת החיים שלו עם כל נוסע.</p>
+
+            <p>לאחר שעלָה לארץ, סבא גם פגש והתאהב באישה מדהימה – סבתא שלי – שגם היא עלתה מעיראק. יחד הם הקימו בית חם ומלא אור, גידלו ילדים לתפארת, והניחו יסודות למשפחה גדולה, גאה וישראלית.</p>
+
+            <p>סבא השתתף בכל מלחמות ישראל, ובכל פעם שנדרש – עמד בגאווה לצד חבריו לנשק, מתוך תחושת שליחות עמוקה ואמונה בצדקת הדרך. הוא היה פטריוט אמיתי – כזה שלא רק דיבר על אהבת הארץ, אלא חי אותה, נשם אותה, ונתן לה את כל כולו.</p>
+
+            <p>מי שזכה להכיר את סבא, ידע שמדובר באדם נדיר: איש של ערכים, של יושר, של עבודה קשה, ושל אהבה עצומה למשפחתו. הוא תמיד היה שם בשביל כולם – עם חיוך, עצה טובה, ולב רחב שלא ידע גבולות.</p>
+
+            <p>סבא שלי נפטר בתאריך כ"ד בתשרי תשפ"א, ונקבר בבית העלמין ירקון שבתל אביב. גם היום, כשהוא כבר לא איתנו בגוף, הרוח שלו מלווה אותנו בכל יום מחדש – ברגעים הקטנים, בצחוק של הנכדים, בשירים של יום העצמאות, ובאהבה האינסופית לארץ הזאת שהוא כה אהב.</p>
+
             <p><strong>יהי זכרו ברוך ❤️</strong></p>
           </div>
         </section>
@@ -563,7 +574,6 @@
             <div class="media"><img src="img1.jpg.jpeg" alt="תמונה 1"></div>
             <div class="media"><img src="img3.jpg.jpeg" alt="תמונה 2"></div>
             <div class="media"><img src="img2.jpg.jpeg" alt="תמונה 3"></div>
-            <!-- תוסיף עוד כרטיסים לפי הצורך -->
           </div>
         </section>
 
@@ -571,17 +581,10 @@
         <section class="section" id="videos">
           <div class="h2">סרטונים</div>
 
-          <!-- אם אין סרטונים כרגע - פלייסהולדר -->
           <div class="videoBox">
             <div class="videoPh">אפשרות לסרטון<br><span style="font-weight:700;color:#888;font-size:13px;">(תוכל לשים כאן וידאו או קישור ליוטיוב)</span></div>
             <div class="videoPh">אפשרות לסרטון</div>
           </div>
-
-          <!-- דוגמה לוידאו מקומי:
-          <div class="media" style="margin-top:12px;">
-            <video controls src="video1.mp4"></video>
-          </div>
-          -->
         </section>
 
         <!-- Memories -->
@@ -602,7 +605,6 @@
           </div>
 
           <div class="memList" id="memList">
-            <!-- דוגמת זיכרון סטטי -->
             <div class="memItem">
               <div class="top">
                 <div>משפחת כהן</div>
@@ -691,7 +693,6 @@
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
         activateTab(tab.dataset.target);
-        // smooth scroll to tabs top
         document.getElementById("tabs").scrollIntoView({behavior:"smooth", block:"start"});
       });
     });
@@ -701,7 +702,6 @@
     btnShare.addEventListener("click", async () => {
       const url = window.location.href;
 
-      // Web Share API (mobile)
       if (navigator.share) {
         try{
           await navigator.share({
@@ -713,7 +713,6 @@
         } catch(e){}
       }
 
-      // fallback: copy to clipboard
       try{
         await navigator.clipboard.writeText(url);
         alert("הקישור הועתק ללוח!");
@@ -724,7 +723,13 @@
 
     // ===== Modal =====
     const modalBg = document.getElementById("modalBg");
-    const openers = [document.getElementById("btnAddMemory"), document.getElementById("btnAddMemory2")];
+
+    // FIX: שלא יישבר אם כפתור/אלמנט חסר
+    const openers = [
+      document.getElementById("btnAddMemory"),
+      document.getElementById("btnAddMemory2")
+    ].filter(Boolean);
+
     const modalClose = document.getElementById("modalClose");
     const cancelModal = document.getElementById("cancelModal");
     const memName = document.getElementById("memName");
@@ -741,7 +746,6 @@
     }
 
     openers.forEach(btn => btn.addEventListener("click", () => {
-      // move to memories tab and open modal
       activateTab("memories");
       document.getElementById("tabs").scrollIntoView({behavior:"smooth", block:"start"});
       setTimeout(openModal, 220);
@@ -807,7 +811,6 @@
       const arr = loadMemories();
       if(!arr.length) return;
 
-      // Add a separator note (optional)
       const sep = document.createElement("div");
       sep.className = "note";
       sep.style.marginTop = "10px";
@@ -835,8 +838,6 @@
       arr.unshift(item);
       saveMemories(arr);
 
-      // show immediately (under the saved separator or at end)
-      // simplest: reload section UI by appending after current content
       memList.appendChild(renderMemoryItem(item));
 
       memName.value = "";
@@ -857,9 +858,7 @@
         return;
       }
 
-      // ❗ החלף למספר שלך בפורמט בינלאומי (ישראל: 972 ואז בלי 0 בהתחלה)
-      // לדוגמה: 972501234567
-      const PHONE = "972584869014"; // <-- לשנות כאן
+      const PHONE = "972584869014"; // <-- לשנות כאן אם צריך
 
       const msg =
         `שלום, אני רוצה להוסיף זיכרון לדף ההנצחה:\n` +
