@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>הסיפור - דף הנצחה</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -43,19 +43,12 @@
       gap:10px;
       padding:10px 4px 14px;
     }
-
-    /* "הסיפור" - עכשיו בצד ימין, גדול ובולט */
     .topbar .logo{
-      font-weight:800;
+      font-weight:700;
       letter-spacing:2px;
-      font-size:22px;
-      text-align:right;
-      order:1; /* צד ימין ב-RTL */
-      white-space:nowrap;
+      font-size:18px;
     }
     .topbar .logo span{ color:var(--brand-main); }
-
-    /* "דף זיכרון אישי" - עכשיו בצד שמאל */
     .topbar .pill{
       display:inline-flex;
       align-items:center;
@@ -67,12 +60,9 @@
       color:var(--text-soft);
       font-size:13px;
       white-space:nowrap;
-      order:3; /* צד שמאל ב-RTL */
-    }
 
-    .topbar .spacer{
-      width:42px;
-      order:2;
+      /* ✅ העברת "דף זיכרון אישי" לצד שמאל */
+      margin-inline-start:auto; /* ב-RTL זה דוחף לשמאל */
     }
 
     /* Profile card */
@@ -114,19 +104,19 @@
     /* ✅ תמונת פרופיל חצי על הבאנר חצי על הלבן + באמצע */
     .avatar{
       position:absolute;
-      top:-52px;
       left:50%;
       right:auto;
+      top:-52px;
       transform: translateX(-50%);
-      width:112px;
-      height:112px;
+      width:104px;
+      height:104px;
       border-radius:50%;
       overflow:hidden;
       border:4px solid #fff;
       box-shadow: 0 10px 26px rgba(0,0,0,.18);
       background:#eee;
-      z-index:5;
     }
+
     .avatar img{
       width:100%;
       height:100%;
@@ -134,12 +124,11 @@
     }
 
     .meta{
-      padding-top: 56px; /* מקום לאווטאר באמצע */
+      padding-top: 44px;
       display:flex;
       flex-direction:column;
       gap:6px;
-      text-align:center;
-      align-items:center;
+      align-items:center; /* שומר על מראה נקי ומסודר */
     }
 
     .meta .small{
@@ -148,38 +137,43 @@
       display:flex;
       align-items:center;
       gap:8px;
-      justify-content:center;
     }
     .meta .name{
       font-size:26px;
       font-weight:800;
       margin:0;
       line-height:1.15;
+      text-align:center;
     }
     .meta .dates{
       color:#222;
       font-size:15px;
       font-weight:600;
       opacity:.85;
+      text-align:center;
     }
+
+    /* ✅ "הסיפור" העליון (המוטו) ימינה + גדול יותר + בולד יותר */
     .meta .quote{
-      margin-top:8px;
-      color:#333;
-      font-size:14px;
-      line-height:1.7;
+      margin-top:10px;
+      color:#222;
+      font-size:15px;
+      line-height:1.8;
       display:flex;
       gap:10px;
       align-items:flex-start;
-      justify-content:center;
-      text-align:center;
-      max-width: 680px;
+      align-self:stretch;
+      justify-content:flex-end;
+      text-align:right;
+      font-weight:800;
     }
     .meta .quote .qmark{
-      font-size:22px;
+      font-size:24px;
       line-height:1;
       color:var(--brand-main);
       font-weight:900;
       margin-top:2px;
+      flex:0 0 auto;
     }
 
     /* Actions row */
@@ -387,32 +381,21 @@
       line-height:1.75;
       white-space:pre-wrap;
     }
+
+    /* ✅ מדיה לזיכרון (תמונה/וידאו) */
     .memMedia{
       margin-top:10px;
       border-radius:14px;
       overflow:hidden;
       border:1px solid #eee;
-      box-shadow: 0 8px 18px rgba(0,0,0,.06);
-      background:#fff;
+      background:#fafafa;
     }
     .memMedia img, .memMedia video{
       width:100%;
       display:block;
-      max-height: 360px;
+      max-height: 320px;
       object-fit:cover;
     }
-    .memLink{
-      display:inline-block;
-      margin-top:10px;
-      font-weight:800;
-      color:#111;
-      text-decoration:none;
-      border:1px solid #e3e3e3;
-      padding:10px 12px;
-      border-radius: 12px;
-      background:#fff;
-    }
-    .memLink:hover{ opacity:.9; }
 
     /* Audio & Songs */
     .audioList{
@@ -510,18 +493,42 @@
       flex-wrap:wrap;
     }
 
+    /* ✅ תצוגה מקדימה לקובץ בזיכרון */
+    .fileHint{
+      margin-top:-6px;
+      font-size:12px;
+      color:#666;
+      line-height:1.4;
+    }
+    .previewBox{
+      border:1px dashed var(--brand-soft);
+      border-radius:14px;
+      padding:10px;
+      background:#fff;
+      display:none;
+      margin-top:8px;
+    }
+    .previewBox.show{ display:block; }
+    .previewBox img, .previewBox video{
+      width:100%;
+      border-radius:12px;
+      display:block;
+      max-height:260px;
+      object-fit:cover;
+    }
+
     /* Responsive */
     @media (max-width: 720px){
       .cover{ height: 230px; }
       .grid{ grid-template-columns: repeat(2, 1fr); }
       .videoBox{ grid-template-columns: 1fr; }
       .meta .name{ font-size:24px; }
-      .topbar .logo{ font-size:21px; }
     }
     @media (max-width: 420px){
       .grid{ grid-template-columns: 1fr; }
-      .avatar{ width:104px; height:104px; top:-52px; }
-      .meta{ padding-top: 56px; }
+      .avatar{ width:96px; height:96px; top:-48px; }
+      .meta{ padding-top: 40px; }
+      .tabs{ gap:0; }
     }
   </style>
 </head>
@@ -531,21 +538,20 @@
     <div class="topbar">
       <div class="pill">🕯️ דף זיכרון אישי</div>
       <div class="logo">ה<span>ס</span>יפור</div>
-      <div class="spacer"></div>
+      <div style="width:42px;"></div>
     </div>
 
     <div class="card" id="card">
 
       <!-- Cover -->
       <div class="cover">
-        <!-- החלף לתמונת הבאנר שלך -->
+        <!-- ✅ החזרת תמונת הבאנר שהייתה -->
         <img src="cover.jpg" alt="באנר משפחתי">
       </div>
 
       <!-- Profile head -->
       <div class="profileHead">
         <div class="avatar">
-          <!-- תמונת פרופיל עגולה -->
           <img src="img4.jpg.png" alt="תמונת פרופיל">
         </div>
 
@@ -588,9 +594,26 @@
         <section class="section active" id="life">
           <div class="h2">סיפור החיים</div>
           <div class="story">
-            <p>סבא שלי, שנולד בשנת 1935 בעיר בגדד, היה אדם יוצא דופן – אדם עם לב רחב, נשמה גדולה ואהבה אינסופית למדינת ישראל ולעמו.</p>
+            <p>סבא שלי, שנולד בשנת 1935 בעיר בגדד, היה אדם יוצא דופן – אדם עם לב רחב, נשמה גדולה ואהבה אינסופית למדינת ישראל ולעמו. הוא נולד למשפחה חמה ומלוכדת, עם שישה אחים, וגדל בבית פשוט אך מלא באהבה, שמחה ומוזיקה עיראקית.</p>
+
             <p>כבר בילדותו התגלה בו חוש אחריות נדיר – בגיל 11 בלבד יצא לעבוד כחייט. בעזרת העבודה הוא למד את מקצועו, והצליח לפרנס את משפחתו.</p>
-            <p>... (תמשיך פה את כל הטקסט שלך) ...</p>
+
+            <p>מלבד עבודתו, סבא אהב לשחק שש-בש – והוא היה פשוט תותח בזה! שעות על גבי שעות היה יושב עם חברים, מחייך את החיוך הרחב שלו ומנצח אחד אחרי השני. הצבע האהוב עליו היה צהוב – צבע של אור, שמחה ואופטימיות, ממש כמו האישיות שלו.</p>
+
+            <p>בשנת 1951, כשהיה בן 16, עלה לארץ ישראל יחד עם משפחתו. עם הגיעם, שיכנו אותם באוהלים בעלייה – שם חיו בתנאים קשים, ללא חשמל, כשהם מדליקים פנס שעובד על נפט כדי להאיר את הלילות הארוכים.</p>
+
+            <p>משם נדדו מפרדס חנה לכפר סבא, וגם שם חיו באוהלים, עד שבסופו של דבר הגיעו לשכונת התקווה בתל אביב – המקום שבו סוף סוף מצאו בית אמיתי.</p>
+
+            <p>במהלך השנים סבא למד נהיגה, והחל לעבוד כנהג מונית – מקצוע שאהב מאוד, ושאפשר לו לפגוש אנשים, לשוחח, ולחלוק את חוכמת החיים שלו עם כל נוסע.</p>
+
+            <p>לאחר שעלָה לארץ, סבא גם פגש והתאהב באישה מדהימה – סבתא שלי – שגם היא עלתה מעיראק. יחד הם הקימו בית חם ומלא אור, גידלו ילדים לתפארת, והניחו יסודות למשפחה גדולה, גאה וישראלית.</p>
+
+            <p>סבא השתתף בכל מלחמות ישראל, ובכל פעם שנדרש – עמד בגאווה לצד חבריו לנשק, מתוך תחושת שליחות עמוקה ואמונה בצדקת הדרך. הוא היה פטריוט אמיתי – כזה שלא רק דיבר על אהבת הארץ, אלא חי אותה, נשם אותה, ונתן לה את כל כולו.</p>
+
+            <p>מי שזכה להכיר את סבא, ידע שמדובר באדם נדיר: איש של ערכים, של יושר, של עבודה קשה, ושל אהבה עצומה למשפחתו. הוא תמיד היה שם בשביל כולם – עם חיוך, עצה טובה, ולב רחב שלא ידע גבולות.</p>
+
+            <p>סבא שלי נפטר בתאריך כ"ד בתשרי תשפ"א, ונקבר בבית העלמין ירקון שבתל אביב. גם היום, כשהוא כבר לא איתנו בגוף, הרוח שלו מלווה אותנו בכל יום מחדש – ברגעים הקטנים, בצחוק של הנכדים, בשירים של יום העצמאות, ובאהבה האינסופית לארץ הזאת שהוא כה אהב.</p>
+
             <p><strong>יהי זכרו ברוך ❤️</strong></p>
           </div>
         </section>
@@ -634,6 +657,10 @@
           </div>
 
           <div class="memList" id="memList">
+            <!-- ✅ כותרת מעל הזיכרונות הציבוריים -->
+            <div class="note" style="margin-top:10px;">זיכרונות שנשמרו לכולם:</div>
+
+            <!-- דוגמת זיכרון סטטי (ציבורי) -->
             <div class="memItem">
               <div class="top">
                 <div>משפחת כהן</div>
@@ -687,10 +714,12 @@
           <textarea id="memText" placeholder="כתבו כמה מילים מהלב..."></textarea>
         </div>
 
-        <!-- ✅ הוספת תמונה/סרטון (קישור) - בלי מערכת שרת -->
+        <!-- ✅ הוספת תמונה/סרטון (שמירה מקומית בלבד) -->
         <div class="field">
-          <label for="memMediaUrl">תמונה / סרטון (קישור – לא חובה)</label>
-          <input id="memMediaUrl" type="url" placeholder="לדוגמה: קישור לתמונה / יוטיוב / דרייב">
+          <label for="memFile">הוספת תמונה / סרטון (לא חובה)</label>
+          <input id="memFile" type="file" accept="image/*,video/*">
+          <div class="fileHint">הקובץ נשמר רק במכשיר הזה (Local). מומלץ קובץ קטן.</div>
+          <div class="previewBox" id="previewBox"></div>
         </div>
 
         <div class="note" style="margin-top:-4px;">
@@ -739,7 +768,11 @@
 
       if (navigator.share) {
         try{
-          await navigator.share({ title: document.title, text: "דף זיכרון", url });
+          await navigator.share({
+            title: document.title,
+            text: "דף זיכרון",
+            url
+          });
           return;
         } catch(e){}
       }
@@ -759,7 +792,11 @@
     const cancelModal = document.getElementById("cancelModal");
     const memName = document.getElementById("memName");
     const memText = document.getElementById("memText");
-    const memMediaUrl = document.getElementById("memMediaUrl");
+    const memFile = document.getElementById("memFile");
+    const previewBox = document.getElementById("previewBox");
+
+    let pickedFileDataUrl = ""; // נשמר זמנית עד שמירה
+    let pickedFileType = "";    // "image" / "video"
 
     function openModal(){
       modalBg.classList.add("open");
@@ -769,6 +806,14 @@
     function closeModal(){
       modalBg.classList.remove("open");
       modalBg.setAttribute("aria-hidden", "true");
+    }
+
+    function resetFile(){
+      pickedFileDataUrl = "";
+      pickedFileType = "";
+      previewBox.classList.remove("show");
+      previewBox.innerHTML = "";
+      if(memFile) memFile.value = "";
     }
 
     openers.forEach(btn => btn.addEventListener("click", () => {
@@ -782,6 +827,39 @@
     modalBg.addEventListener("click", (e) => { if(e.target === modalBg) closeModal(); });
     document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeModal(); });
 
+    // ===== File preview (local only) =====
+    memFile.addEventListener("change", () => {
+      const file = memFile.files && memFile.files[0];
+      resetFile();
+      if(!file) return;
+
+      // LocalStorage לרוב מוגבל (~5MB). כדי לא לשבור, נשים מגבלה.
+      const MAX_BYTES = 2 * 1024 * 1024; // 2MB
+      if(file.size > MAX_BYTES){
+        alert("הקובץ גדול מדי לשמירה מקומית. נסו קובץ קטן יותר (עד ~2MB).");
+        return;
+      }
+
+      const isImg = file.type.startsWith("image/");
+      const isVid = file.type.startsWith("video/");
+      if(!isImg && !isVid){
+        alert("אפשר להעלות רק תמונה או סרטון.");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        pickedFileDataUrl = String(reader.result || "");
+        pickedFileType = isImg ? "image" : "video";
+
+        previewBox.classList.add("show");
+        previewBox.innerHTML = isImg
+          ? `<img src="${pickedFileDataUrl}" alt="תצוגה מקדימה">`
+          : `<video controls src="${pickedFileDataUrl}"></video>`;
+      };
+      reader.readAsDataURL(file);
+    });
+
     // ===== Memories (LocalStorage) =====
     const memList = document.getElementById("memList");
     const saveLocal = document.getElementById("saveLocal");
@@ -793,6 +871,29 @@
       return `${dd}/${mm}/${yyyy}`;
     }
 
+    function renderMemoryItem(item){
+      const box = document.createElement("div");
+      box.className = "memItem";
+
+      const mediaHtml = item.mediaDataUrl
+        ? `<div class="memMedia">${
+            item.mediaType === "video"
+              ? `<video controls src="${item.mediaDataUrl}"></video>`
+              : `<img src="${item.mediaDataUrl}" alt="זיכרון - תמונה">`
+          }</div>`
+        : "";
+
+      box.innerHTML = `
+        <div class="top">
+          <div>${escapeHtml(item.name || "אורח/ת")}</div>
+          <div class="date">${escapeHtml(item.date)}</div>
+        </div>
+        <div class="text">${escapeHtml(item.text)}</div>
+        ${mediaHtml}
+      `;
+      return box;
+    }
+
     function escapeHtml(str){
       return String(str)
         .replaceAll("&","&amp;")
@@ -800,64 +901,6 @@
         .replaceAll(">","&gt;")
         .replaceAll('"',"&quot;")
         .replaceAll("'","&#039;");
-    }
-
-    function looksLikeImage(url){
-      return /\.(png|jpg|jpeg|webp|gif)(\?.*)?$/i.test(url);
-    }
-    function looksLikeVideo(url){
-      return /\.(mp4|webm|ogg)(\?.*)?$/i.test(url);
-    }
-    function isYouTube(url){
-      return /youtube\.com\/watch\?v=|youtu\.be\//i.test(url);
-    }
-
-    function renderMemoryItem(item){
-      const box = document.createElement("div");
-      box.className = "memItem";
-
-      const safeName = escapeHtml(item.name || "אורח/ת");
-      const safeDate = escapeHtml(item.date);
-      const safeText = escapeHtml(item.text);
-
-      let mediaHtml = "";
-      const url = (item.mediaUrl || "").trim();
-
-      if(url){
-        const safeUrl = url.replaceAll('"','%22');
-
-        if(looksLikeImage(url)){
-          mediaHtml = `
-            <div class="memMedia">
-              <img src="${safeUrl}" alt="תמונה מצורפת">
-            </div>
-          `;
-        } else if(looksLikeVideo(url)){
-          mediaHtml = `
-            <div class="memMedia">
-              <video controls src="${safeUrl}"></video>
-            </div>
-          `;
-        } else if(isYouTube(url)){
-          mediaHtml = `
-            <a class="memLink" href="${safeUrl}" target="_blank" rel="noopener">▶ צפייה בסרטון</a>
-          `;
-        } else {
-          mediaHtml = `
-            <a class="memLink" href="${safeUrl}" target="_blank" rel="noopener">🔗 קישור מצורף</a>
-          `;
-        }
-      }
-
-      box.innerHTML = `
-        <div class="top">
-          <div>${safeName}</div>
-          <div class="date">${safeDate}</div>
-        </div>
-        <div class="text">${safeText}</div>
-        ${mediaHtml}
-      `;
-      return box;
     }
 
     const STORAGE_KEY = "hasipur_memories_v1";
@@ -898,14 +941,20 @@
     saveLocal.addEventListener("click", () => {
       const name = (memName.value || "").trim();
       const text = (memText.value || "").trim();
-      const mediaUrl = (memMediaUrl.value || "").trim();
 
       if(text.length < 2){
         alert("רשמו לפחות כמה מילים 🙂");
         return;
       }
 
-      const item = { name, text, mediaUrl, date: formatDate(new Date()) };
+      const item = {
+        name,
+        text,
+        date: formatDate(new Date()),
+        mediaDataUrl: pickedFileDataUrl || "",
+        mediaType: pickedFileType || ""
+      };
+
       const arr = loadMemories();
       arr.unshift(item);
       saveMemories(arr);
@@ -914,7 +963,7 @@
 
       memName.value = "";
       memText.value = "";
-      memMediaUrl.value = "";
+      resetFile();
       closeModal();
 
       alert("נשמר! (במכשיר הזה). אם תרצו שזה יופיע לכולם — שלחו אליכם לוואטסאפ.");
@@ -925,7 +974,6 @@
     sendWhatsapp.addEventListener("click", () => {
       const name = (memName.value || "").trim();
       const text = (memText.value || "").trim();
-      const mediaUrl = (memMediaUrl.value || "").trim();
 
       if(text.length < 2){
         alert("רשמו קודם את הזיכרון 🙂");
@@ -934,12 +982,15 @@
 
       const PHONE = "972584869014"; // <-- לשנות כאן
 
+      const hasMedia = !!pickedFileDataUrl;
+      const mediaNote = hasMedia ? "\nיש לי גם תמונה/סרטון מצורף — אצרף ידנית בוואטסאפ." : "";
+
       const msg =
         `שלום, אני רוצה להוסיף זיכרון לדף ההנצחה:\n` +
         `שם: ${name || "ללא"}\n` +
-        `זיכרון: ${text}\n` +
-        (mediaUrl ? `קישור מצורף: ${mediaUrl}\n` : ``) +
-        `\nקישור לדף: ${window.location.href}`;
+        `זיכרון: ${text}` +
+        `${mediaNote}\n\n` +
+        `קישור לדף: ${window.location.href}`;
 
       const url = `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
       window.open(url, "_blank");
