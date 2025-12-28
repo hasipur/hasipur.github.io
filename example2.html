@@ -35,7 +35,7 @@
       padding: 14px 12px 50px;
     }
 
-    /* ===== Topbar (pill left, logo centered, menu right) ===== */
+    /* Top app header (simple) */
     .topbar{
       position:relative;
       display:flex;
@@ -43,6 +43,7 @@
       justify-content:space-between;
       gap:10px;
       padding:10px 4px 14px;
+      direction:ltr; /* כדי ש"שמאל" באמת יהיה שמאל */
     }
 
     .topbar .pill{
@@ -56,122 +57,84 @@
       color:var(--text-soft);
       font-size:13px;
       white-space:nowrap;
-      order:3;          /* כדי שיהיה בצד שמאל ב-RTL */
-      margin-left:auto; /* דוחף שמאלה */
+      direction:rtl;
     }
 
     .topbar .logo{
       position:absolute;
       left:50%;
       transform:translateX(-50%);
-      font-weight:900;           /* יותר בולד */
+      font-weight:900; /* יותר BOLD */
       letter-spacing:2px;
-      font-size:24px;
+      font-size:22px;
       text-align:center;
       white-space:nowrap;
+      direction:rtl;
+      pointer-events:none;
     }
     .topbar .logo span{ color:var(--brand-main); }
 
-    .menuBtn{
-      order:1; /* צד ימין */
-      width:44px;
-      height:44px;
-      border-radius:14px;
-      border:1px solid #ececec;
-      background:#ffffffb8;
-      box-shadow: 0 10px 24px rgba(0,0,0,.08);
-      cursor:pointer;
+    /* hamburger menu */
+    .menuWrap{
+      position:relative;
       display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      direction:rtl;
+    }
+    .menuBtn{
+      appearance:none;
+      border:1px solid #eee;
+      background:#ffffffb8;
+      width:46px;
+      height:46px;
+      border-radius:14px;
+      cursor:pointer;
+      display:inline-flex;
       align-items:center;
       justify-content:center;
-      user-select:none;
+      box-shadow: 0 10px 22px rgba(0,0,0,.10);
     }
-    .burger{
-      width:18px;
-      height:14px;
-      position:relative;
+    .menuBtn:active{ transform:scale(.98); }
+    .menuIcon{
+      font-size:22px;
+      line-height:1;
+      color:#222;
     }
-    .burger span{
+
+    .menuDropdown{
       position:absolute;
-      left:0;
+      top:52px;
       right:0;
-      height:2px;
-      background:#222;
-      border-radius:999px;
-      opacity:.85;
-    }
-    .burger span:nth-child(1){ top:0; }
-    .burger span:nth-child(2){ top:6px; }
-    .burger span:nth-child(3){ top:12px; }
-
-    /* ===== Side Drawer ===== */
-    .drawerBg{
-      position:fixed;
-      inset:0;
-      background: rgba(0,0,0,.35);
-      display:none;
-      z-index:2000;
-    }
-    .drawerBg.open{ display:block; }
-
-    .drawer{
-      position:fixed;
-      top:0;
-      right:0;
-      height:100%;
-      width:min(330px, 86vw);
+      width:220px;
       background:#fff;
-      box-shadow: -20px 0 60px rgba(0,0,0,.22);
-      transform:translateX(110%);
-      transition:transform .22s ease;
-      z-index:2001;
-      display:flex;
-      flex-direction:column;
-    }
-    .drawer.open{ transform:translateX(0); }
-
-    .drawerHead{
-      padding:14px 14px 10px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      border-bottom:1px solid #eee;
-    }
-    .drawerTitle{
-      font-weight:900;
-      font-size:15px;
-    }
-    .drawerClose{
-      border:none;
-      background:transparent;
-      cursor:pointer;
-      font-size:20px;
-      font-weight:900;
-      opacity:.75;
-    }
-    .drawerLinks{
-      padding:10px 10px 18px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-    .drawerLink{
-      text-decoration:none;
-      color:#111;
       border:1px solid #eee;
       border-radius:16px;
-      padding:12px 12px;
+      box-shadow: 0 18px 50px rgba(0,0,0,.18);
+      overflow:hidden;
+      display:none;
+      z-index:9999;
+      direction:rtl;
+    }
+    .menuDropdown.open{ display:block; }
+    .menuItem{
       display:flex;
       align-items:center;
-      justify-content:space-between;
       gap:10px;
-      box-shadow: 0 10px 22px rgba(0,0,0,.06);
+      padding:14px 14px;
+      text-decoration:none;
+      color:#111;
       font-weight:800;
+      border-bottom:1px solid #f1f1f1;
     }
-    .drawerLink .sub{
-      color:#777;
-      font-weight:700;
-      font-size:12px;
+    .menuItem:last-child{ border-bottom:none; }
+    .menuItem:hover{ background:#fafafa; }
+    .menuDot{
+      width:10px;
+      height:10px;
+      border-radius:999px;
+      background:var(--brand-main);
+      flex:0 0 auto;
     }
 
     /* Profile card */
@@ -394,7 +357,7 @@
     /* Media grids */
     .grid{
       display:grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr); /* 2 בכל שורה */
       gap:10px;
     }
     .media{
@@ -413,16 +376,15 @@
       display:block;
     }
 
-    /* ===== Videos grid (2 per row) ===== */
-    .videoGrid{
+    /* Video placeholder */
+    .videoBox{
       display:grid;
-      grid-template-columns: repeat(2, 1fr); /* 50% + 50% */
+      grid-template-columns: repeat(2, 1fr); /* 2 סרטונים בשורה */
       gap:12px;
-      align-items:start;
     }
 
-    /* Lite YouTube (חד + לא מטושטש) */
-    .ytLite{
+    /* iframe responsive */
+    .iframeWrap{
       position:relative;
       width:100%;
       aspect-ratio: 9 / 16;
@@ -431,52 +393,8 @@
       border:1px solid #eee;
       box-shadow: 0 8px 18px rgba(0,0,0,.08);
       background:#000;
-      cursor:pointer;
-      display:block;
     }
-    .ytLite::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background-image: var(--ytbg);
-      background-size:cover;
-      background-position:center;
-      filter: saturate(1.05);
-      transform: scale(1.02);
-    }
-    .ytLite::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background: linear-gradient(to bottom, rgba(0,0,0,.10), rgba(0,0,0,0) 35%, rgba(0,0,0,.18));
-      pointer-events:none;
-    }
-    .ytPlay{
-      position:absolute;
-      inset:auto;
-      left:50%;
-      top:50%;
-      transform:translate(-50%, -50%);
-      width:58px;
-      height:58px;
-      border-radius:50%;
-      background: rgba(255,255,255,.92);
-      box-shadow: 0 18px 44px rgba(0,0,0,.28);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-    .ytPlay span{
-      display:block;
-      width:0;
-      height:0;
-      border-right:0;
-      border-left:18px solid var(--brand-main);
-      border-top:11px solid transparent;
-      border-bottom:11px solid transparent;
-      margin-left:4px;
-    }
-    .ytLite iframe{
+    .iframeWrap iframe{
       position:absolute;
       inset:0;
       width:100%;
@@ -633,17 +551,12 @@
     /* Responsive */
     @media (max-width: 720px){
       .cover{ height: 230px; }
-      .grid{ grid-template-columns: repeat(2, 1fr); }
       .meta .name{ font-size:24px; }
-      .videoGrid{ grid-template-columns: repeat(2, 1fr); } /* עדיין 2 בשורה */
     }
     @media (max-width: 420px){
-      .grid{ grid-template-columns: 1fr; }
       .avatar{ width:96px; height:96px; top:-48px; }
       .meta{ padding-top: 58px; }
-      .tabs{ gap:0; }
-      .videoGrid{ grid-template-columns: repeat(2, 1fr); } /* נשאר 2 בשורה גם בנייד */
-      .topbar .logo{ font-size:22px; }
+      /* משאירים 2 עמודות בתמונות ובסרטונים גם במסכים קטנים */
     }
   </style>
 </head>
@@ -651,15 +564,29 @@
 <body>
   <div class="wrap">
     <div class="topbar">
-      <button class="menuBtn" id="menuBtn" type="button" aria-label="תפריט">
-        <div class="burger" aria-hidden="true">
-          <span></span><span></span><span></span>
-        </div>
-      </button>
+      <!-- שמאל -->
+      <div class="pill">🕯️ דף זיכרון אישי</div>
 
+      <!-- אמצע -->
       <div class="logo">ה<span>ס</span>יפור</div>
 
-      <div class="pill">🕯️ דף זיכרון אישי</div>
+      <!-- ימין -->
+      <div class="menuWrap">
+        <button class="menuBtn" id="menuBtn" type="button" aria-label="תפריט">
+          <span class="menuIcon">≡</span>
+        </button>
+
+        <div class="menuDropdown" id="menuDropdown" aria-hidden="true">
+          <a class="menuItem" href="https://www.hasipur-il.com/products/%D7%91%D7%A8%D7%A7%D7%95%D7%93-%D7%A9%D7%9C-%D7%94%D7%A1%D7%99%D7%A4%D7%95%D7%A8" target="_blank" rel="noopener">
+            <span class="menuDot"></span>
+            לרכישת ברקוד
+          </a>
+          <a class="menuItem" href="https://www.hasipur-il.com/pages/contact" target="_blank" rel="noopener">
+            <span class="menuDot"></span>
+            צרו קשר
+          </a>
+        </div>
+      </div>
     </div>
 
     <div class="card" id="card">
@@ -711,7 +638,6 @@
 
       <!-- Content -->
       <div class="content">
-
         <!-- Life -->
         <section class="section active" id="life">
           <div class="h2">סיפור החיים</div>
@@ -733,25 +659,33 @@
         <!-- Photos -->
         <section class="section" id="photos">
           <div class="h2">תמונות</div>
+
           <div class="grid">
             <div class="media"><img src="img1.jpg.jpeg" alt="תמונה 1"></div>
             <div class="media"><img src="img3.jpg.jpeg" alt="תמונה 2"></div>
           </div>
         </section>
 
-        <!-- Videos (רק יוטיוב + 2 בשורה + טאמבנייל חד) -->
+        <!-- Videos -->
         <section class="section" id="videos">
           <div class="h2">סרטונים</div>
 
-          <div class="videoGrid">
-            <!-- שים כאן עוד div.ytLite לסרטונים נוספים אם תרצה -->
-            <div
-              class="ytLite"
-              data-ytid="HCodwcl2VjA"
-              role="button"
-              tabindex="0"
-              aria-label="נגן סרטון מיוטיוב">
-              <div class="ytPlay" aria-hidden="true"><span></span></div>
+          <div class="videoBox">
+            <div class="iframeWrap" aria-label="סרטון מיוטיוב">
+              <iframe
+                src="https://www.youtube.com/embed/HCodwcl2VjA"
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+            </div>
+
+            <!-- אותו סרטון לידו -->
+            <div class="iframeWrap" aria-label="סרטון מיוטיוב">
+              <iframe
+                src="https://www.youtube.com/embed/HCodwcl2VjA"
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
             </div>
           </div>
         </section>
@@ -830,37 +764,9 @@
             </div>
           </div>
         </section>
-
       </div>
     </div>
   </div>
-
-  <!-- Drawer -->
-  <div class="drawerBg" id="drawerBg" aria-hidden="true"></div>
-  <aside class="drawer" id="drawer" aria-label="תפריט">
-    <div class="drawerHead">
-      <div class="drawerTitle">תפריט</div>
-      <button class="drawerClose" id="drawerClose" type="button" aria-label="סגירה">✕</button>
-    </div>
-
-    <div class="drawerLinks">
-      <a class="drawerLink" href="https://www.hasipur-il.com/products/%D7%91%D7%A8%D7%A7%D7%95%D7%93-%D7%A9%D7%9C-%D7%94%D7%A1%D7%99%D7%A4%D7%95%D7%A8" target="_blank" rel="noopener">
-        <div>
-          לרכישת ברקוד
-          <div class="sub">מעבר לעמוד המוצר</div>
-        </div>
-        <div aria-hidden="true">↗</div>
-      </a>
-
-      <a class="drawerLink" href="https://www.hasipur-il.com/pages/contact" target="_blank" rel="noopener">
-        <div>
-          צרו קשר
-          <div class="sub">וואטסאפ / טופס יצירת קשר</div>
-        </div>
-        <div aria-hidden="true">↗</div>
-      </a>
-    </div>
-  </aside>
 
   <!-- Modal: Add Memory -->
   <div class="modalBg" id="modalBg" aria-hidden="true">
@@ -931,28 +837,6 @@
         prompt("העתיקו את הקישור:", url);
       }
     });
-
-    // ===== Drawer menu =====
-    const menuBtn = document.getElementById("menuBtn");
-    const drawer = document.getElementById("drawer");
-    const drawerBg = document.getElementById("drawerBg");
-    const drawerClose = document.getElementById("drawerClose");
-
-    function openDrawer(){
-      drawer.classList.add("open");
-      drawerBg.classList.add("open");
-      drawerBg.setAttribute("aria-hidden","false");
-    }
-    function closeDrawer(){
-      drawer.classList.remove("open");
-      drawerBg.classList.remove("open");
-      drawerBg.setAttribute("aria-hidden","true");
-    }
-
-    menuBtn.addEventListener("click", openDrawer);
-    drawerClose.addEventListener("click", closeDrawer);
-    drawerBg.addEventListener("click", closeDrawer);
-    document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeDrawer(); });
 
     // ===== Modal =====
     const modalBg = document.getElementById("modalBg");
@@ -1123,32 +1007,31 @@
       window.open(url, "_blank");
     });
 
-    // ===== Lite YouTube (חד, לא מטושטש) =====
-    // משתמשים בתמונת maxresdefault (בדרך כלל הכי חדה). אם אין maxres, יוטיוב יחזיר עדיין תמונה.
-    document.querySelectorAll(".ytLite").forEach(el => {
-      const id = el.getAttribute("data-ytid");
-      el.style.setProperty("--ytbg", `url('https://i.ytimg.com/vi/${id}/maxresdefault.jpg')`);
+    // ===== Menu =====
+    const menuBtn = document.getElementById("menuBtn");
+    const menuDropdown = document.getElementById("menuDropdown");
 
-      function loadIframe(){
-        // החלפה ל-iframe רק כשמקליקים
-        el.innerHTML = `
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0&modestbranding=1"
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-          ></iframe>
-        `;
+    function closeMenu(){
+      menuDropdown.classList.remove("open");
+      menuDropdown.setAttribute("aria-hidden","true");
+    }
+    function toggleMenu(){
+      const isOpen = menuDropdown.classList.contains("open");
+      if(isOpen) closeMenu();
+      else{
+        menuDropdown.classList.add("open");
+        menuDropdown.setAttribute("aria-hidden","false");
       }
+    }
 
-      el.addEventListener("click", loadIframe);
-      el.addEventListener("keydown", (e) => {
-        if(e.key === "Enter" || e.key === " "){
-          e.preventDefault();
-          loadIframe();
-        }
-      });
+    menuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleMenu();
     });
+
+    document.addEventListener("click", () => closeMenu());
+    document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeMenu(); });
+    menuDropdown.addEventListener("click", (e) => e.stopPropagation());
   </script>
 </body>
 </html>
