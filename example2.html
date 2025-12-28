@@ -9,559 +9,866 @@
 
   <style>
     :root{
-      --brand: #ff5757;
+      --brand-main:#ff5757;
       --brand-soft:#ffdede;
-      --ink:#111;
-      --muted:#6b7280;
-      --bg:#f5f6f8;
-      --card:#fff;
-      --line:#e8e8ee;
-      --shadow: 0 18px 40px rgba(0,0,0,.10);
-      --radius: 18px;
-      --radius-lg: 22px;
+      --text-main:#111;
+      --text-soft:#777;
+      --bg:#f4f4f4;
+      --card:#ffffff;
+      --stroke:#eeeeee;
+      --shadow: 0 14px 40px rgba(0,0,0,.10);
+      --radius: 22px;
     }
 
-    *{box-sizing:border-box}
+    *{ box-sizing:border-box; }
     body{
       margin:0;
-      font-family:"Open Sans",sans-serif;
-      background:var(--bg);
-      color:var(--ink);
+      font-family:"Open Sans",system-ui,Arial;
+      background: radial-gradient(circle at top, #ffe3e3, #f2f2f2);
+      color:var(--text-main);
     }
 
-    /* Top bar */
-    .topbar{
-      position: sticky;
-      top:0;
-      z-index:50;
-      background: rgba(255,255,255,.9);
-      backdrop-filter: blur(10px);
-      border-bottom:1px solid var(--line);
+    .wrap{
+      width:100%;
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 14px 12px 50px;
     }
-    .topbar-inner{
-      max-width: 980px;
-      margin:0 auto;
-      padding: 10px 14px;
+
+    /* Top app header (simple) */
+    .topbar{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
+      padding:10px 4px 14px;
     }
-    .left-actions,.right-actions{
-      display:flex; align-items:center; gap:10px;
-    }
-    .icon-btn{
-      width:40px; height:40px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:#fff;
-      display:grid;
-      place-items:center;
-      cursor:pointer;
-      transition:.15s;
-    }
-    .icon-btn:hover{transform: translateY(-1px)}
-    .pill{
-      border:1px solid var(--line);
-      background:#fff;
-      padding:8px 12px;
-      border-radius:999px;
-      font-size:13px;
-      color:var(--ink);
-      cursor:pointer;
-    }
-    .brandmark{
-      display:flex; align-items:center; gap:10px;
-      font-weight:800;
-      letter-spacing:.5px;
-    }
-    .brandmark .logo{
-      width:34px; height:34px;
-      border-radius:10px;
-      background: radial-gradient(circle at 30% 20%, #fff, var(--brand-soft));
-      border:1px solid var(--brand-soft);
-      display:grid;
-      place-items:center;
-      font-weight:900;
-      color:var(--brand);
-    }
-    .brandmark .name{
+    .topbar .logo{
+      font-weight:700;
+      letter-spacing:2px;
       font-size:18px;
     }
-
-    /* Layout */
-    .wrap{
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 14px 14px 40px;
+    .topbar .logo span{ color:var(--brand-main); }
+    .topbar .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:#ffffffb8;
+      border:1px solid var(--brand-soft);
+      color:var(--text-soft);
+      font-size:13px;
+      white-space:nowrap;
     }
 
-    /* Hero card */
-    .hero{
+    /* Profile card */
+    .card{
       background:var(--card);
-      border:1px solid var(--line);
-      border-radius: var(--radius-lg);
-      overflow:hidden;
+      border:1px solid var(--stroke);
+      border-radius: var(--radius);
       box-shadow: var(--shadow);
+      overflow:hidden;
     }
-    .banner{
+
+    /* Cover */
+    .cover{
       position:relative;
-      height: 220px;
-      background: #ddd;
+      height: 270px;
+      background:#ddd;
     }
-    .banner img{
+    .cover img{
       width:100%;
       height:100%;
       object-fit:cover;
       display:block;
-      filter: saturate(1.02);
+    }
+    .cover::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(to bottom, rgba(0,0,0,.18), rgba(0,0,0,0) 45%, rgba(0,0,0,.18));
+      pointer-events:none;
     }
 
-    .profile-row{
+    /* Header section under cover */
+    .profileHead{
       position:relative;
-      padding: 14px 16px 0;
+      padding: 16px 16px 12px;
+      background: #fff;
     }
 
     .avatar{
       position:absolute;
-      left: 18px;
-      top: -56px;
-      width: 112px;
-      height: 112px;
-      border-radius: 999px;
+      left:16px; /* RTL: keep on left like your screenshot circle on right? */
+      right:auto;
+      top:-52px;
+      width:104px;
+      height:104px;
+      border-radius:50%;
       overflow:hidden;
-      border: 5px solid #fff;
-      box-shadow: 0 14px 30px rgba(0,0,0,.18);
-      background:#fff;
+      border:4px solid #fff;
+      box-shadow: 0 10px 26px rgba(0,0,0,.18);
+      background:#eee;
     }
+    /* In RTL, put avatar on the right like screenshot */
+    [dir="rtl"] .avatar{
+      right:16px;
+      left:auto;
+    }
+
     .avatar img{
-      width:100%; height:100%;
+      width:100%;
+      height:100%;
       object-fit:cover;
-      object-position:center;
-      display:block;
     }
 
-    .profile-meta{
-      padding-top: 54px; /* space for avatar overlap on mobile RTL layout */
+    .meta{
+      padding-top: 44px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
     }
 
-    .tiny{
-      color:var(--muted);
+    .meta .small{
+      color:var(--text-soft);
       font-size:13px;
       display:flex;
       align-items:center;
       gap:8px;
-      flex-wrap:wrap;
     }
-
-    .title{
-      margin: 6px 0 2px;
-      font-size: 28px;
-      font-weight: 800;
-      letter-spacing:.2px;
+    .meta .name{
+      font-size:26px;
+      font-weight:800;
+      margin:0;
+      line-height:1.15;
     }
-    .dates{
-      color:var(--muted);
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-    .quote{
-      margin: 10px 0 0;
+    .meta .dates{
       color:#222;
-      font-size: 15px;
-      line-height:1.7;
-      border-right: 3px solid var(--brand);
-      padding-right: 10px;
+      font-size:15px;
+      font-weight:600;
+      opacity:.85;
     }
-
-    .actions{
+    .meta .quote{
+      margin-top:8px;
+      color:#333;
+      font-size:14px;
+      line-height:1.7;
       display:flex;
       gap:10px;
-      padding: 14px 16px 14px;
+      align-items:flex-start;
+    }
+    .meta .quote .qmark{
+      font-size:22px;
+      line-height:1;
+      color:var(--brand-main);
+      font-weight:900;
+      margin-top:2px;
+    }
+
+    /* Actions row */
+    .actions{
+      margin-top: 12px;
+      display:flex;
+      gap:10px;
       flex-wrap:wrap;
     }
     .btn{
-      border-radius: 999px;
-      border:1px solid var(--line);
-      background:#fff;
-      padding: 11px 14px;
-      font-size:14px;
-      font-weight:700;
+      appearance:none;
+      border:none;
       cursor:pointer;
+      border-radius: 999px;
+      padding: 11px 14px;
+      font-weight:700;
+      font-size:14px;
       display:inline-flex;
       align-items:center;
-      gap:10px;
-      transition:.15s;
+      justify-content:center;
+      gap:8px;
+      transition: transform .08s ease, opacity .2s ease;
+      user-select:none;
     }
-    .btn:hover{ transform: translateY(-1px); }
-    .btn.primary{
-      background: var(--brand);
-      border-color: var(--brand);
-      color:#fff;
-    }
-    .btn.ghost{
+    .btn:active{ transform: scale(.98); }
+    .btn.secondary{
       background:#fff;
-      border-color: var(--line);
-      color: var(--ink);
+      border:1px solid #dcdcdc;
+      color:#111;
+    }
+    .btn.primary{
+      background: var(--brand-main);
+      color:#fff;
+      border:1px solid rgba(0,0,0,0);
+    }
+    .btn .icon{
+      width:18px;
+      height:18px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-size:16px;
     }
 
     /* Tabs */
     .tabs{
-      margin-top: 12px;
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius: var(--radius-lg);
-      overflow:hidden;
-      box-shadow: 0 10px 28px rgba(0,0,0,.07);
-    }
-    .tabbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:#fff;
+      border-top:1px solid var(--stroke);
+      border-bottom:1px solid var(--stroke);
       display:flex;
       gap:0;
       overflow:auto;
-      border-bottom:1px solid var(--line);
-      background: #fff;
       -webkit-overflow-scrolling: touch;
     }
     .tab{
-      flex: 0 0 auto;
-      padding: 14px 14px;
+      flex:1 0 auto;
+      padding: 12px 14px;
       font-size:14px;
-      font-weight:800;
-      color: var(--muted);
-      cursor:pointer;
-      border:0;
+      color:#444;
       background:transparent;
-      position:relative;
+      border:none;
+      cursor:pointer;
+      font-weight:700;
+      opacity:.85;
       white-space:nowrap;
+      position:relative;
     }
     .tab.active{
-      color: var(--ink);
+      opacity:1;
+      color:#111;
     }
     .tab.active::after{
       content:"";
       position:absolute;
-      right: 12px;
-      left: 12px;
-      bottom: 0;
-      height: 3px;
-      background: var(--brand);
+      right:14px;
+      left:14px;
+      bottom:0;
+      height:3px;
       border-radius: 999px;
+      background: var(--brand-main);
     }
 
-    .panel{
-      display:none;
-      padding: 16px;
-    }
-    .panel.active{ display:block; }
-
-    /* Content blocks */
-    .section-title{
-      margin: 4px 0 10px;
-      font-size: 18px;
-      font-weight: 800;
-    }
-    .prose{
-      color:#222;
-      font-size:15px;
-      line-height:1.9;
-    }
-    .muted{ color: var(--muted); }
-
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-    }
-    .media-card{
-      border:1px solid var(--line);
-      border-radius: 16px;
-      overflow:hidden;
+    /* Content sections */
+    .content{
+      padding: 14px 16px 18px;
       background:#fff;
     }
-    .media-card img{
+
+    .section{
+      display:none;
+      animation: fade .18s ease;
+    }
+    .section.active{ display:block; }
+
+    @keyframes fade{
+      from{ opacity:.0; transform: translateY(4px); }
+      to{ opacity:1; transform: translateY(0); }
+    }
+
+    .h2{
+      margin: 6px 0 10px;
+      font-size:18px;
+      font-weight:800;
+    }
+
+    .story{
+      font-size:16px;
+      line-height:1.95;
+      color:#222;
+    }
+    .story p{ margin:0 0 12px; }
+
+    /* Media grids */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:10px;
+    }
+    .media{
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid #eee;
+      box-shadow: 0 8px 18px rgba(0,0,0,.08);
+      background:#fff;
+      min-height: 150px;
+      position:relative;
+    }
+    .media img, .media video{
       width:100%;
-      height: 210px;
+      height:100%;
       object-fit:cover;
       display:block;
     }
-    .media-card .cap{
-      padding:10px 12px;
-      font-size:13px;
-      color: var(--muted);
-    }
 
-    .empty{
-      border: 2px dashed var(--brand-soft);
-      border-radius: 16px;
-      padding: 16px;
+    /* Video placeholder */
+    .videoBox{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap:12px;
+    }
+    .videoPh{
+      border:2px dashed var(--brand-soft);
+      border-radius:18px;
+      min-height: 180px;
       background:#fff;
-      color: var(--muted);
-      font-weight:700;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      color:#666;
       text-align:center;
+      padding:16px;
     }
 
-    .list{
+    /* Memories list */
+    .memoriesTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom: 8px;
+    }
+    .note{
+      color:var(--text-soft);
+      font-size:12.5px;
+      line-height:1.5;
+    }
+    .memList{
       display:flex;
       flex-direction:column;
       gap:10px;
+      margin-top: 12px;
     }
-    .note{
-      border:1px solid var(--line);
+    .memItem{
+      border:1px solid #eee;
       border-radius: 16px;
-      background:#fff;
       padding: 12px 12px;
+      background:#fff;
+      box-shadow: 0 8px 18px rgba(0,0,0,.06);
     }
-    .note .who{
+    .memItem .top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      margin-bottom: 6px;
+      color:#333;
       font-weight:800;
-      margin-bottom:6px;
-      font-size:13px;
-    }
-    .note .txt{
-      margin:0;
-      color:#222;
-      line-height:1.7;
       font-size:14px;
     }
+    .memItem .date{
+      font-weight:700;
+      color:#999;
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .memItem .text{
+      color:#222;
+      font-size:14px;
+      line-height:1.75;
+      white-space:pre-wrap;
+    }
 
-    audio{
+    /* Audio & Songs */
+    .audioList{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top: 8px;
+    }
+    .audioItem{
+      border:1px solid #eee;
+      border-radius:16px;
+      padding: 12px;
+      background:#fff;
+      box-shadow: 0 8px 18px rgba(0,0,0,.06);
+    }
+    .audioItem .title{
+      font-weight:900;
+      margin-bottom: 8px;
+    }
+    audio{ width:100%; }
+
+    /* Modal */
+    .modalBg{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,.45);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      z-index:1000;
+    }
+    .modalBg.open{ display:flex; }
+
+    .modal{
       width:100%;
+      max-width: 520px;
+      background:#fff;
+      border-radius: 22px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.25);
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.4);
+    }
+    .modalHead{
+      padding: 14px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      border-bottom:1px solid #eee;
+    }
+    .modalHead .title{
+      font-weight:900;
+      font-size:16px;
+    }
+    .xbtn{
+      border:none;
+      background:transparent;
+      cursor:pointer;
+      font-size:18px;
+      font-weight:900;
+      opacity:.75;
+    }
+    .modalBody{
+      padding: 14px 16px 16px;
+    }
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin-bottom: 12px;
+    }
+    label{
+      font-size:12.5px;
+      color:#444;
+      font-weight:800;
+    }
+    input, textarea{
+      font-family: inherit;
+      border:1px solid #e3e3e3;
+      border-radius: 14px;
+      padding: 11px 12px;
+      font-size:14px;
+      outline:none;
+    }
+    textarea{
+      min-height: 120px;
+      resize: vertical;
+      line-height:1.6;
+    }
+    .modalFoot{
+      padding: 0 16px 16px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
     }
 
     /* Responsive */
-    @media (max-width: 640px){
-      .banner{ height: 190px; }
-      .avatar{
-        left: 14px;
-        width: 104px; height: 104px;
-        top: -52px;
-      }
-      .title{ font-size: 24px; }
+    @media (max-width: 720px){
+      .cover{ height: 230px; }
+      .grid{ grid-template-columns: repeat(2, 1fr); }
+      .videoBox{ grid-template-columns: 1fr; }
+      .meta .name{ font-size:24px; }
+    }
+    @media (max-width: 420px){
       .grid{ grid-template-columns: 1fr; }
-      .media-card img{ height: 230px; }
+      .avatar{ width:96px; height:96px; top:-48px; }
+      .meta{ padding-top: 40px; }
+      .tabs{ gap:0; }
     }
   </style>
 </head>
 
 <body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="pill">🕯️ דף זיכרון אישי</div>
+      <div class="logo">ה<span>ס</span>יפור</div>
+      <div style="width:42px;"></div>
+    </div>
 
-  <div class="topbar">
-    <div class="topbar-inner">
-      <div class="left-actions">
-        <button class="icon-btn" type="button" aria-label="התראות">🔔</button>
-        <button class="pill" type="button">עריכה</button>
+    <div class="card" id="card">
+
+      <!-- Cover -->
+      <div class="cover">
+        <!-- החלף לתמונת הבאנר שלך -->
+        <img src="cover.jpg" alt="באנר משפחתי">
       </div>
 
-      <div class="brandmark" aria-label="הסיפור">
-        <div class="logo">ס</div>
-        <div class="name">הסיפור</div>
+      <!-- Profile head -->
+      <div class="profileHead">
+        <div class="avatar">
+          <!-- תמונת פרופיל עגולה -->
+          <img src="img4.jpg.png" alt="תמונת פרופיל">
+        </div>
+
+        <div class="meta">
+          <div class="small">לזכר</div>
+          <h1 class="name">סבא אליאס ז״ל</h1>
+          <div class="dates">06.08.1946 - 22.07.2022</div>
+
+          <div class="quote">
+            <div class="qmark">״</div>
+            <div>אני גיטרה הרוח מנגן עלי</div>
+          </div>
+
+          <div class="actions">
+            <button class="btn secondary" id="btnShare" type="button">
+              <span class="icon">⤴️</span>
+              שיתוף
+            </button>
+
+            <button class="btn secondary" id="btnAddMemory" type="button">
+              <span class="icon">✍️</span>
+              הוספת זיכרון
+            </button>
+
+            <!-- כפתור "פרטי" הוסר כי אי אפשר לעשות אותו אמיתי בלי מערכת -->
+          </div>
+        </div>
       </div>
 
-      <div class="right-actions">
-        <button class="icon-btn" type="button" aria-label="תפריט">☰</button>
+      <!-- Tabs -->
+      <div class="tabs" id="tabs">
+        <button class="tab active" data-target="life">סיפור חיים</button>
+        <button class="tab" data-target="photos">תמונות</button>
+        <button class="tab" data-target="videos">סרטונים</button>
+        <button class="tab" data-target="memories">זיכרונות</button>
+        <button class="tab" data-target="audio">הקלטות ושירים</button>
+      </div>
+
+      <!-- Content -->
+      <div class="content">
+        <!-- Life -->
+        <section class="section active" id="life">
+          <div class="h2">סיפור החיים</div>
+          <div class="story">
+            <!-- הטקסט שלך -->
+            <p>סבא שלי, שנולד בשנת 1935 בעיר בגדד, היה אדם יוצא דופן – אדם עם לב רחב, נשמה גדולה ואהבה אינסופית למדינת ישראל ולעמו.</p>
+            <p>כבר בילדותו התגלה בו חוש אחריות נדיר – בגיל 11 בלבד יצא לעבוד כחייט. בעזרת העבודה הוא למד את מקצועו, והצליח לפרנס את משפחתו.</p>
+            <p>... (תמשיך פה את כל הטקסט שלך) ...</p>
+            <p><strong>יהי זכרו ברוך ❤️</strong></p>
+          </div>
+        </section>
+
+        <!-- Photos -->
+        <section class="section" id="photos">
+          <div class="h2">תמונות</div>
+
+          <div class="grid">
+            <div class="media"><img src="img1.jpg.jpeg" alt="תמונה 1"></div>
+            <div class="media"><img src="img3.jpg.jpeg" alt="תמונה 2"></div>
+            <div class="media"><img src="img2.jpg.jpeg" alt="תמונה 3"></div>
+            <!-- תוסיף עוד כרטיסים לפי הצורך -->
+          </div>
+        </section>
+
+        <!-- Videos -->
+        <section class="section" id="videos">
+          <div class="h2">סרטונים</div>
+
+          <!-- אם אין סרטונים כרגע - פלייסהולדר -->
+          <div class="videoBox">
+            <div class="videoPh">אפשרות לסרטון<br><span style="font-weight:700;color:#888;font-size:13px;">(תוכל לשים כאן וידאו או קישור ליוטיוב)</span></div>
+            <div class="videoPh">אפשרות לסרטון</div>
+          </div>
+
+          <!-- דוגמה לוידאו מקומי:
+          <div class="media" style="margin-top:12px;">
+            <video controls src="video1.mp4"></video>
+          </div>
+          -->
+        </section>
+
+        <!-- Memories -->
+        <section class="section" id="memories">
+          <div class="memoriesTop">
+            <div>
+              <div class="h2" style="margin:6px 0 4px;">זיכרונות</div>
+              <div class="note">
+                אפשר להוסיף זיכרון בקלות דרך הכפתור למעלה.<br>
+                חשוב: בלי מערכת/שרת, הזיכרון נשמר במכשיר של מי שכתב (וגם אפשר לשלוח אליכם לוואטסאפ).
+              </div>
+            </div>
+
+            <button class="btn primary" type="button" id="btnAddMemory2">
+              <span class="icon">＋</span>
+              הוספת זיכרון
+            </button>
+          </div>
+
+          <div class="memList" id="memList">
+            <!-- דוגמת זיכרון סטטי -->
+            <div class="memItem">
+              <div class="top">
+                <div>משפחת כהן</div>
+                <div class="date">24/12/2025</div>
+              </div>
+              <div class="text">תמיד נזכור את החיוך שלך ואת הלב הענק. תודה על כל רגע. ❤️</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Audio -->
+        <section class="section" id="audio">
+          <div class="h2">הקלטות ושירים</div>
+
+          <div class="audioList">
+            <div class="audioItem">
+              <div class="title">הקלטה 1</div>
+              <audio controls src="audio1.mp3"></audio>
+            </div>
+
+            <div class="audioItem">
+              <div class="title">שיר אהוב</div>
+              <audio controls src="song1.mp3"></audio>
+            </div>
+          </div>
+
+          <div class="note" style="margin-top:10px;">
+            טיפ: אם אין לך MP3, אפשר גם לשים קישור ליוטיוב/ספוטיפיי כטקסט.
+          </div>
+        </section>
       </div>
     </div>
   </div>
 
-  <div class="wrap">
-
-    <section class="hero">
-      <div class="banner">
-        <!-- החלף לבאנר שלך -->
-        <img src="banner.jpg" alt="תמונת באנר">
+  <!-- Modal: Add Memory -->
+  <div class="modalBg" id="modalBg" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="הוספת זיכרון">
+      <div class="modalHead">
+        <div class="title">הוספת זיכרון</div>
+        <button class="xbtn" id="modalClose" type="button">✕</button>
       </div>
 
-      <div class="profile-row">
-        <div class="avatar">
-          <!-- החלף לתמונת פרופיל -->
-          <img src="avatar.jpg" alt="תמונת פרופיל">
+      <div class="modalBody">
+        <div class="field">
+          <label for="memName">שם (לא חובה)</label>
+          <input id="memName" type="text" placeholder="לדוגמה: משפחת לוי">
         </div>
 
-        <div class="profile-meta">
-          <div class="tiny">לזכר</div>
-          <div class="title">שלמה ספקטור</div>
-          <div class="dates">06.08.1946 – 22.07.2022</div>
-          <p class="quote">"אני גיטרה הרוח מנגן עליי"</p>
+        <div class="field">
+          <label for="memText">הזיכרון שלך</label>
+          <textarea id="memText" placeholder="כתבו כמה מילים מהלב..."></textarea>
         </div>
-      </div>
 
-      <div class="actions">
-        <button class="btn ghost" type="button" id="btnPrivate">🔒 הפוך לפרטי</button>
-        <button class="btn ghost" type="button" id="btnShare">↗️ שיתוף</button>
-        <a class="btn primary" href="#memories">🕯️ הוספת זיכרון</a>
-      </div>
-    </section>
-
-    <section class="tabs" aria-label="תוכן הנצחה">
-      <div class="tabbar" role="tablist">
-        <button class="tab active" data-tab="life" role="tab">סיפור חיים</button>
-        <button class="tab" data-tab="photos" role="tab">תמונות</button>
-        <button class="tab" data-tab="videos" role="tab">סרטונים</button>
-        <button class="tab" data-tab="timeline" role="tab">ציר זמן</button>
-        <button class="tab" data-tab="memories" role="tab">זיכרונות</button>
-        <button class="tab" data-tab="audio" role="tab">הקלטות ושירים</button>
-      </div>
-
-      <!-- סיפור חיים -->
-      <div class="panel active" id="life" role="tabpanel">
-        <div class="section-title">סיפור חיים</div>
-        <div class="prose">
-          <p>כאן יהיה הסיפור המלא — אפשר לשים פסקאות, כותרות קצרות, וכל מה שתרצה.</p>
-          <p class="muted">טיפ: תשמור את הטקסט בקובץ אחד ותעדכן לכל נפטר רק נתונים/תמונות.</p>
+        <div class="note" style="margin-top:-4px;">
+          ✳️ בעמוד סטטי: שמירה מקומית = הזיכרון יוצג במכשיר הזה.  
+          אם תרצו שהזיכרון יתווסף לדף לכולם – שלחו אלינו לוואטסאפ.
         </div>
       </div>
 
-      <!-- תמונות -->
-      <div class="panel" id="photos" role="tabpanel">
-        <div class="section-title">תמונות</div>
-        <div class="grid">
-          <div class="media-card">
-            <img src="img1.jpg" alt="תמונה 1">
-            <div class="cap">כיתוב קצר (אופציונלי)</div>
-          </div>
-          <div class="media-card">
-            <img src="img2.jpg" alt="תמונה 2">
-            <div class="cap">כיתוב קצר (אופציונלי)</div>
-          </div>
-          <div class="media-card">
-            <img src="img3.jpg" alt="תמונה 3">
-            <div class="cap">כיתוב קצר (אופציונלי)</div>
-          </div>
-          <div class="media-card">
-            <img src="img4.jpg" alt="תמונה 4">
-            <div class="cap">כיתוב קצר (אופציונלי)</div>
-          </div>
-        </div>
+      <div class="modalFoot">
+        <button class="btn primary" type="button" id="saveLocal">
+          שמירה כאן
+        </button>
+
+        <button class="btn secondary" type="button" id="sendWhatsapp">
+          שליחה לוואטסאפ
+        </button>
+
+        <button class="btn secondary" type="button" id="cancelModal">
+          ביטול
+        </button>
       </div>
-
-      <!-- סרטונים -->
-      <div class="panel" id="videos" role="tabpanel">
-        <div class="section-title">סרטונים</div>
-
-        <!-- אופציה 1: YouTube embed -->
-        <div class="media-card" style="overflow:hidden">
-          <div style="position:relative; padding-top:56.25%;">
-            <iframe
-              title="וידאו"
-              src="https://www.youtube.com/embed/VIDEO_ID"
-              style="position:absolute; inset:0; width:100%; height:100%; border:0;"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen></iframe>
-          </div>
-          <div class="cap">וידאו מהמשפחה (YouTube/Vimeo)</div>
-        </div>
-
-        <div style="height:10px"></div>
-        <div class="empty">אפשר להוסיף עוד סרטונים – פשוט משכפלים בלוק</div>
-      </div>
-
-      <!-- ציר זמן -->
-      <div class="panel" id="timeline" role="tabpanel">
-        <div class="section-title">ציר זמן</div>
-        <div class="list">
-          <div class="note">
-            <div class="who">1946</div>
-            <p class="txt">נולד/ה …</p>
-          </div>
-          <div class="note">
-            <div class="who">1970</div>
-            <p class="txt">חתונה / שירות / עבודה …</p>
-          </div>
-          <div class="note">
-            <div class="who">2022</div>
-            <p class="txt">נפרדנו באהבה…</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- זיכרונות -->
-      <div class="panel" id="memories" role="tabpanel">
-        <div class="section-title" style="scroll-margin-top:90px;">זיכרונות</div>
-
-        <!-- אם אתה רוצה "הוספת זיכרון" בלי התחברות:
-             1) תשים פה כפתור לטופס Google/Typeform
-             2) או נטפליי-פורמס ואז אתה מאשר ומעלה -->
-        <div class="actions" style="padding:0 0 10px; gap:8px;">
-          <a class="btn primary" href="YOUR_FORM_LINK" target="_blank" rel="noopener">➕ הוספת זיכרון</a>
-          <button class="btn ghost" type="button" id="btnCopyLink">🔗 העתק קישור לדף</button>
-        </div>
-
-        <div class="list">
-          <div class="note">
-            <div class="who">יעל כהן</div>
-            <p class="txt">תמיד אזכור את החיוך והלב הטוב. תודה על כל רגע.</p>
-          </div>
-          <div class="note">
-            <div class="who">דניאל לוי</div>
-            <p class="txt">היית השראה אמיתית למשפחה. מתגעגעים בלי סוף.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- הקלטות ושירים -->
-      <div class="panel" id="audio" role="tabpanel">
-        <div class="section-title">הקלטות ושירים</div>
-
-        <div class="note">
-          <div class="who">הקלטה – קול הנפטר</div>
-          <audio controls src="voice.mp3"></audio>
-        </div>
-
-        <div style="height:10px"></div>
-
-        <div class="note">
-          <div class="who">שיר אהוב</div>
-          <audio controls src="song.mp3"></audio>
-        </div>
-
-        <div style="height:10px"></div>
-        <div class="empty">אפשר להוסיף עוד קבצים (mp3) או להטמיע Spotify/YouTube</div>
-      </div>
-    </section>
-
+    </div>
   </div>
 
   <script>
-    // Tabs
-    const tabs = Array.from(document.querySelectorAll(".tab"));
-    const panels = Array.from(document.querySelectorAll(".panel"));
+    // ===== Tabs =====
+    const tabs = document.querySelectorAll(".tab");
+    const sections = document.querySelectorAll(".section");
 
-    function activate(tabId){
-      tabs.forEach(t => t.classList.toggle("active", t.dataset.tab === tabId));
-      panels.forEach(p => p.classList.toggle("active", p.id === tabId));
+    function activateTab(targetId){
+      tabs.forEach(t => t.classList.toggle("active", t.dataset.target === targetId));
+      sections.forEach(s => s.classList.toggle("active", s.id === targetId));
     }
 
-    tabs.forEach(btn => {
-      btn.addEventListener("click", () => activate(btn.dataset.tab));
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        activateTab(tab.dataset.target);
+        // smooth scroll to tabs top
+        document.getElementById("tabs").scrollIntoView({behavior:"smooth", block:"start"});
+      });
     });
 
-    // Share
-    document.getElementById("btnShare").addEventListener("click", async () => {
+    // ===== Share =====
+    const btnShare = document.getElementById("btnShare");
+    btnShare.addEventListener("click", async () => {
       const url = window.location.href;
+
+      // Web Share API (mobile)
+      if (navigator.share) {
+        try{
+          await navigator.share({
+            title: document.title,
+            text: "דף זיכרון",
+            url
+          });
+          return;
+        } catch(e){}
+      }
+
+      // fallback: copy to clipboard
       try{
-        if (navigator.share){
-          await navigator.share({ title: document.title, url });
-        } else {
-          await navigator.clipboard.writeText(url);
-          alert("הקישור הועתק ✅");
-        }
+        await navigator.clipboard.writeText(url);
+        alert("הקישור הועתק ללוח!");
       } catch(e){
-        // user canceled share
+        prompt("העתיקו את הקישור:", url);
       }
     });
 
-    // Copy link
-    document.getElementById("btnCopyLink").addEventListener("click", async () => {
+    // ===== Modal =====
+    const modalBg = document.getElementById("modalBg");
+    const openers = [document.getElementById("btnAddMemory"), document.getElementById("btnAddMemory2")];
+    const modalClose = document.getElementById("modalClose");
+    const cancelModal = document.getElementById("cancelModal");
+    const memName = document.getElementById("memName");
+    const memText = document.getElementById("memText");
+
+    function openModal(){
+      modalBg.classList.add("open");
+      modalBg.setAttribute("aria-hidden", "false");
+      memText.focus();
+    }
+    function closeModal(){
+      modalBg.classList.remove("open");
+      modalBg.setAttribute("aria-hidden", "true");
+    }
+
+    openers.forEach(btn => btn.addEventListener("click", () => {
+      // move to memories tab and open modal
+      activateTab("memories");
+      document.getElementById("tabs").scrollIntoView({behavior:"smooth", block:"start"});
+      setTimeout(openModal, 220);
+    }));
+
+    modalClose.addEventListener("click", closeModal);
+    cancelModal.addEventListener("click", closeModal);
+    modalBg.addEventListener("click", (e) => { if(e.target === modalBg) closeModal(); });
+    document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeModal(); });
+
+    // ===== Memories (LocalStorage) =====
+    const memList = document.getElementById("memList");
+    const saveLocal = document.getElementById("saveLocal");
+
+    function formatDate(d){
+      const dd = String(d.getDate()).padStart(2,'0');
+      const mm = String(d.getMonth()+1).padStart(2,'0');
+      const yyyy = d.getFullYear();
+      return `${dd}/${mm}/${yyyy}`;
+    }
+
+    function renderMemoryItem(item){
+      const box = document.createElement("div");
+      box.className = "memItem";
+      box.innerHTML = `
+        <div class="top">
+          <div>${escapeHtml(item.name || "אורח/ת")}</div>
+          <div class="date">${escapeHtml(item.date)}</div>
+        </div>
+        <div class="text">${escapeHtml(item.text)}</div>
+      `;
+      return box;
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    const STORAGE_KEY = "hasipur_memories_v1";
+
+    function loadMemories(){
       try{
-        await navigator.clipboard.writeText(window.location.href);
-        alert("הקישור הועתק ✅");
-      } catch(e){
-        alert("לא הצלחתי להעתיק. אפשר להעתיק ידנית משורת הכתובת.");
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return [];
+        const arr = JSON.parse(raw);
+        if(!Array.isArray(arr)) return [];
+        return arr;
+      }catch(e){
+        return [];
       }
+    }
+
+    function saveMemories(arr){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+    }
+
+    function paintSavedMemories(){
+      const arr = loadMemories();
+      if(!arr.length) return;
+
+      // Add a separator note (optional)
+      const sep = document.createElement("div");
+      sep.className = "note";
+      sep.style.marginTop = "10px";
+      sep.textContent = "זיכרונות שנשמרו במכשיר הזה:";
+      memList.appendChild(sep);
+
+      arr.forEach(item => {
+        memList.appendChild(renderMemoryItem(item));
+      });
+    }
+
+    paintSavedMemories();
+
+    saveLocal.addEventListener("click", () => {
+      const name = (memName.value || "").trim();
+      const text = (memText.value || "").trim();
+
+      if(text.length < 2){
+        alert("רשמו לפחות כמה מילים 🙂");
+        return;
+      }
+
+      const item = { name, text, date: formatDate(new Date()) };
+      const arr = loadMemories();
+      arr.unshift(item);
+      saveMemories(arr);
+
+      // show immediately (under the saved separator or at end)
+      // simplest: reload section UI by appending after current content
+      memList.appendChild(renderMemoryItem(item));
+
+      memName.value = "";
+      memText.value = "";
+      closeModal();
+
+      alert("נשמר! (במכשיר הזה). אם תרצו שזה יופיע לכולם — שלחו אליכם לוואטסאפ.");
     });
 
-    // Private button (דמו בלבד)
-    document.getElementById("btnPrivate").addEventListener("click", () => {
-      alert("ב־GitHub Pages אין 'פרטי' אמיתי בלי מערכת. אם תרצה — אראה לך איך עושים 'פרטי' עם קישור סודי/סיסמה דרך שירות חיצוני.");
+    // ===== WhatsApp send =====
+    const sendWhatsapp = document.getElementById("sendWhatsapp");
+    sendWhatsapp.addEventListener("click", () => {
+      const name = (memName.value || "").trim();
+      const text = (memText.value || "").trim();
+
+      if(text.length < 2){
+        alert("רשמו קודם את הזיכרון 🙂");
+        return;
+      }
+
+      // ❗ החלף למספר שלך בפורמט בינלאומי (ישראל: 972 ואז בלי 0 בהתחלה)
+      // לדוגמה: 972501234567
+      const PHONE = "972584869014"; // <-- לשנות כאן
+
+      const msg =
+        `שלום, אני רוצה להוסיף זיכרון לדף ההנצחה:\n` +
+        `שם: ${name || "ללא"}\n` +
+        `זיכרון: ${text}\n\n` +
+        `קישור לדף: ${window.location.href}`;
+
+      const url = `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
+      window.open(url, "_blank");
     });
   </script>
 </body>
