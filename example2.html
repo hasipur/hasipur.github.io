@@ -302,11 +302,12 @@
       min-height: 150px;
       position:relative;
     }
-    .media img, .media video{
+    .media img, .media video, .media iframe{
       width:100%;
       height:100%;
       object-fit:cover;
       display:block;
+      border:0;
     }
 
     /* Video placeholder */
@@ -503,14 +504,12 @@
 
       <!-- Cover -->
       <div class="cover">
-        <!-- החזרתי באנר לתמונה אמיתית (כמו שהיה) -->
         <img src="img1.jpg.jpeg" alt="באנר משפחתי">
       </div>
 
       <!-- Profile head -->
       <div class="profileHead">
         <div class="avatar">
-          <!-- תמונת פרופיל עגולה -->
           <img src="img4.jpg.png" alt="תמונת פרופיל">
         </div>
 
@@ -534,8 +533,6 @@
               <span class="icon">✍️</span>
               הוספת זיכרון
             </button>
-
-            <!-- כפתור "פרטי" הוסר כי אי אפשר לעשות אותו אמיתי בלי מערכת -->
           </div>
         </div>
       </div>
@@ -557,25 +554,15 @@
           <div class="h2">סיפור החיים</div>
           <div class="story">
             <p>סבא שלי, שנולד בשנת 1935 בעיר בגדד, היה אדם יוצא דופן – אדם עם לב רחב, נשמה גדולה ואהבה אינסופית למדינת ישראל ולעמו. הוא נולד למשפחה חמה ומלוכדת, עם שישה אחים, וגדל בבית פשוט אך מלא באהבה, שמחה ומוזיקה עיראקית.</p>
-
             <p>כבר בילדותו התגלה בו חוש אחריות נדיר – בגיל 11 בלבד יצא לעבוד כחייט. בעזרת העבודה הוא למד את מקצועו, והצליח לפרנס את משפחתו.</p>
-
             <p>מלבד עבודתו, סבא אהב לשחק שש-בש – והוא היה פשוט תותח בזה! שעות על גבי שעות היה יושב עם חברים, מחייך את החיוך הרחב שלו ומנצח אחד אחרי השני. הצבע האהוב עליו היה צהוב – צבע של אור, שמחה ואופטימיות, ממש כמו האישיות שלו.</p>
-
             <p>בשנת 1951, כשהיה בן 16, עלה לארץ ישראל יחד עם משפחתו. עם הגיעם, שיכנו אותם באוהלים בעלייה – שם חיו בתנאים קשים, ללא חשמל, כשהם מדליקים פנס שעובד על נפט כדי להאיר את הלילות הארוכים.</p>
-
             <p>משם נדדו מפרדס חנה לכפר סבא, וגם שם חיו באוהלים, עד שבסופו של דבר הגיעו לשכונת התקווה בתל אביב – המקום שבו סוף סוף מצאו בית אמיתי.</p>
-
             <p>במהלך השנים סבא למד נהיגה, והחל לעבוד כנהג מונית – מקצוע שאהב מאוד, ושאפשר לו לפגוש אנשים, לשוחח, ולחלוק את חוכמת החיים שלו עם כל נוסע.</p>
-
             <p>לאחר שעלָה לארץ, סבא גם פגש והתאהב באישה מדהימה – סבתא שלי – שגם היא עלתה מעיראק. יחד הם הקימו בית חם ומלא אור, גידלו ילדים לתפארת, והניחו יסודות למשפחה גדולה, גאה וישראלית.</p>
-
             <p>סבא השתתף בכל מלחמות ישראל, ובכל פעם שנדרש – עמד בגאווה לצד חבריו לנשק, מתוך תחושת שליחות עמוקה ואמונה בצדקת הדרך. הוא היה פטריוט אמיתי – כזה שלא רק דיבר על אהבת הארץ, אלא חי אותה, נשם אותה, ונתן לה את כל כולו.</p>
-
             <p>מי שזכה להכיר את סבא, ידע שמדובר באדם נדיר: איש של ערכים, של יושר, של עבודה קשה, ושל אהבה עצומה למשפחתו. הוא תמיד היה שם בשביל כולם – עם חיוך, עצה טובה, ולב רחב שלא ידע גבולות.</p>
-
             <p>סבא שלי נפטר בתאריך כ"ד בתשרי תשפ"א, ונקבר בבית העלמין ירקון שבתל אביב. גם היום, כשהוא כבר לא איתנו בגוף, הרוח שלו מלווה אותנו בכל יום מחדש – ברגעים הקטנים, בצחוק של הנכדים, בשירים של יום העצמאות, ובאהבה האינסופית לארץ הזאת שהוא כה אהב.</p>
-
             <p><strong>יהי זכרו ברוך ❤️</strong></p>
           </div>
         </section>
@@ -583,11 +570,10 @@
         <!-- Photos -->
         <section class="section" id="photos">
           <div class="h2">תמונות</div>
-
           <div class="grid">
             <div class="media"><img src="img1.jpg.jpeg" alt="תמונה 1"></div>
             <div class="media"><img src="img3.jpg.jpeg" alt="תמונה 2"></div>
-            <!-- תוסיף עוד כרטיסים לפי הצורך -->
+            <div class="media"><img src="img2.jpg.jpeg" alt="תמונה 3"></div>
           </div>
         </section>
 
@@ -595,10 +581,22 @@
         <section class="section" id="videos">
           <div class="h2">סרטונים</div>
 
-          <!-- אם אין סרטונים כרגע - פלייסהולדר -->
           <div class="videoBox">
-            <div class="videoPh">אפשרות לסרטון<br><span style="font-weight:700;color:#888;font-size:13px;">(תוכל לשים כאן וידאו או קישור ליוטיוב)</span></div>
-            <div class="videoPh">אפשרות לסרטון</div>
+            <!-- וידאו מתוך GitHub Pages -->
+            <div class="media" style="min-height:260px;">
+              <video controls playsinline preload="metadata"
+                src="https://hasipur.github.io/%D7%A1%D7%99%D7%95%D7%9E%D7%AA%20%D7%A9%D7%99%D7%95%D7%A7.mp4"></video>
+            </div>
+
+            <!-- יוטיוב שורטס (Embed) -->
+            <div class="media" style="min-height:260px;">
+              <iframe
+                src="https://www.youtube.com/embed/HCodwcl2VjA"
+                title="YouTube video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>
           </div>
         </section>
 
@@ -620,10 +618,8 @@
           </div>
 
           <div class="memList" id="memList">
-            <!-- כותרת לזיכרונות הציבוריים -->
             <div class="note" style="margin-top:10px;">זיכרונות שנשמרו לכולם:</div>
 
-            <!-- דוגמת זיכרון סטטי -->
             <div class="memItem">
               <div class="top">
                 <div>משפחת כהן</div>
@@ -665,7 +661,7 @@
 
           <button class="btn secondary" type="button" id="sendWhatsappSongs" style="margin-top:10px;">
             <span class="icon">💬</span>
-            שליחה לוואטסאפ
+            שליחה לוואצאפ
           </button>
 
           <div class="audioList">
@@ -699,7 +695,7 @@
         </div>
 
         <div class="note" style="margin-top:-4px;">
-         הכפתור "שמירה כאן" - יבצע שמירה לזיכרון רק במכשיר הזה | הכפתור "שליחה לוואטסאפ" - ישלח לנו את הזיכרון ונוסיף אותו באופן ציבורי לכולם.
+          ✳️ הכפתור "שמירה כאן" - יבצע שמירה לזיכרון רק במכשיר הזה | הכפתור "שליחה לוואטסאפ" - ישלח לנו את הזיכרון ונוסיף אותו באופן ציבורי לכולם.
         </div>
       </div>
 
@@ -732,7 +728,6 @@
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
         activateTab(tab.dataset.target);
-        // smooth scroll to tabs top
         document.getElementById("tabs").scrollIntoView({behavior:"smooth", block:"start"});
       });
     });
@@ -742,7 +737,6 @@
     btnShare.addEventListener("click", async () => {
       const url = window.location.href;
 
-      // Web Share API (mobile)
       if (navigator.share) {
         try{
           await navigator.share({
@@ -754,7 +748,6 @@
         } catch(e){}
       }
 
-      // fallback: copy to clipboard
       try{
         await navigator.clipboard.writeText(url);
         alert("הקישור הועתק ללוח!");
@@ -782,7 +775,6 @@
     }
 
     openers.forEach(btn => btn.addEventListener("click", () => {
-      // move to memories tab and open modal
       activateTab("memories");
       document.getElementById("tabs").scrollIntoView({behavior:"smooth", block:"start"});
       setTimeout(openModal, 220);
@@ -848,7 +840,6 @@
       const arr = loadMemories();
       if(!arr.length) return;
 
-      // Add a separator note (optional)
       const sep = document.createElement("div");
       sep.className = "note";
       sep.style.marginTop = "10px";
@@ -896,8 +887,6 @@
         return;
       }
 
-      // ❗ החלף למספר שלך בפורמט בינלאומי (ישראל: 972 ואז בלי 0 בהתחלה)
-      // לדוגמה: 972501234567
       const PHONE = "972584869014"; // <-- לשנות כאן
 
       const msg =
@@ -911,7 +900,7 @@
     });
 
     // ===== WhatsApp send (Recordings & Songs) =====
-    const PHONE = "972584869014"; // <-- אותו מספר כמו בזיכרונות (לשנות כאן אם צריך)
+    const PHONE = "972584869014";
 
     const sendWhatsappRecordings = document.getElementById("sendWhatsappRecordings");
     sendWhatsappRecordings.addEventListener("click", () => {
