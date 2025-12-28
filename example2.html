@@ -573,7 +573,6 @@
           <div class="grid">
             <div class="media"><img src="img1.jpg.jpeg" alt="תמונה 1"></div>
             <div class="media"><img src="img3.jpg.jpeg" alt="תמונה 2"></div>
-            <div class="media"><img src="img2.jpg.jpeg" alt="תמונה 3"></div>
           </div>
         </section>
 
@@ -581,24 +580,25 @@
         <section class="section" id="videos">
           <div class="h2">סרטונים</div>
 
-          <div class="videoBox">
-            <!-- וידאו מתוך GitHub Pages -->
-            <div class="media" style="min-height:260px;">
-              <video controls playsinline preload="metadata"
-                src="https://hasipur.github.io/%D7%A1%D7%99%D7%95%D7%9E%D7%AA%20%D7%A9%D7%99%D7%95%D7%A7.mp4"></video>
-            </div>
+<!-- YouTube Shorts (מוטמע בתוך הדף, לא לוקח לך מקום בגיטהאב) -->
+<div class="media" style="aspect-ratio:9/16; min-height:auto;">
+  <iframe
+    style="width:100%; height:100%; border:0;"
+    src="https://www.youtube.com/embed/HCodwcl2VjA"
+    title="YouTube video"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+  </iframe>
+</div>
 
-            <!-- יוטיוב שורטס (Embed) -->
-            <div class="media" style="min-height:260px;">
-              <iframe
-                src="https://www.youtube.com/embed/HCodwcl2VjA"
-                title="YouTube video"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen>
-              </iframe>
-            </div>
-          </div>
-        </section>
+<!-- MP4 מהגיטהאב (כן לוקח מקום/משקל כי זה קובץ אצלך) -->
+<div class="media">
+  <video controls playsinline preload="metadata" style="width:100%; height:100%; object-fit:cover;">
+    <source src="PUT_YOUR_RAW_URL_HERE.mp4" type="video/mp4">
+    הדפדפן לא תומך בניגון וידאו.
+  </video>
+</div>
+
 
         <!-- Memories -->
         <section class="section" id="memories">
