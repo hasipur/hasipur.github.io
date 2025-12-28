@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>הסיפור - דף הנצחה</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -37,14 +37,22 @@
 
     /* Top app header (simple) */
     .topbar{
-      position:relative;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
       padding:10px 4px 14px;
-      direction:ltr; /* כדי ש"שמאל" באמת יהיה שמאל */
+      position:relative;
     }
+    .topbar .logo{
+      font-weight:900;              /* יותר bold */
+      letter-spacing:2px;
+      font-size:22px;
+      text-align:center;            /* באמצע */
+      white-space:nowrap;
+      flex:1;                       /* כדי להיות במרכז */
+    }
+    .topbar .logo span{ color:var(--brand-main); }
 
     .topbar .pill{
       display:inline-flex;
@@ -57,84 +65,118 @@
       color:var(--text-soft);
       font-size:13px;
       white-space:nowrap;
-      direction:rtl;
+
+      /* להזיז לצד שמאל (כמו שביקשת) */
+      margin-right:auto;
     }
 
-    .topbar .logo{
-      position:absolute;
-      left:50%;
-      transform:translateX(-50%);
-      font-weight:900; /* יותר BOLD */
-      letter-spacing:2px;
-      font-size:22px;
-      text-align:center;
-      white-space:nowrap;
-      direction:rtl;
-      pointer-events:none;
-    }
-    .topbar .logo span{ color:var(--brand-main); }
-
-    /* hamburger menu */
-    .menuWrap{
-      position:relative;
-      display:flex;
-      align-items:center;
-      justify-content:flex-end;
-      direction:rtl;
-    }
+    /* Menu button (top-right) */
     .menuBtn{
       appearance:none;
-      border:1px solid #eee;
-      background:#ffffffb8;
-      width:46px;
-      height:46px;
-      border-radius:14px;
+      border:none;
       cursor:pointer;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      box-shadow: 0 10px 22px rgba(0,0,0,.10);
-    }
-    .menuBtn:active{ transform:scale(.98); }
-    .menuIcon{
-      font-size:22px;
-      line-height:1;
-      color:#222;
-    }
-
-    .menuDropdown{
-      position:absolute;
-      top:52px;
-      right:0;
-      width:220px;
-      background:#fff;
-      border:1px solid #eee;
-      border-radius:16px;
-      box-shadow: 0 18px 50px rgba(0,0,0,.18);
-      overflow:hidden;
-      display:none;
-      z-index:9999;
-      direction:rtl;
-    }
-    .menuDropdown.open{ display:block; }
-    .menuItem{
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      background:#ffffffcc;
+      border:1px solid #f0f0f0;
+      box-shadow: 0 10px 24px rgba(0,0,0,.10);
       display:flex;
       align-items:center;
+      justify-content:center;
+      flex:0 0 auto;
+    }
+    .menuBtn .bars{
+      width:18px;
+      height:12px;
+      position:relative;
+      display:block;
+    }
+    .menuBtn .bars::before,
+    .menuBtn .bars::after,
+    .menuBtn .bars span{
+      content:"";
+      position:absolute;
+      left:0; right:0;
+      height:2px;
+      background:#333;
+      border-radius:999px;
+    }
+    .menuBtn .bars::before{ top:0; }
+    .menuBtn .bars span{ top:5px; }
+    .menuBtn .bars::after{ bottom:0; }
+
+    /* Drawer */
+    .drawerBg{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,.35);
+      display:none;
+      z-index:1200;
+    }
+    .drawerBg.open{ display:block; }
+
+    .drawer{
+      position:fixed;
+      top:0;
+      right:0;
+      height:100%;
+      width:min(320px, 86vw);
+      background:#fff;
+      box-shadow: -20px 0 60px rgba(0,0,0,.22);
+      transform: translateX(100%);
+      transition: transform .22s ease;
+      z-index:1300;
+      padding:14px 14px 18px;
+    }
+    .drawer.open{ transform: translateX(0); }
+
+    .drawerHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
       gap:10px;
-      padding:14px 14px;
+      padding:6px 4px 10px;
+      border-bottom:1px solid #eee;
+      margin-bottom:10px;
+    }
+    .drawerTitle{
+      font-weight:900;
+      font-size:15px;
+      color:#111;
+    }
+    .drawerClose{
+      border:none;
+      background:transparent;
+      cursor:pointer;
+      font-size:20px;
+      font-weight:900;
+      opacity:.8;
+    }
+    .drawerLinks{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      padding-top:8px;
+    }
+    .drawerLinks a{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:12px 12px;
+      border:1px solid #eee;
+      border-radius:14px;
       text-decoration:none;
       color:#111;
       font-weight:800;
-      border-bottom:1px solid #f1f1f1;
+      background:#fff;
     }
-    .menuItem:last-child{ border-bottom:none; }
-    .menuItem:hover{ background:#fafafa; }
-    .menuDot{
-      width:10px;
-      height:10px;
-      border-radius:999px;
-      background:var(--brand-main);
-      flex:0 0 auto;
+    .drawerLinks a:active{ transform: scale(.99); }
+    .drawerLinks .hint{
+      color:#777;
+      font-weight:700;
+      font-size:12.5px;
     }
 
     /* Profile card */
@@ -357,7 +399,7 @@
     /* Media grids */
     .grid{
       display:grid;
-      grid-template-columns: repeat(2, 1fr); /* 2 בכל שורה */
+      grid-template-columns: repeat(3, 1fr);
       gap:10px;
     }
     .media{
@@ -376,11 +418,12 @@
       display:block;
     }
 
-    /* Video placeholder */
-    .videoBox{
+    /* Videos grid (2 per row) */
+    .videoGrid{
       display:grid;
-      grid-template-columns: repeat(2, 1fr); /* 2 סרטונים בשורה */
+      grid-template-columns: repeat(2, 1fr);
       gap:12px;
+      align-items:start;
     }
 
     /* iframe responsive */
@@ -551,12 +594,15 @@
     /* Responsive */
     @media (max-width: 720px){
       .cover{ height: 230px; }
+      .grid{ grid-template-columns: repeat(2, 1fr); } /* 2 בכל שורה */
       .meta .name{ font-size:24px; }
     }
     @media (max-width: 420px){
+      .grid{ grid-template-columns: repeat(2, 1fr); } /* להשאיר 2 בכל שורה גם במובייל */
+      .videoGrid{ grid-template-columns: repeat(2, 1fr); } /* 2 בשורה גם כאן */
       .avatar{ width:96px; height:96px; top:-48px; }
       .meta{ padding-top: 58px; }
-      /* משאירים 2 עמודות בתמונות ובסרטונים גם במסכים קטנים */
+      .tabs{ gap:0; }
     }
   </style>
 </head>
@@ -564,29 +610,13 @@
 <body>
   <div class="wrap">
     <div class="topbar">
-      <!-- שמאל -->
       <div class="pill">🕯️ דף זיכרון אישי</div>
 
-      <!-- אמצע -->
       <div class="logo">ה<span>ס</span>יפור</div>
 
-      <!-- ימין -->
-      <div class="menuWrap">
-        <button class="menuBtn" id="menuBtn" type="button" aria-label="תפריט">
-          <span class="menuIcon">≡</span>
-        </button>
-
-        <div class="menuDropdown" id="menuDropdown" aria-hidden="true">
-          <a class="menuItem" href="https://www.hasipur-il.com/products/%D7%91%D7%A8%D7%A7%D7%95%D7%93-%D7%A9%D7%9C-%D7%94%D7%A1%D7%99%D7%A4%D7%95%D7%A8" target="_blank" rel="noopener">
-            <span class="menuDot"></span>
-            לרכישת ברקוד
-          </a>
-          <a class="menuItem" href="https://www.hasipur-il.com/pages/contact" target="_blank" rel="noopener">
-            <span class="menuDot"></span>
-            צרו קשר
-          </a>
-        </div>
-      </div>
+      <button class="menuBtn" id="menuBtn" type="button" aria-label="תפריט">
+        <span class="bars"><span></span></span>
+      </button>
     </div>
 
     <div class="card" id="card">
@@ -670,11 +700,13 @@
         <section class="section" id="videos">
           <div class="h2">סרטונים</div>
 
-          <div class="videoBox">
+          <!-- רק יוטיוב + להציג 2 בשורה -->
+          <div class="videoGrid">
             <div class="iframeWrap" aria-label="סרטון מיוטיוב">
               <iframe
-                src="https://www.youtube.com/embed/HCodwcl2VjA"
+                src="https://www.youtube.com/embed/HCodwcl2VjA?playsinline=1&rel=0&modestbranding=1&vq=hd1080"
                 title="YouTube video player"
+                loading="lazy"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen></iframe>
             </div>
@@ -682,8 +714,9 @@
             <!-- אותו סרטון לידו -->
             <div class="iframeWrap" aria-label="סרטון מיוטיוב">
               <iframe
-                src="https://www.youtube.com/embed/HCodwcl2VjA"
+                src="https://www.youtube.com/embed/HCodwcl2VjA?playsinline=1&rel=0&modestbranding=1&vq=hd1080"
                 title="YouTube video player"
+                loading="lazy"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen></iframe>
             </div>
@@ -768,6 +801,25 @@
     </div>
   </div>
 
+  <!-- Drawer -->
+  <div class="drawerBg" id="drawerBg" aria-hidden="true"></div>
+  <aside class="drawer" id="drawer" aria-label="תפריט">
+    <div class="drawerHead">
+      <div class="drawerTitle">אפשרויות</div>
+      <button class="drawerClose" id="drawerClose" type="button" aria-label="סגירה">✕</button>
+    </div>
+    <div class="drawerLinks">
+      <a href="https://www.hasipur-il.com/products/%D7%91%D7%A8%D7%A7%D7%95%D7%93-%D7%A9%D7%9C-%D7%94%D7%A1%D7%99%D7%A4%D7%95%D7%A8" target="_blank" rel="noopener">
+        <span>לרכישת ברקוד</span>
+        <span class="hint">↗</span>
+      </a>
+      <a href="https://www.hasipur-il.com/pages/contact" target="_blank" rel="noopener">
+        <span>צרו קשר</span>
+        <span class="hint">↗</span>
+      </a>
+    </div>
+  </aside>
+
   <!-- Modal: Add Memory -->
   <div class="modalBg" id="modalBg" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-label="הוספת זיכרון">
@@ -794,9 +846,17 @@
       </div>
 
       <div class="modalFoot">
-        <button class="btn primary" type="button" id="saveLocal">שמירה כאן</button>
-        <button class="btn secondary" type="button" id="sendWhatsapp">שליחה לוואטסאפ</button>
-        <button class="btn secondary" type="button" id="cancelModal">ביטול</button>
+        <button class="btn primary" type="button" id="saveLocal">
+          שמירה כאן
+        </button>
+
+        <button class="btn secondary" type="button" id="sendWhatsapp">
+          שליחה לוואטסאפ
+        </button>
+
+        <button class="btn secondary" type="button" id="cancelModal">
+          ביטול
+        </button>
       </div>
     </div>
   </div>
@@ -838,6 +898,27 @@
       }
     });
 
+    // ===== Drawer =====
+    const menuBtn = document.getElementById("menuBtn");
+    const drawer = document.getElementById("drawer");
+    const drawerBg = document.getElementById("drawerBg");
+    const drawerClose = document.getElementById("drawerClose");
+
+    function openDrawer(){
+      drawer.classList.add("open");
+      drawerBg.classList.add("open");
+      drawerBg.setAttribute("aria-hidden","false");
+    }
+    function closeDrawer(){
+      drawer.classList.remove("open");
+      drawerBg.classList.remove("open");
+      drawerBg.setAttribute("aria-hidden","true");
+    }
+
+    menuBtn.addEventListener("click", openDrawer);
+    drawerClose.addEventListener("click", closeDrawer);
+    drawerBg.addEventListener("click", closeDrawer);
+
     // ===== Modal =====
     const modalBg = document.getElementById("modalBg");
     const openers = [document.getElementById("btnAddMemory"), document.getElementById("btnAddMemory2")];
@@ -865,7 +946,12 @@
     modalClose.addEventListener("click", closeModal);
     cancelModal.addEventListener("click", closeModal);
     modalBg.addEventListener("click", (e) => { if(e.target === modalBg) closeModal(); });
-    document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeModal(); });
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape"){
+        closeModal();
+        closeDrawer();
+      }
+    });
 
     // ===== Memories (LocalStorage) =====
     const memList = document.getElementById("memList");
@@ -1006,32 +1092,6 @@
       const url = `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
       window.open(url, "_blank");
     });
-
-    // ===== Menu =====
-    const menuBtn = document.getElementById("menuBtn");
-    const menuDropdown = document.getElementById("menuDropdown");
-
-    function closeMenu(){
-      menuDropdown.classList.remove("open");
-      menuDropdown.setAttribute("aria-hidden","true");
-    }
-    function toggleMenu(){
-      const isOpen = menuDropdown.classList.contains("open");
-      if(isOpen) closeMenu();
-      else{
-        menuDropdown.classList.add("open");
-        menuDropdown.setAttribute("aria-hidden","false");
-      }
-    }
-
-    menuBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      toggleMenu();
-    });
-
-    document.addEventListener("click", () => closeMenu());
-    document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeMenu(); });
-    menuDropdown.addEventListener("click", (e) => e.stopPropagation());
   </script>
 </body>
 </html>
