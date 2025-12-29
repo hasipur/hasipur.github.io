@@ -330,14 +330,44 @@
       font-size:16px;
     }
 
-    /* === ADDED: Memorial Plaque CTA button === */
-    .btn.plaque{
-      background:#ff6b6b;
+    /* === ADDED: Floating Memorial Plaque CTA (bottom-right) === */
+    .plaqueFloat{
+      position:fixed;
+      right:22px;
+      bottom:22px;
+      z-index:950; /* below modal (1000), above page */
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+
+      padding: 12px 16px;
+      border-radius: 999px;
+
+      background: #ff6b6b;
       color:#fff;
-      border:1px solid rgba(0,0,0,0);
-      box-shadow: 0 10px 24px rgba(255,87,87,.25);
+
+      font-weight:800;
+      font-size:14px;
+
+      text-decoration:none;   /* no underline */
+      border:1px solid rgba(255,255,255,.35);
+      box-shadow: 0 14px 32px rgba(255,87,87,.22);
+
+      opacity:.92;           /* not too bold */
+      transition: transform .08s ease, opacity .2s ease;
+      -webkit-tap-highlight-color: transparent;
     }
-    .btn.plaque:hover{ opacity:.95; }
+    .plaqueFloat:hover{ opacity:.98; }
+    .plaqueFloat:active{ transform: scale(.98); }
+
+    @media (max-width: 420px){
+      .plaqueFloat{
+        right:16px;
+        bottom:16px;
+        padding: 11px 14px;
+        font-size:13.5px;
+      }
+    }
     /* === END ADDED === */
 
     /* Tabs */
@@ -728,13 +758,6 @@
               <span class="icon">✍️</span>
               הוספת זיכרון
             </button>
-
-            <!-- === ADDED: Button "לרכישת לוחית הנצחה" === -->
-            <a class="btn plaque" href="https://www.hasipur-il.com/products/%D7%91%D7%A8%D7%A7%D7%95%D7%93-%D7%A9%D7%9C-%D7%94%D7%A1%D7%99%D7%A4%D7%95%D7%A8" target="_blank" rel="noopener">
-              לרכישת לוחית הנצחה
-            </a>
-            <!-- === END ADDED === -->
-
           </div>
         </div>
       </div>
@@ -779,33 +802,32 @@
           </div>
         </section>
 
-<!-- Videos -->
-<section class="section" id="videos">
-  <div class="h2">סרטונים</div>
+        <!-- Videos -->
+        <section class="section" id="videos">
+          <div class="h2">סרטונים</div>
 
-  <div class="videoGrid">
-    <!-- Video 1 -->
-    <div class="ytCard" data-yt="rd_1yaXXXeA" aria-label="סרטון מיוטיוב">
-      <img
-        src="https://i.ytimg.com/vi/rd_1yaXXXeA/hqdefault.jpg"
-        alt="תמונה מקדימה של הסרטון">
-      <div class="ytPlay" aria-hidden="true">
-        <div class="btnPlay"><div class="triangle"></div></div>
-      </div>
-    </div>
+          <div class="videoGrid">
+            <!-- Video 1 -->
+            <div class="ytCard" data-yt="rd_1yaXXXeA" aria-label="סרטון מיוטיוב">
+              <img
+                src="https://i.ytimg.com/vi/rd_1yaXXXeA/hqdefault.jpg"
+                alt="תמונה מקדימה של הסרטון">
+              <div class="ytPlay" aria-hidden="true">
+                <div class="btnPlay"><div class="triangle"></div></div>
+              </div>
+            </div>
 
-    <!-- Video 2 -->
-    <div class="ytCard" data-yt="7a9SY-n1qnA" aria-label="סרטון מיוטיוב">
-      <img
-        src="https://i.ytimg.com/vi/7a9SY-n1qnA/hqdefault.jpg"
-        alt="תמונה מקדימה של הסרטון">
-      <div class="ytPlay" aria-hidden="true">
-        <div class="btnPlay"><div class="triangle"></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
+            <!-- Video 2 -->
+            <div class="ytCard" data-yt="7a9SY-n1qnA" aria-label="סרטון מיוטיוב">
+              <img
+                src="https://i.ytimg.com/vi/7a9SY-n1qnA/hqdefault.jpg"
+                alt="תמונה מקדימה של הסרטון">
+              <div class="ytPlay" aria-hidden="true">
+                <div class="btnPlay"><div class="triangle"></div></div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <!-- Memories -->
         <section class="section" id="memories">
@@ -875,11 +897,11 @@
             שליחה לוואטסאפ
           </button>
 
-<div class="audioList">
-  <div class="note" style="margin-top:8px;">
-    אין הקלטה כרגע
-  </div>
-</div>
+          <div class="audioList">
+            <div class="note" style="margin-top:8px;">
+              אין הקלטה כרגע
+            </div>
+          </div>
 
         </section>
 
@@ -897,16 +919,22 @@
             שליחה לוואטסאפ
           </button>
 
-<div class="audioList">
-  <div class="note" style="margin-top:8px;">
-    אין שיר כרגע
-  </div>
-</div>
+          <div class="audioList">
+            <div class="note" style="margin-top:8px;">
+              אין שיר כרגע
+            </div>
+          </div>
 
         </section>
       </div>
     </div>
   </div>
+
+  <!-- === ADDED: Floating Button (bottom-right, subtle) === -->
+  <a class="plaqueFloat" href="https://www.hasipur-il.com/products/%D7%91%D7%A8%D7%A7%D7%95%D7%93-%D7%A9%D7%9C-%D7%94%D7%A1%D7%99%D7%A4%D7%95%D7%A8" target="_blank" rel="noopener">
+    לרכישת לוחית הנצחה
+  </a>
+  <!-- === END ADDED === -->
 
   <!-- Modal: Add Memory -->
   <div class="modalBg" id="modalBg" aria-hidden="true">
