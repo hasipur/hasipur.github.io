@@ -1,210 +1,1101 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>הסיפור - דף הנצחה</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>הסיפור - דף הנצחה</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 
-<style>
-:root{
-  --brand-main:#ff5757;
-  --brand-soft:#ffdede;
-  --text-main:#111;
-  --text-soft:#777;
-  --card:#fff;
-  --stroke:#eee;
-  --shadow:0 14px 40px rgba(0,0,0,.1);
-  --radius:22px;
-}
+  <style>
+    :root{
+      --brand-main:#ff5757;
+      --brand-soft:#ffdede;
+      --text-main:#111;
+      --text-soft:#777;
+      --bg:#f4f4f4;
+      --card:#ffffff;
+      --stroke:#eeeeee;
+      --shadow: 0 14px 40px rgba(0,0,0,.10);
+      --radius: 22px;
+    }
 
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:"Open Sans",system-ui,Arial;
-  background:radial-gradient(circle at top,#ffe3e3,#f2f2f2);
-}
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family:"Open Sans",system-ui,Arial;
+      background: radial-gradient(circle at top, #ffe3e3, #f2f2f2);
+      color:var(--text-main);
+    }
 
-.wrap{max-width:920px;margin:0 auto;padding:14px 12px 50px}
+    .wrap{
+      width:100%;
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 14px 12px 50px;
+    }
 
-/* Card */
-.card{
-  background:var(--card);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  overflow:hidden;
-  border:1px solid var(--stroke);
-}
+    /* Top bar */
+    .topbar{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 4px 14px;
+    }
 
-/* Cover */
-.cover{height:260px}
-.cover img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:50% 35%;
-}
+    /* pill on the LEFT (visual left) */
+    .topbar .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:#ffffffb8;
+      border:1px solid var(--brand-soft);
+      color:var(--text-soft);
+      font-size:13px;
+      white-space:nowrap;
 
-/* Profile */
-.profileHead{position:relative;padding:16px;background:#fff}
-.avatar{
-  position:absolute;
-  left:50%;
-  top:-52px;
-  transform:translateX(-50%);
-  width:104px;height:104px;
-  border-radius:50%;
-  overflow:hidden;
-  border:4px solid #fff;
-  box-shadow:0 10px 26px rgba(0,0,0,.18)
-}
-.avatar img{width:100%;height:100%;object-fit:cover}
+      /* forces it visually to the left side */
+      order:3;
+      margin-right:auto;   /* in RTL this pushes it to the left visually */
+    }
 
-.meta{padding-top:62px;text-align:center}
-.meta .small{font-size:13px;color:#777}
-.meta .name{font-size:26px;font-weight:800;margin:4px 0}
-.meta .dates{font-size:15px;opacity:.85}
+    /* centered logo */
+    .topbar .logo{
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
+      font-weight:900;
+      letter-spacing:2px;
+      font-size:24px;      /* a bit bolder/stronger */
+      text-align:center;
+      white-space:nowrap;
+      pointer-events:none; /* so it won't block clicks */
+    }
+    .topbar .logo span{ color:var(--brand-main); }
 
-/* Actions */
-.actions{margin-top:12px;display:flex;gap:10px;justify-content:center}
-.btn{
-  border-radius:999px;
-  padding:11px 16px;
-  border:1px solid #dcdcdc;
-  background:#fff;
-  font-weight:700;
-  cursor:pointer;
-}
+    /* menu button on the RIGHT */
+    .menuBtn{
+      order:1;
+      margin-left:auto;
+      width:46px;
+      height:46px;
+      border-radius:16px;
+      border:1px solid #ececec;
+      background:#fff;
+      box-shadow: 0 10px 24px rgba(0,0,0,.10);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .menuIcon{
+      width:22px;
+      height:22px;
+      display:block;
+    }
+    .menuIcon span{
+      display:block;
+      height:2px;
+      background:#222;
+      border-radius:999px;
+      margin:5px 0;
+      width:100%;
+    }
 
-/* Tabs */
-.tabs{
-  display:flex;
-  border-top:1px solid #eee;
-  border-bottom:1px solid #eee;
-}
-.tab{
-  flex:1;
-  padding:12px;
-  font-weight:700;
-  background:none;
-  border:none;
-  cursor:pointer;
-}
-.tab.active{
-  border-bottom:3px solid var(--brand-main);
-}
+    /* Drawer */
+    .drawerBg{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,.35);
+      display:none;
+      z-index:2000;
+    }
+    .drawerBg.open{ display:block; }
 
-.content{padding:16px}
-.section{display:none}
-.section.active{display:block}
+    .drawer{
+      position:fixed;
+      top:0;
+      right:0;
+      height:100%;
+      width:min(86vw, 360px);
+      background:#fff;
+      border-left:1px solid #eee;
+      box-shadow: -20px 0 60px rgba(0,0,0,.18);
+      transform: translateX(100%);
+      transition: transform .22s ease;
+      z-index:2001;
+      display:flex;
+      flex-direction:column;
+    }
+    .drawerBg.open + .drawer{
+      transform: translateX(0);
+    }
+    .drawerHead{
+      padding:14px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      border-bottom:1px solid #eee;
+    }
+    .drawerHead .title{
+      font-weight:900;
+      color:#111;
+      font-size:14px;
+    }
+    .drawerClose{
+      width:40px;
+      height:40px;
+      border-radius:12px;
+      border:1px solid #eee;
+      background:#fff;
+      cursor:pointer;
+      font-size:18px;
+      font-weight:900;
+      color:#111;
+    }
+    .drawerList{
+      padding:10px 10px 16px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .drawerItem{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:14px 12px;
+      border-radius:14px;
+      border:1px solid #f0f0f0;
+      background:#fff;
+      text-decoration:none;
+      color:#111;
+      font-weight:800;
+    }
+    .drawerItem .sub{
+      font-weight:700;
+      color:#888;
+      font-size:12px;
+    }
 
-.h2{font-size:18px;font-weight:800;margin-bottom:10px}
+    /* Profile card */
+    .card{
+      background:var(--card);
+      border:1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
 
-/* Story */
-.story{font-size:16px;line-height:1.95;color:#222}
-.story p{margin:0 0 12px}
+    /* Cover */
+    .cover{
+      position:relative;
+      height: 270px;
+      background:#ddd;
+    }
+    .cover img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      object-position: 50% 35%; /* ✅ כיוון חיתוך הבאנר (יותר מספר = יורד למטה) */
+    }
+    .cover::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(to bottom, rgba(0,0,0,.18), rgba(0,0,0,0) 45%, rgba(0,0,0,.18));
+      pointer-events:none;
+    }
 
-/* Photos */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-}
-.media{
-  border-radius:16px;
-  overflow:hidden;
-  border:1px solid #eee;
-}
-.media img{width:100%;height:100%;object-fit:cover}
-</style>
+    /* Header section under cover */
+    .profileHead{
+      position:relative;
+      padding: 16px 16px 12px;
+      background: #fff;
+    }
+
+    .avatar{
+      position:absolute;
+      left:50%;
+      right:auto;
+      top:-52px;
+      transform: translateX(-50%);
+      width:104px;
+      height:104px;
+      border-radius:50%;
+      overflow:hidden;
+      border:4px solid #fff;
+      box-shadow: 0 10px 26px rgba(0,0,0,.18);
+      background:#eee;
+    }
+
+    .avatar img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .meta{
+      padding-top: 62px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      text-align:center;
+    }
+
+    .meta .small{
+      color:var(--text-soft);
+      font-size:13px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+    }
+    .meta .name{
+      font-size:26px;
+      font-weight:800;
+      margin:0;
+      line-height:1.15;
+    }
+    .meta .dates{
+      color:#222;
+      font-size:15px;
+      font-weight:600;
+      opacity:.85;
+    }
+
+    /* Actions row */
+    .actions{
+      margin-top: 12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+    .btn{
+      appearance:none;
+      border:none;
+      cursor:pointer;
+      border-radius: 999px;
+      padding: 11px 14px;
+      font-weight:700;
+      font-size:14px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      transition: transform .08s ease, opacity .2s ease;
+      user-select:none;
+    }
+    .btn:active{ transform: scale(.98); }
+    .btn.secondary{
+      background:#fff;
+      border:1px solid #dcdcdc;
+      color:#111;
+    }
+    .btn.primary{
+      background: var(--brand-main);
+      color:#fff;
+      border:1px solid rgba(0,0,0,0);
+    }
+    .btn .icon{
+      width:18px;
+      height:18px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-size:16px;
+    }
+
+    /* Floating CTA */
+    .plaqueFloat{
+      position:fixed;
+      right:22px;
+      bottom:22px;
+      z-index:950;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: #ff6b6b;
+      color:#fff;
+      font-weight:800;
+      font-size:14px;
+      text-decoration:none;
+      border:1px solid rgba(255n(255,255,255,.35);
+      box-shadow: 0 14px 32px rgba(255,87,87,.22);
+      opacity:.92;
+      transition: transform .08s ease, opacity .2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .plaqueFloat:hover{ opacity:.98; }
+    .plaqueFloat:active{ transform: scale(.98); }
+
+    @media (max-width: 420px){
+      .plaqueFloat{
+        right:16px;
+        bottom:16px;
+        padding: 11px 14px;
+        font-size:13.5px;
+      }
+    }
+
+    /* Tabs */
+    .tabs{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:#fff;
+      border-top:1px solid var(--stroke);
+      border-bottom:1px solid var(--stroke);
+      display:flex;
+      gap:0;
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .tab{
+      flex:1 0 auto;
+      padding: 12px 14px;
+      font-size:14px;
+      color:#444;
+      background:transparent;
+      border:none;
+      cursor:pointer;
+      font-weight:700;
+      opacity:.85;
+      white-space:nowrap;
+      position:relative;
+    }
+    .tab.active{
+      opacity:1;
+      color:#111;
+    }
+    .tab.active::after{
+      content:"";
+      position:absolute;
+      right:14px;
+      left:14px;
+      bottom:0;
+      height:3px;
+      border-radius: 999px;
+      background: var(--brand-main);
+    }
+
+    /* Content */
+    .content{
+      padding: 14px 16px 18px;
+      background:#fff;
+    }
+
+    .section{
+      display:none;
+      animation: fade .18s ease;
+    }
+    .section.active{ display:block; }
+
+    @keyframes fade{
+      from{ opacity:.0; transform: translateY(4px); }
+      to{ opacity:1; transform: translateY(0); }
+    }
+
+    .h2{
+      margin: 6px 0 10px;
+      font-size:18px;
+      font-weight:800;
+    }
+
+    .story{
+      font-size:16px;
+      line-height:1.95;
+      color:#222;
+    }
+    .story p{ margin:0 0 12px; }
+
+    /* Photos grid */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap:10px;
+    }
+    .media{
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid #eee;
+      box-shadow: 0 8px 18px rgba(0,0,0,.08);
+      background:#fff;
+      min-height: 150px;
+      position:relative;
+    }
+    .media img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    /* Memories */
+    .memoriesTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom: 8px;
+    }
+    .note{
+      color:var(--text-soft);
+      font-size:12.5px;
+      line-height:1.5;
+    }
+    .memList{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top: 12px;
+    }
+    .memItem{
+      border:1px solid #eee;
+      border-radius: 16px;
+      padding: 12px 12px;
+      background:#fff;
+      box-shadow: 0 8px 18px rgba(0,0,0,.06);
+    }
+    .memItem .top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      margin-bottom: 6px;
+      color:#333;
+      font-weight:800;
+      font-size:14px;
+    }
+    .memItem .date{
+      font-weight:700;
+      color:#999;
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .memItem .text{
+      color:#222;
+      font-size:14px;
+      line-height:1.75;
+      white-space:pre-wrap;
+    }
+
+    /* Audio & Songs */
+    .audioList{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top: 8px;
+    }
+    .audioItem{
+      border:1px solid #eee;
+      border-radius:16px;
+      padding: 12px;
+      background:#fff;
+      box-shadow: 0 8px 18px rgba(0,0,0,.06);
+    }
+    .audioItem .title{
+      font-weight:900;
+      margin-bottom: 8px;
+    }
+    audio{ width:100%; }
+
+    /* Modal */
+    .modalBg{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,.45);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      z-index:1000;
+    }
+    .modalBg.open{ display:flex; }
+
+    .modal{
+      width:100%;
+      max-width: 520px;
+      background:#fff;
+      border-radius: 22px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.25);
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.4);
+    }
+    .modalHead{
+      padding: 14px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      border-bottom:1px solid #eee;
+    }
+    .modalHead .title{
+      font-weight:900;
+      font-size:16px;
+    }
+    .xbtn{
+      border:none;
+      background:transparent;
+      cursor:pointer;
+      font-size:18px;
+      font-weight:900;
+      opacity:.75;
+    }
+    .modalBody{
+      padding: 14px 16px 16px;
+    }
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin-bottom: 12px;
+    }
+    label{
+      font-size:12.5px;
+      color:#444;
+      font-weight:800;
+    }
+    input, textarea{
+      font-family: inherit;
+      border:1px solid #e3e3e3;
+      border-radius: 14px;
+      padding: 11px 12px;
+      font-size:14px;
+      outline:none;
+    }
+    textarea{
+      min-height: 120px;
+      resize: vertical;
+      line-height:1.6;
+    }
+    .modalFoot{
+      padding: 0 16px 16px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    @media (max-width: 720px){
+      .cover{ height: 230px; }
+      .meta .name{ font-size:24px; }
+    }
+    @media (max-width: 420px){
+      .avatar{ width:96px; height:96px; top:-48px; }
+      .meta{ padding-top: 58px; }
+      .grid{ grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
 </head>
 
 <body>
-<div class="wrap">
+  <div class="wrap">
+    <div class="topbar">
+      <button class="menuBtn" id="menuBtn" type="button" aria-label="תפריט">
+        <span class="menuIcon" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
 
-<div class="card">
+      <div class="pill">🕯️ דף זיכרון אישי</div>
 
-  <!-- Banner -->
-  <div class="cover">
-    <img src="11.jpeg" alt="באנר">
-  </div>
-
-  <!-- Profile -->
-  <div class="profileHead">
-    <div class="avatar">
-      <img src="23.jpeg" alt="תמונת פרופיל">
+      <div class="logo">ה<span>ס</span>יפור</div>
     </div>
 
-    <div class="meta">
-      <div class="small">לזכר</div>
-      <h1 class="name">סבא אליאס ז״ל</h1>
-      <div class="dates">01.01.1935 - 11.10.2020</div>
+    <!-- Drawer -->
+    <div class="drawerBg" id="drawerBg" aria-hidden="true"></div>
+    <aside class="drawer" id="drawer" aria-label="תפריט צד">
+      <div class="drawerHead">
+        <div class="title">תפריט</div>
+        <button class="drawerClose" id="drawerClose" type="button" aria-label="סגירה">✕</button>
+      </div>
+      <div class="drawerList">
+        <a class="drawerItem" href="https://www.hasipur-il.com/products/%D7%91%D7%A8%D7%A7%D7%95%D7%93-%D7%A9%D7%9C-%D7%94%D7%A1%D7%99%D7%A4%D7%95%D7%A8" target="_blank" rel="noopener">
+          <div>
+            לרכישת ברקוד
+            <div class="sub">מעבר לעמוד רכישה</div>
+          </div>
+          <div>↗</div>
+        </a>
 
-      <!-- המוטו הוסר -->
+        <a class="drawerItem" href="https://www.hasipur-il.com/pages/contact" target="_blank" rel="noopener">
+          <div>
+            צרו קשר
+            <div class="sub">וואטסאפ / טופס</div>
+          </div>
+          <div>↗</div>
+        </a>
+      </div>
+    </aside>
 
-      <div class="actions">
-        <button class="btn">⤴️ שיתוף</button>
-        <button class="btn">✍️ הוספת זיכרון</button>
+    <div class="card" id="card">
+
+      <!-- Cover -->
+      <div class="cover">
+        <img src="11.jpeg" alt="באנר משפחתי">
+      </div>
+
+      <!-- Profile head -->
+      <div class="profileHead">
+        <div class="avatar">
+          <img src="23.jpeg" alt="תמונת פרופיל">
+        </div>
+
+        <div class="meta">
+          <div class="small">לזכר</div>
+          <h1 class="name">סבא אליאס ז״ל</h1>
+          <div class="dates">01.01.1935 - 11.10.2020</div>
+
+          <!-- ✅ המוטו הוסר לגמרי -->
+
+          <div class="actions">
+            <button class="btn secondary" id="btnShare" type="button">
+              <span class="icon">⤴️</span>
+              שיתוף
+            </button>
+
+            <button class="btn secondary" id="btnAddMemory" type="button">
+              <span class="icon">✍️</span>
+              הוספת זיכרון
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs" id="tabs">
+        <button class="tab active" data-target="life">סיפור חיים</button>
+        <button class="tab" data-target="photos">תמונות</button>
+        <button class="tab" data-target="videos">סרטונים</button>
+        <button class="tab" data-target="memories">זיכרונות</button>
+        <button class="tab" data-target="recordings">הקלטות</button>
+        <button class="tab" data-target="songs">שירים</button>
+      </div>
+
+      <!-- Content -->
+      <div class="content">
+        <!-- Life -->
+        <section class="section active" id="life">
+          <div class="h2">סיפור החיים</div>
+          <div class="story">
+            <p>אדם אהוב, בן אהוב, אח אהוב ואוהב, בן זוג מסור ומושלם ואב יקר לילדיו.</p>
+            <p>נגע בלבבות רבים והותיר אחריו אור גדול וכאב עצום.</p>
+            <p>האתר נוצר באהבה ובגעגוע כדי לספר את סיפור חייו, לשמר את זכרו ולאפשר לכל מי שהכיר ואהב אותו לעצור לרגע לזכור ולהרגיש קרוב.</p>
+            <p>עמיחי נולד 19.08.1981 כ' באב התשמ"א בבאר שבע.</p>
+            <p>לאורך חייו התאפיין בלב רחב, חוש הומור, מסירות, אהבת אדם, איש משפחה, בן אהוב לדוד ורחל.</p>
+            <p>ואח מיוחד לרפאל והגר, בן זוג מדהים ואוהב למיטל ואבא מושלם לנהוראי אור ושירה.</p>
+            <p>עמיחי אהב במיוחד את משפחתו וידע להפוך רגעים פשוטים למשמעותיים.</p>
+            <p>עבור משפחתו וחבריו היה עוגן של ביטחון, מקור לעצה טובה וחיוך שתמיד היה שם.</p>
+            <p>הרגעים הקטנים, השיחות, הצחוק והדאגה היומיומית — הם אלה שמלווים אותנו בכל יום גם עכשיו.</p>
+            <p>אהבתו ממשיכה ללוות אותנו, להדריך ולחזק.</p>
+            <p>עמיחי עבד 22 שנה ברכבת ישראל, נפטר ב־23.10.25 כשהיה מנהל תחנת עפולה.</p>
+            <p>חבריו לעבודה דיברו עליו רק טוב וציינו שהחלל שנשאר הוא גדול.</p>
+            <p>בעמוד זה נאספו תמונות, סיפורים וזיכרונות מרגעים מיוחדים בחייו — כל זיכרון הוא עוד פיסה מהאדם שהיה; פשוט, אמיתי ואהוב — אדם שראה את כולם, גם את השקופים ביותר.</p>
+            <p>האתר הזה הוא מקום של חיבור: אתם מוזמנים להדליק נר, לכתוב כמה מילים, לשתף זיכרון או מחשבה — כל מילה מחזקת את ההרגשה שהוא עדיין כאן בלב, בזיכרון ובאהבה.</p>
+            <p><strong>דברי פרידה</strong></p>
+            <p>עמיחי בעלי היקר והאבא הכי מושלם שיש.</p>
+            <p>האהבה אליך אינה נגמרת והיא תמשיך ללוות אותנו תמיד.</p>
+            <p>אנחנו נמשיך את דרכך בדיוק כמו שרצית ואהבת.</p>
+            <p>הגעגוע אליך אינסופי וקשה — בכל יום ובכל דקה אתה תמיד בליבנו.</p>
+            <p>הלכת מהר מדי ומוקדם מדי ואתה רק בן 44 לנצח...</p>
+            <p>הילדים שלנו גאים באבא שהיה להם וימשיכו את דרכך.</p>
+            <p>תשמור עלינו מלמעלה — אנחנו זקוקים לזה.</p>
+            <p>אוהבים אותך וזה שורף.</p>
+          </div>
+        </section>
+
+        <!-- Photos -->
+        <section class="section" id="photos">
+          <div class="h2">תמונות</div>
+          <div class="grid">
+            <div class="media"><img src="1.jpeg" alt="תמונה 1"></div>
+            <div class="media"><img src="2.jpeg" alt="תמונה 2"></div>
+            <div class="media"><img src="3.jpeg" alt="תמונה 3"></div>
+            <div class="media"><img src="4.jpeg" alt="תמונה 4"></div>
+            <div class="media"><img src="5.jpeg" alt="תמונה 5"></div>
+            <div class="media"><img src="6.jpeg" alt="תמונה 6"></div>
+            <div class="media"><img src="7.jpeg" alt="תמונה 7"></div>
+            <div class="media"><img src="8.jpeg" alt="תמונה 8"></div>
+            <div class="media"><img src="9.jpeg" alt="תמונה 9"></div>
+            <div class="media"><img src="10.jpeg" alt="תמונה 10"></div>
+            <div class="media"><img src="11.jpeg" alt="תמונה 11"></div>
+            <div class="media"><img src="12.jpeg" alt="תמונה 12"></div>
+            <div class="media"><img src="13.jpeg" alt="תמונה 13"></div>
+            <div class="media"><img src="14.jpeg" alt="תמונה 14"></div>
+            <div class="media"><img src="15.jpeg" alt="תמונה 15"></div>
+            <div class="media"><img src="16.jpeg" alt="תמונה 16"></div>
+            <div class="media"><img src="17.jpeg" alt="תמונה 17"></div>
+            <div class="media"><img src="18.jpeg" alt="תמונה 18"></div>
+            <div class="media"><img src="19.jpeg" alt="תמונה 19"></div>
+            <div class="media"><img src="20.jpeg" alt="תמונה 20"></div>
+            <div class="media"><img src="21.jpeg" alt="תמונה 21"></div>
+            <div class="media"><img src="22.jpeg" alt="תמונה 22"></div>
+            <div class="media"><img src="23.jpeg" alt="תמונה 23"></div>
+            <div class="media"><img src="24.jpeg" alt="תמונה 24"></div>
+            <div class="media"><img src="25.jpeg" alt="תמונה 25"></div>
+            <div class="media"><img src="26.jpeg" alt="תמונה 26"></div>
+            <div class="media"><img src="27.jpeg" alt="תמונה 27"></div>
+            <div class="media"><img src="28.jpeg" alt="תמונה 28"></div>
+            <div class="media"><img src="29.jpeg" alt="תמונה 29"></div>
+            <div class="media"><img src="30.jpeg" alt="תמונה 30"></div>
+            <div class="media"><img src="31.jpeg" alt="תמונה 31"></div>
+          </div>
+        </section>
+
+        <!-- Videos (empty as requested) -->
+        <section class="section" id="videos">
+          <div class="h2">סרטונים</div>
+          <div class="note" style="margin-top:8px;">אין סרטונים כרגע</div>
+        </section>
+
+        <!-- Memories (UI like screenshot + works) -->
+        <section class="section" id="memories">
+          <div class="memoriesTop">
+            <div>
+              <div class="h2" style="margin:6px 0 4px;">זיכרונות</div>
+              <div class="note">
+                יש בחירה בין לשמור את הזיכרון רק במכשיר של מי שכתב או לשלוח אלינו לוואצאפ - ונוסיף את זה באופן ציבורי לכולם.<br>
+                <strong>שימו לב:</strong> אחרי שנקבל את הבקשה בוואצאפ, נוודא מול בעל העמוד (הלקוח שרכש) שהוא מאשר את הבקשה - ורק אז נוסיף. אם לא יאשר, לא יתווסף.
+              </div>
+            </div>
+
+            <button class="btn primary" type="button" id="btnAddMemory2">
+              <span class="icon">＋</span>
+              הוספת זיכרון
+            </button>
+          </div>
+
+          <div class="memList" id="memList">
+            <div class="note" style="margin-top:10px;">זיכרונות שנשמרו לכולם:</div>
+            <div class="note" style="margin-top:8px;">אין זיכרונות כרגע</div>
+          </div>
+        </section>
+
+        <!-- Recordings -->
+        <section class="section" id="recordings">
+          <div class="h2">הקלטות</div>
+
+          <div class="note" style="margin-top:-4px;">
+            כדי להוסיף הקלטה - לחצו על הכפתור מתחת.<br>
+            <strong>שימו לב:</strong> אחרי שנקבל את הבקשה בוואצאפ, נוודא מול בעל העמוד (הלקוח שרכש) שהוא מאשר את הבקשה - ורק אז נוסיף. אם לא יאשר, לא יתווסף.
+          </div>
+
+          <button class="btn secondary" type="button" id="sendWhatsappRecordings" style="margin-top:10px;">
+            <span class="icon">💬</span>
+            שליחה לוואטסאפ
+          </button>
+
+          <div class="audioList">
+            <div class="note" style="margin-top:8px;">אין הקלטה כרגע</div>
+          </div>
+        </section>
+
+        <!-- Songs -->
+        <section class="section" id="songs">
+          <div class="h2">שירים</div>
+
+          <div class="note" style="margin-top:-4px;">
+            כדי להוסיף שיר - לחצו על הכפתור מתחת.<br>
+            <strong>שימו לב:</strong> אחרי שנקבל את הבקשה בוואצאפ, נוודא מול בעל העמוד (הלקוח שרכש) שהוא מאשר את הבקשה - ורק אז נוסיף. אם לא יאשר, לא יתווסף.
+          </div>
+
+          <button class="btn secondary" type="button" id="sendWhatsappSongs" style="margin-top:10px;">
+            <span class="icon">💬</span>
+            שליחה לוואטסאפ
+          </button>
+
+          <div class="audioList">
+            <div class="note" style="margin-top:8px;">אין שיר כרגע</div>
+          </div>
+        </section>
       </div>
     </div>
   </div>
 
-  <!-- Tabs -->
-  <div class="tabs">
-    <button class="tab active" onclick="showTab('life',this)">סיפור חיים</button>
-    <button class="tab" onclick="showTab('photos',this)">תמונות</button>
-    <button class="tab" onclick="showTab('videos',this)">סרטונים</button>
-    <button class="tab" onclick="showTab('memories',this)">זיכרונות</button>
-    <button class="tab" onclick="showTab('recordings',this)">הקלטות</button>
-    <button class="tab" onclick="showTab('songs',this)">שירים</button>
+  <!-- Floating CTA -->
+  <a class="plaqueFloat" href="https://www.hasipur-il.com/products/%D7%91%D7%A8%D7%A7%D7%95%D7%93-%D7%A9%D7%9C-%D7%94%D7%A1%D7%99%D7%A4%D7%95%D7%A8" target="_blank" rel="noopener">
+    לרכישת לוחית הנצחה
+  </a>
+
+  <!-- Modal: Add Memory -->
+  <div class="modalBg" id="modalBg" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="הוספת זיכרון">
+      <div class="modalHead">
+        <div class="title">הוספת זיכרון</div>
+        <button class="xbtn" id="modalClose" type="button">✕</button>
+      </div>
+
+      <div class="modalBody">
+        <div class="field">
+          <label for="memName">שם (לא חובה)</label>
+          <input id="memName" type="text" placeholder="לדוגמה: משפחת לוי">
+        </div>
+
+        <div class="field">
+          <label for="memText">הזיכרון שלך</label>
+          <textarea id="memText" placeholder="כתבו כמה מילים מהלב..."></textarea>
+        </div>
+
+        <div class="note" style="margin-top:-4px;">
+          הכפתור "שמירה כאן" - יבצע שמירה לזיכרון רק במכשיר הזה. <br>
+          הכפתור "שליחה לווטסאפ" - ישלח לנו בקשה ונוודא מול בעל העמוד את האישור להוסיף לכולם.<br>
+          <strong>שימו לב:</strong> אחרי קבלת הבקשה בוואצאפ אנחנו נוודא מול בעל העמוד (הלקוח שרכש) שהוא מאשר את הבקשה - ורק אז נוסיף. אם לא יאשר, לא יתווסף.
+        </div>
+      </div>
+
+      <div class="modalFoot">
+        <button class="btn primary" type="button" id="saveLocal">שמירה כאן</button>
+        <button class="btn secondary" type="button" id="sendWhatsapp">שליחה לוואטסאפ</button>
+        <button class="btn secondary" type="button" id="cancelModal">ביטול</button>
+      </div>
+    </div>
   </div>
 
-  <div class="content">
+  <script>
+    // ===== Tabs =====
+    const tabs = document.querySelectorAll(".tab");
+    const sections = document.querySelectorAll(".section");
 
-    <!-- Life -->
-    <section id="life" class="section active">
-      <div class="h2">סיפור החיים</div>
-      <div class="story">
-        <p>אדם אהוב, בן אהוב, אח אהוב ואוהב, בן זוג מסור ומושלם ואב יקר לילדיו.</p>
-        <p>נגע בלבבות רבים והותיר אחריו אור גדול וכאב עצום.</p>
-        <p>האתר נוצר באהבה ובגעגוע כדי לספר את סיפור חייו, לשמר את זכרו ולאפשר לכל מי שהכיר ואהב אותו לעצור לרגע, לזכור ולהרגיש קרוב.</p>
-        <p>עמיחי נולד ב-19.08.1981 בבאר שבע.</p>
-        <p>אהב במיוחד את משפחתו וידע להפוך רגעים פשוטים למשמעותיים.</p>
-      </div>
-    </section>
+    function activateTab(targetId){
+      tabs.forEach(t => t.classList.toggle("active", t.dataset.target === targetId));
+      sections.forEach(s => s.classList.toggle("active", s.id === targetId));
+    }
 
-    <!-- Photos -->
-    <section id="photos" class="section">
-      <div class="h2">תמונות</div>
-      <div class="grid">
-        <!-- 31 תמונות -->
-        <script>
-          for(let i=1;i<=31;i++){
-            document.write(`<div class="media"><img src="${i}.jpeg"></div>`);
-          }
-        </script>
-      </div>
-    </section>
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        activateTab(tab.dataset.target);
+        document.getElementById("tabs").scrollIntoView({behavior:"smooth", block:"start"});
+      });
+    });
 
-    <section id="videos" class="section"><div class="h2">סרטונים</div></section>
-    <section id="memories" class="section"><div class="h2">זיכרונות</div></section>
-    <section id="recordings" class="section"><div class="h2">הקלטות</div></section>
-    <section id="songs" class="section"><div class="h2">שירים</div></section>
+    // ===== Drawer =====
+    const menuBtn = document.getElementById("menuBtn");
+    const drawerBg = document.getElementById("drawerBg");
+    const drawerClose = document.getElementById("drawerClose");
 
-  </div>
+    function openDrawer(){
+      drawerBg.classList.add("open");
+      drawerBg.setAttribute("aria-hidden","false");
+      document.body.style.overflow = "hidden";
+    }
+    function closeDrawer(){
+      drawerBg.classList.remove("open");
+      drawerBg.setAttribute("aria-hidden","true");
+      document.body.style.overflow = "";
+    }
 
-</div>
-</div>
+    menuBtn.addEventListener("click", openDrawer);
+    drawerClose.addEventListener("click", closeDrawer);
+    drawerBg.addEventListener("click", closeDrawer);
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape") closeDrawer();
+    });
 
-<script>
-function showTab(id,btn){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  btn.classList.add('active');
-}
-</script>
+    // ===== Share =====
+    const btnShare = document.getElementById("btnShare");
+    btnShare.addEventListener("click", async () => {
+      const url = window.location.href;
 
+      if (navigator.share) {
+        try{
+          await navigator.share({ title: document.title, text: "דף זיכרון", url });
+          return;
+        } catch(e){}
+      }
+
+      try{
+        await navigator.clipboard.writeText(url);
+        alert("הקישור הועתק ללוח!");
+      } catch(e){
+        prompt("העתיקו את הקישור:", url);
+      }
+    });
+
+    // ===== Modal =====
+    const modalBg = document.getElementById("modalBg");
+    const modalClose = document.getElementById("modalClose");
+    const cancelModal = document.getElementById("cancelModal");
+    const memName = document.getElementById("memName");
+    const memText = document.getElementById("memText");
+
+    function openModal(){
+      modalBg.classList.add("open");
+      modalBg.setAttribute("aria-hidden", "false");
+      memText.focus();
+    }
+    function closeModal(){
+      modalBg.classList.remove("open");
+      modalBg.setAttribute("aria-hidden", "true");
+    }
+
+    // ✅ הכפתורים עובדים (גם מהפרופיל וגם מהטאב)
+    const btnAddMemory = document.getElementById("btnAddMemory");
+    const btnAddMemory2 = document.getElementById("btnAddMemory2");
+
+    [btnAddMemory, btnAddMemory2].forEach(btn => {
+      if(!btn) return;
+      btn.addEventListener("click", () => {
+        activateTab("memories");
+        document.getElementById("tabs").scrollIntoView({behavior:"smooth", block:"start"});
+        setTimeout(openModal, 120);
+      });
+    });
+
+    modalClose.addEventListener("click", closeModal);
+    cancelModal.addEventListener("click", closeModal);
+    modalBg.addEventListener("click", (e) => { if(e.target === modalBg) closeModal(); });
+    document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeModal(); });
+
+    // ===== Memories (LocalStorage) =====
+    const memList = document.getElementById("memList");
+    const saveLocal = document.getElementById("saveLocal");
+
+    function formatDate(d){
+      const dd = String(d.getDate()).padStart(2,'0');
+      const mm = String(d.getMonth()+1).padStart(2,'0');
+      const yyyy = d.getFullYear();
+      return `${dd}/${mm}/${yyyy}`;
+    }
+
+    function renderMemoryItem(item){
+      const box = document.createElement("div");
+      box.className = "memItem";
+      box.innerHTML = `
+        <div class="top">
+          <div>${escapeHtml(item.name || "אורח/ת")}</div>
+          <div class="date">${escapeHtml(item.date)}</div>
+        </div>
+        <div class="text">${escapeHtml(item.text)}</div>
+      `;
+      return box;
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    const STORAGE_KEY = "hasipur_memories_v1";
+
+    function loadMemories(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return [];
+        const arr = JSON.parse(raw);
+        if(!Array.isArray(arr)) return [];
+        return arr;
+      }catch(e){
+        return [];
+      }
+    }
+
+    function saveMemories(arr){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+    }
+
+    function paintSavedMemories(){
+      const arr = loadMemories();
+      if(!arr.length) return;
+
+      const sep = document.createElement("div");
+      sep.className = "note";
+      sep.style.marginTop = "10px";
+      sep.textContent = "זיכרונות שנשמרו במכשיר הזה:";
+      memList.appendChild(sep);
+
+      arr.forEach(item => {
+        memList.appendChild(renderMemoryItem(item));
+      });
+    }
+
+    paintSavedMemories();
+
+    saveLocal.addEventListener("click", () => {
+      const name = (memName.value || "").trim();
+      const text = (memText.value || "").trim();
+
+      if(text.length < 2){
+        alert("רשמו לפחות כמה מילים 🙂");
+        return;
+      }
+
+      const item = { name, text, date: formatDate(new Date()) };
+      const arr = loadMemories();
+      arr.unshift(item);
+      saveMemories(arr);
+
+      memList.appendChild(renderMemoryItem(item));
+
+      memName.value = "";
+      memText.value = "";
+      closeModal();
+
+      alert("נשמר! (במכשיר הזה). אם תרצו שזה יופיע לכולם — שלחו אליכם לוואטסאפ.");
+    });
+
+    // ===== WhatsApp send (Memories) =====
+    const sendWhatsapp = document.getElementById("sendWhatsapp");
+    sendWhatsapp.addEventListener("click", () => {
+      const name = (memName.value || "").trim();
+      const text = (memText.value || "").trim();
+
+      if(text.length < 2){
+        alert("רשמו קודם את הזיכרון 🙂");
+        return;
+      }
+
+      const PHONE = "972584869014"; // <-- לשנות כאן
+
+      const msg =
+        `שלום, אני רוצה להוסיף זיכרון לדף ההנצחה:\n` +
+        `שם: ${name || "ללא"}\n` +
+        `זיכרון: ${text}\n\n` +
+        `חשוב: לאחר קבלת ההודעה, תאשרו זאת מול בעל העמוד (הלקוח שרכש). אם יאשר - תוסיפו. אם לא - לא.\n` +
+        `קישור לדף: ${window.location.href}`;
+
+      const url = `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
+      window.open(url, "_blank");
+    });
+
+    // ===== WhatsApp send (Recordings & Songs) =====
+    const PHONE = "972584869014"; // <-- אותו מספר (לשנות כאן אם צריך)
+
+    const sendWhatsappRecordings = document.getElementById("sendWhatsappRecordings");
+    sendWhatsappRecordings.addEventListener("click", () => {
+      const msg =
+        `שלום, אני רוצה להוסיף הקלטה לדף ההנצחה.\n` +
+        `אנא כתבו לי כאן את שם ההקלטה + צרפו את הקובץ (MP3) או קישור.\n\n` +
+        `חשוב: לאחר קבלת ההודעה, תאשרו זאת מול בעל העמוד (הלקוח שרכש). אם יאשר - תוסיפו. אם לא - לא.\n` +
+        `קישור לדף: ${window.location.href}`;
+      const url = `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
+      window.open(url, "_blank");
+    });
+
+    const sendWhatsappSongs = document.getElementById("sendWhatsappSongs");
+    sendWhatsappSongs.addEventListener("click", () => {
+      const msg =
+        `שלום, אני רוצה להוסיף שיר לדף ההנצחה.\n` +
+        `אנא כתבו לי כאן את שם השיר + קישור (יוטיוב/ספוטיפיי) או קובץ (MP3).\n\n` +
+        `חשוב: לאחר קבלת ההודעה, תאשרו זאת מול בעל העמוד (הלקוח שרכש). אם יאשר - תוסיפו. אם לא - לא.\n` +
+        `קישור לדף: ${window.location.href}`;
+      const url = `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
+      window.open(url, "_blank");
+    });
+  </script>
 </body>
 </html>
