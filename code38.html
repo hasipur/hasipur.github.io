@@ -204,7 +204,6 @@
       height:100%;
       object-fit:cover;
       display:block;
-      object-position: 50% 35%; /* ✅ כיוון חיתוך הבאנר (יותר מספר = יורד למטה) */
     }
     .cover::after{
       content:"";
@@ -270,6 +269,23 @@
       font-weight:600;
       opacity:.85;
     }
+    .meta .quote{
+      margin-top:8px;
+      color:#333;
+      font-size:14px;
+      line-height:1.7;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      justify-content:center;
+    }
+    .meta .quote .qmark{
+      font-size:22px;
+      line-height:1;
+      color:var(--brand-main);
+      font-weight:900;
+      margin-top:2px;
+    }
 
     /* Actions row */
     .actions{
@@ -314,25 +330,30 @@
       font-size:16px;
     }
 
-    /* Floating CTA */
+    /* === ADDED: Floating Memorial Plaque CTA (bottom-right) === */
     .plaqueFloat{
       position:fixed;
       right:22px;
       bottom:22px;
-      z-index:950;
+      z-index:950; /* below modal (1000), above page */
       display:inline-flex;
       align-items:center;
       justify-content:center;
+
       padding: 12px 16px;
       border-radius: 999px;
+
       background: #ff6b6b;
       color:#fff;
+
       font-weight:800;
       font-size:14px;
-      text-decoration:none;
-      border:1px solid rgba(255n(255,255,255,.35);
+
+      text-decoration:none;   /* no underline */
+      border:1px solid rgba(255,255,255,.35);
       box-shadow: 0 14px 32px rgba(255,87,87,.22);
-      opacity:.92;
+
+      opacity:.92;           /* not too bold */
       transition: transform .08s ease, opacity .2s ease;
       -webkit-tap-highlight-color: transparent;
     }
@@ -347,6 +368,7 @@
         font-size:13.5px;
       }
     }
+    /* === END ADDED === */
 
     /* Tabs */
     .tabs{
@@ -389,7 +411,7 @@
       background: var(--brand-main);
     }
 
-    /* Content */
+    /* Content sections */
     .content{
       padding: 14px 16px 18px;
       background:#fff;
@@ -419,10 +441,10 @@
     }
     .story p{ margin:0 0 12px; }
 
-    /* Photos grid */
+    /* Media grids */
     .grid{
       display:grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, 1fr); /* 2 per row */
       gap:10px;
     }
     .media{
@@ -434,14 +456,76 @@
       min-height: 150px;
       position:relative;
     }
-    .media img{
+    .media img, .media video{
       width:100%;
       height:100%;
       object-fit:cover;
       display:block;
     }
 
-    /* Memories */
+    /* Videos: 2 per row */
+    .videoGrid{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap:12px;
+    }
+
+    /* YouTube clickable thumbnail (not blurry, has play) */
+    .ytCard{
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid #eee;
+      box-shadow: 0 8px 18px rgba(0,0,0,.08);
+      background:#000;
+      position:relative;
+      aspect-ratio: 9 / 16;
+      cursor:pointer;
+      user-select:none;
+    }
+    .ytCard img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      filter:none;
+      transform:none;
+    }
+    .ytPlay{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      pointer-events:none;
+    }
+    .ytPlay .btnPlay{
+      width:68px;
+      height:48px;
+      border-radius:14px;
+      background: rgba(0,0,0,.55);
+      border:1px solid rgba(255,255,255,.35);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .ytPlay .triangle{
+      width:0;
+      height:0;
+      border-top:10px solid transparent;
+      border-bottom:10px solid transparent;
+      border-left:16px solid #fff;
+      margin-right:-2px;
+    }
+    .ytFrame{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      border:0;
+    }
+
+    /* Memories list */
     .memoriesTop{
       display:flex;
       align-items:flex-start;
@@ -587,6 +671,7 @@
       flex-wrap:wrap;
     }
 
+    /* Responsive */
     @media (max-width: 720px){
       .cover{ height: 230px; }
       .meta .name{ font-size:24px; }
@@ -594,7 +679,8 @@
     @media (max-width: 420px){
       .avatar{ width:96px; height:96px; top:-48px; }
       .meta{ padding-top: 58px; }
-      .grid{ grid-template-columns: repeat(2, 1fr); }
+      .grid{ grid-template-columns: repeat(2, 1fr); }       /* keep 2 per row */
+      .videoGrid{ grid-template-columns: repeat(2, 1fr); } /* keep 2 per row */
     }
   </style>
 </head>
@@ -643,13 +729,13 @@
 
       <!-- Cover -->
       <div class="cover">
-        <img src="11.jpeg" alt="באנר משפחתי">
+        <img src="img1.jpg.jpeg" alt="באנר משפחתי">
       </div>
 
       <!-- Profile head -->
       <div class="profileHead">
         <div class="avatar">
-          <img src="23.jpeg" alt="תמונת פרופיל">
+          <img src="img4.jpg.png" alt="תמונת פרופיל">
         </div>
 
         <div class="meta">
@@ -657,7 +743,10 @@
           <h1 class="name">סבא אליאס ז״ל</h1>
           <div class="dates">01.01.1935 - 11.10.2020</div>
 
-          <!-- ✅ המוטו הוסר לגמרי -->
+          <div class="quote">
+            <div class="qmark">״</div>
+            <div>החיים יפים, אל תשכחו את זה</div>
+          </div>
 
           <div class="actions">
             <button class="btn secondary" id="btnShare" type="button">
@@ -778,7 +867,7 @@
 </section>
 
 
-        <!-- Videos (empty as requested) -->
+        <!-- Videos -->
 <section class="section" id="videos">
   <div class="h2">סרטונים</div>
 
@@ -788,13 +877,13 @@
 </section>
 
 
-        <!-- Memories (UI like screenshot + works) -->
+        <!-- Memories -->
         <section class="section" id="memories">
           <div class="memoriesTop">
             <div>
               <div class="h2" style="margin:6px 0 4px;">זיכרונות</div>
               <div class="note">
-                יש בחירה בין לשמור את הזיכרון רק במכשיר של מי שכתב או לשלוח אלינו לוואצאפ - ונוסיף את זה באופן ציבורי לכולם.<br>
+               יש בחירה בין לשמור את הזיכרון רק במכשיר של מי שכתב או לשלוח אלינו לוואצאפ - ונוסיף את זה באופן ציבורי לכולם.<br>
                 <strong>שימו לב:</strong> אחרי שנקבל את הבקשה בוואצאפ, נוודא מול בעל העמוד (הלקוח שרכש) שהוא מאשר את הבקשה - ורק אז נוסיף. אם לא יאשר, לא יתווסף.
               </div>
             </div>
@@ -807,7 +896,38 @@
 
           <div class="memList" id="memList">
             <div class="note" style="margin-top:10px;">זיכרונות שנשמרו לכולם:</div>
-            <div class="note" style="margin-top:8px;">אין זיכרונות כרגע</div>
+
+            <div class="memItem">
+              <div class="top">
+                <div>משפחת כהן</div>
+                <div class="date">24/12/2025</div>
+              </div>
+              <div class="text">תמיד נזכור את החיוך שלך ואת הלב הענק. תודה על כל רגע. ❤️</div>
+            </div>
+
+            <div class="memItem">
+              <div class="top">
+                <div>אורית לוי</div>
+                <div class="date">26/12/2025</div>
+              </div>
+              <div class="text">תודה על החום והאהבה שהיית מפזר סביבך. חסר לנו בכל מפגש משפחתי. ❤️</div>
+            </div>
+
+            <div class="memItem">
+              <div class="top">
+                <div>משפחת מזרחי</div>
+                <div class="date">27/12/2025</div>
+              </div>
+              <div class="text">הסיפורים, הצחוק והעצה הטובה שלך נשארו איתנו. יהי זכרך ברוך.</div>
+            </div>
+
+            <div class="memItem">
+              <div class="top">
+                <div>נכדים אוהבים</div>
+                <div class="date">28/12/2025</div>
+              </div>
+              <div class="text">כל פעם שאנחנו שומעים שיר שאהבת, אנחנו ישר נזכרים בך ובחיוך שלך. מתגעגעים. 💛</div>
+            </div>
           </div>
         </section>
 
@@ -826,8 +946,11 @@
           </button>
 
           <div class="audioList">
-            <div class="note" style="margin-top:8px;">אין הקלטה כרגע</div>
+            <div class="note" style="margin-top:8px;">
+              אין הקלטה כרגע
+            </div>
           </div>
+
         </section>
 
         <!-- Songs -->
@@ -845,17 +968,21 @@
           </button>
 
           <div class="audioList">
-            <div class="note" style="margin-top:8px;">אין שיר כרגע</div>
+            <div class="note" style="margin-top:8px;">
+              אין שיר כרגע
+            </div>
           </div>
+
         </section>
       </div>
     </div>
   </div>
 
-  <!-- Floating CTA -->
+  <!-- === ADDED: Floating Button (bottom-right, subtle) === -->
   <a class="plaqueFloat" href="https://www.hasipur-il.com/products/%D7%91%D7%A8%D7%A7%D7%95%D7%93-%D7%A9%D7%9C-%D7%94%D7%A1%D7%99%D7%A4%D7%95%D7%A8" target="_blank" rel="noopener">
     לרכישת לוחית הנצחה
   </a>
+  <!-- === END ADDED === -->
 
   <!-- Modal: Add Memory -->
   <div class="modalBg" id="modalBg" aria-hidden="true">
@@ -877,8 +1004,7 @@
         </div>
 
         <div class="note" style="margin-top:-4px;">
-          הכפתור "שמירה כאן" - יבצע שמירה לזיכרון רק במכשיר הזה. <br>
-          הכפתור "שליחה לווטסאפ" - ישלח לנו בקשה ונוודא מול בעל העמוד את האישור להוסיף לכולם.<br>
+          הכפתור "שמירה כאן" - יבצע שמירה לזיכרון רק במכשיר הזה. <br> הכפתור "שליחה לווטסאפ" - ישלח לנו בקשה ונוודא מול בעל העמוד את האישור להוסיף לכולם.<br>
           <strong>שימו לב:</strong> אחרי קבלת הבקשה בוואצאפ אנחנו נוודא מול בעל העמוד (הלקוח שרכש) שהוא מאשר את הבקשה - ורק אז נוסיף. אם לא יאשר, לא יתווסף.
         </div>
       </div>
@@ -953,6 +1079,7 @@
 
     // ===== Modal =====
     const modalBg = document.getElementById("modalBg");
+    const openers = [document.getElementById("btnAddMemory"), document.getElementById("btnAddMemory2")];
     const modalClose = document.getElementById("modalClose");
     const cancelModal = document.getElementById("cancelModal");
     const memName = document.getElementById("memName");
@@ -968,18 +1095,11 @@
       modalBg.setAttribute("aria-hidden", "true");
     }
 
-    // ✅ הכפתורים עובדים (גם מהפרופיל וגם מהטאב)
-    const btnAddMemory = document.getElementById("btnAddMemory");
-    const btnAddMemory2 = document.getElementById("btnAddMemory2");
-
-    [btnAddMemory, btnAddMemory2].forEach(btn => {
-      if(!btn) return;
-      btn.addEventListener("click", () => {
-        activateTab("memories");
-        document.getElementById("tabs").scrollIntoView({behavior:"smooth", block:"start"});
-        setTimeout(openModal, 120);
-      });
-    });
+    openers.forEach(btn => btn.addEventListener("click", () => {
+      activateTab("memories");
+      document.getElementById("tabs").scrollIntoView({behavior:"smooth", block:"start"});
+      setTimeout(openModal, 220);
+    }));
 
     modalClose.addEventListener("click", closeModal);
     cancelModal.addEventListener("click", closeModal);
@@ -1124,6 +1244,22 @@
         `קישור לדף: ${window.location.href}`;
       const url = `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
       window.open(url, "_blank");
+    });
+
+    // ===== YouTube: sharp thumbnail + play button -> loads iframe on click =====
+    document.querySelectorAll(".ytCard").forEach(card => {
+      card.addEventListener("click", () => {
+        const id = card.getAttribute("data-yt");
+        if(!id) return;
+
+        card.innerHTML = `
+          <iframe class="ytFrame"
+            src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0&playsinline=1"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        `;
+      }, { once:true });
     });
   </script>
 </body>
