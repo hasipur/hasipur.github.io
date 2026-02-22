@@ -1,303 +1,1251 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>2 הסיפור - דף זיכרון</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>הסיפור - דף הנצחה</title>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- פונט Open Sans -->
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --brand-main: #ff5757;
-      --brand-soft: #ffdede;
-      --text-main: #222;
-      --text-soft: #777;
-      --card-bg: rgba(255, 255, 255, 0.96);
+    :root{
+      --brand-main:#ff5757;
+      --brand-soft:#ffdede;
+      --text-main:#111;
+      --text-soft:#777;
+      --bg:#f4f4f4;
+      --card:#ffffff;
+      --stroke:#eeeeee;
+      --shadow: 0 14px 40px rgba(0,0,0,.10);
+      --radius: 22px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      font-family: 'Open Sans', sans-serif;
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family:"Open Sans",system-ui,Arial;
       background: radial-gradient(circle at top, #ffe3e3, #f2f2f2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      color:var(--text-main);
     }
 
-    .page-wrapper {
-      width: 100%;
-      max-width: 840px;
-      padding: 20px 12px 30px;
+    .wrap{
+      width:100%;
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 14px 12px 50px;
     }
 
-    /* כותרת עליונה */
-    .brand-header {
-      text-align: center;
-      margin-bottom: 12px;
+    /* Top bar */
+    .topbar{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 4px 14px;
     }
 
-    .brand-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
+    /* pill on the LEFT (visual left) */
+    .topbar .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:#ffffffb8;
+      border:1px solid var(--brand-soft);
+      color:var(--text-soft);
+      font-size:13px;
+      white-space:nowrap;
+
+      /* forces it visually to the left side */
+      order:3;
+      margin-right:auto;   /* in RTL this pushes it to the left visually */
+    }
+
+    /* centered logo */
+    .topbar .logo{
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
+      font-weight:900;
+      letter-spacing:2px;
+      font-size:24px;      /* a bit bolder/stronger */
+      text-align:center;
+      white-space:nowrap;
+      pointer-events:none; /* so it won't block clicks */
+    }
+    .topbar .logo span{ color:var(--brand-main); }
+
+    /* menu button on the RIGHT */
+    .menuBtn{
+      order:1;
+      margin-left:auto;
+      width:46px;
+      height:46px;
+      border-radius:16px;
+      border:1px solid #ececec;
+      background:#fff;
+      box-shadow: 0 10px 24px rgba(0,0,0,.10);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .menuIcon{
+      width:22px;
+      height:22px;
+      display:block;
+    }
+    .menuIcon span{
+      display:block;
+      height:2px;
+      background:#222;
+      border-radius:999px;
+      margin:5px 0;
+      width:100%;
+    }
+
+    /* Drawer */
+    .drawerBg{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,.35);
+      display:none;
+      z-index:2000;
+    }
+    .drawerBg.open{ display:block; }
+
+    .drawer{
+      position:fixed;
+      top:0;
+      right:0;
+      height:100%;
+      width:min(86vw, 360px);
+      background:#fff;
+      border-left:1px solid #eee;
+      box-shadow: -20px 0 60px rgba(0,0,0,.18);
+      transform: translateX(100%);
+      transition: transform .22s ease;
+      z-index:2001;
+      display:flex;
+      flex-direction:column;
+    }
+    .drawerBg.open + .drawer{
+      transform: translateX(0);
+    }
+    .drawerHead{
+      padding:14px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      border-bottom:1px solid #eee;
+    }
+    .drawerHead .title{
+      font-weight:900;
+      color:#111;
+      font-size:14px;
+    }
+    .drawerClose{
+      width:40px;
+      height:40px;
+      border-radius:12px;
+      border:1px solid #eee;
+      background:#fff;
+      cursor:pointer;
+      font-size:18px;
+      font-weight:900;
+      color:#111;
+    }
+    .drawerList{
+      padding:10px 10px 16px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .drawerItem{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:14px 12px;
+      border-radius:14px;
+      border:1px solid #f0f0f0;
+      background:#fff;
+      text-decoration:none;
+      color:#111;
+      font-weight:800;
+    }
+    .drawerItem .sub{
+      font-weight:700;
+      color:#888;
+      font-size:12px;
+    }
+
+    /* Profile card */
+    .card{
+      background:var(--card);
+      border:1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    /* Cover */
+    .cover{
+      position:relative;
+      height: 270px;
+      background:#ddd;
+    }
+.cover img{
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+    .cover::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(to bottom, rgba(0,0,0,.18), rgba(0,0,0,0) 45%, rgba(0,0,0,.18));
+      pointer-events:none;
+    }
+
+    /* Header section under cover */
+    .profileHead{
+      position:relative;
+      padding: 16px 16px 12px;
+      background: #fff;
+    }
+
+    .avatar{
+      position:absolute;
+      left:50%;
+      right:auto;
+      top:-52px;
+      transform: translateX(-50%);
+      width:104px;
+      height:104px;
+      border-radius:50%;
+      overflow:hidden;
+      border:4px solid #fff;
+      box-shadow: 0 10px 26px rgba(0,0,0,.18);
+      background:#eee;
+    }
+
+    .avatar img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .meta{
+      padding-top: 62px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      text-align:center;
+    }
+
+    .meta .small{
+      color:var(--text-soft);
+      font-size:13px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+    }
+    .meta .name{
+      font-size:26px;
+      font-weight:800;
+      margin:0;
+      line-height:1.15;
+    }
+    .meta .dates{
+      color:#222;
+      font-size:15px;
+      font-weight:600;
+      opacity:.85;
+    }
+    .meta .quote{
+      margin-top:8px;
+      color:#333;
+      font-size:14px;
+      line-height:1.7;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      justify-content:center;
+    }
+    .meta .quote .qmark{
+      font-size:22px;
+      line-height:1;
+      color:var(--brand-main);
+      font-weight:900;
+      margin-top:2px;
+    }
+
+    /* Actions row */
+    .actions{
+      margin-top: 12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+    .btn{
+      appearance:none;
+      border:none;
+      cursor:pointer;
       border-radius: 999px;
-      background: #ffffffaa;
-      border: 1px solid var(--brand-soft);
-      font-size: 13px;
-      color: var(--text-soft);
+      padding: 11px 14px;
+      font-weight:700;
+      font-size:14px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      transition: transform .08s ease, opacity .2s ease;
+      user-select:none;
+    }
+    .btn:active{ transform: scale(.98); }
+    .btn.secondary{
+      background:#fff;
+      border:1px solid #dcdcdc;
+      color:#111;
+    }
+    .btn.primary{
+      background: var(--brand-main);
+      color:#fff;
+      border:1px solid rgba(0,0,0,0);
+    }
+    .btn .icon{
+      width:18px;
+      height:18px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-size:16px;
     }
 
-    .brand-badge span.icon {
-      font-size: 15px;
-    }
+    /* === ADDED: Floating Memorial Plaque CTA (bottom-right) === */
+    .plaqueFloat{
+      position:fixed;
+      right:22px;
+      bottom:22px;
+      z-index:950; /* below modal (1000), above page */
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
 
-    .brand-title {
-      margin-top: 10px;
-      font-size: 30px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      color: var(--text-main);
-    }
-
-    /* שינוי צבע האות ס בלבד */
-    .brand-title span.red {
-      color: var(--brand-main);
-    }
-
-    .brand-subtitle {
-      margin-top: 4px;
-      font-size: 13px;
-      color: var(--text-soft);
-    }
-
-    /* כרטיס הזיכרון */
-    .memorial-card {
-      margin-top: 18px;
-      background: var(--card-bg);
-      border-radius: 22px;
-      padding: 26px 22px 26px;
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
-      border: 1px solid var(--brand-soft);
-      backdrop-filter: blur(8px);
-    }
-
-    .name-block {
-      text-align: center;
-      margin-bottom: 14px;
-    }
-
-    .name-block h1 {
-      margin: 0 0 6px;
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--text-main);
-    }
-
-    .name-block .dates {
-      margin: 0;
-      font-size: 14px;
-      color: var(--text-soft);
-    }
-
-    .divider {
-      width: 90px;
-      height: 2px;
-      margin: 18px auto 18px;
+      padding: 12px 16px;
       border-radius: 999px;
-      background: linear-gradient(90deg, #ffabab, #ff7777, #ff5757);
-    }
 
-    .portrait-wrapper {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
+      background: #ff6b6b;
+      color:#fff;
 
-    .portrait-circle {
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 4px solid var(--brand-soft);
-      box-shadow: 0 10px 24px rgba(0,0,0,0.12);
-    }
+      font-weight:800;
+      font-size:14px;
 
-    .portrait-circle img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+      text-decoration:none;   /* no underline */
+      border:1px solid rgba(255,255,255,.35);
+      box-shadow: 0 14px 32px rgba(255,87,87,.22);
 
-    .story-title {
-      text-align: center;
-      font-size: 19px;
-      font-weight: 600;
-      margin: 0 0 14px;
-      color: var(--text-main);
+      opacity:.92;           /* not too bold */
+      transition: transform .08s ease, opacity .2s ease;
+      -webkit-tap-highlight-color: transparent;
     }
+    .plaqueFloat:hover{ opacity:.98; }
+    .plaqueFloat:active{ transform: scale(.98); }
 
-    .story-text {
-      font-size: 16px;
-      line-height: 1.9;
-      color: var(--text-main);
-      margin: 0 0 18px;
+    @media (max-width: 420px){
+      .plaqueFloat{
+        right:16px;
+        bottom:16px;
+        padding: 11px 14px;
+        font-size:13.5px;
+      }
     }
+    /* === END ADDED === */
 
-    .story-text p {
-      margin: 0 0 10px;
+    /* Tabs */
+    .tabs{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:#fff;
+      border-top:1px solid var(--stroke);
+      border-bottom:1px solid var(--stroke);
+      display:flex;
+      gap:0;
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
     }
-
-    .gallery {
-      margin-top: 8px;
+    .tab{
+      flex:1 0 auto;
+      padding: 12px 14px;
+      font-size:14px;
+      color:#444;
+      background:transparent;
+      border:none;
+      cursor:pointer;
+      font-weight:700;
+      opacity:.85;
+      white-space:nowrap;
+      position:relative;
     }
-
-    .gallery-title {
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 10px;
-      color: var(--text-soft);
+    .tab.active{
+      opacity:1;
+      color:#111;
     }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
-    }
-
-    .gallery-grid img {
-      width: 100%;
-      height: 90px;
-      object-fit: cover;
-      border-radius: 10px;
-      border: 1px solid #eee;
-    }
-
-    .dedication {
-      margin-top: 20px;
-      font-size: 14px;
-      text-align: center;
-      color: var(--text-soft);
-    }
-
-    .footer-link {
-      margin-top: 18px;
-      text-align: center;
-    }
-
-    .footer-link a {
-      display: inline-block;
-      padding: 10px 20px;
+    .tab.active::after{
+      content:"";
+      position:absolute;
+      right:14px;
+      left:14px;
+      bottom:0;
+      height:3px;
       border-radius: 999px;
       background: var(--brand-main);
-      color: #ffffff;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 14px;
-      box-shadow: 0 8px 18px rgba(255, 87, 87, 0.35);
     }
 
-    .footer-link a:hover {
-      opacity: 0.95;
-      transform: translateY(-1px);
+    /* Content sections */
+    .content{
+      padding: 14px 16px 18px;
+      background:#fff;
     }
 
-    @media (max-width: 600px) {
-      body {
-        align-items: flex-start;
-      }
-      .memorial-card {
-        padding: 18px 15px 20px;
-        border-radius: 18px;
-      }
-      .portrait-circle {
-        width: 130px;
-        height: 130px;
-      }
-      .gallery-grid img {
-        height: 80px;
-      }
+    .section{
+      display:none;
+      animation: fade .18s ease;
+    }
+    .section.active{ display:block; }
+
+    @keyframes fade{
+      from{ opacity:.0; transform: translateY(4px); }
+      to{ opacity:1; transform: translateY(0); }
+    }
+
+    .h2{
+      margin: 6px 0 10px;
+      font-size:18px;
+      font-weight:800;
+    }
+
+    .story{
+      font-size:16px;
+      line-height:1.95;
+      color:#222;
+    }
+    .story p{ margin:0 0 12px; }
+
+    /* Media grids */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr); /* 2 per row */
+      gap:10px;
+    }
+    .media{
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid #eee;
+      box-shadow: 0 8px 18px rgba(0,0,0,.08);
+      background:#fff;
+      min-height: 150px;
+      position:relative;
+    }
+    .media img, .media video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    /* Videos: 2 per row */
+    .videoGrid{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap:12px;
+    }
+
+    /* YouTube clickable thumbnail (not blurry, has play) */
+    .ytCard{
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid #eee;
+      box-shadow: 0 8px 18px rgba(0,0,0,.08);
+      background:#000;
+      position:relative;
+      aspect-ratio: 9 / 16;
+      cursor:pointer;
+      user-select:none;
+    }
+    .ytCard img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      filter:none;
+      transform:none;
+    }
+    .ytPlay{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      pointer-events:none;
+    }
+    .ytPlay .btnPlay{
+      width:68px;
+      height:48px;
+      border-radius:14px;
+      background: rgba(0,0,0,.55);
+      border:1px solid rgba(255,255,255,.35);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .ytPlay .triangle{
+      width:0;
+      height:0;
+      border-top:10px solid transparent;
+      border-bottom:10px solid transparent;
+      border-left:16px solid #fff;
+      margin-right:-2px;
+    }
+    .ytFrame{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      border:0;
+    }
+
+    /* Memories list */
+    .memoriesTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom: 8px;
+    }
+    .note{
+      color:var(--text-soft);
+      font-size:12.5px;
+      line-height:1.5;
+    }
+    .memList{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top: 12px;
+    }
+    .memItem{
+      border:1px solid #eee;
+      border-radius: 16px;
+      padding: 12px 12px;
+      background:#fff;
+      box-shadow: 0 8px 18px rgba(0,0,0,.06);
+    }
+    .memItem .top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      margin-bottom: 6px;
+      color:#333;
+      font-weight:800;
+      font-size:14px;
+    }
+    .memItem .date{
+      font-weight:700;
+      color:#999;
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .memItem .text{
+      color:#222;
+      font-size:14px;
+      line-height:1.75;
+      white-space:pre-wrap;
+    }
+
+    /* Audio & Songs */
+    .audioList{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top: 8px;
+    }
+    .audioItem{
+      border:1px solid #eee;
+      border-radius:16px;
+      padding: 12px;
+      background:#fff;
+      box-shadow: 0 8px 18px rgba(0,0,0,.06);
+    }
+    .audioItem .title{
+      font-weight:900;
+      margin-bottom: 8px;
+    }
+    audio{ width:100%; }
+
+    /* Modal */
+    .modalBg{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,.45);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      z-index:1000;
+    }
+    .modalBg.open{ display:flex; }
+
+    .modal{
+      width:100%;
+      max-width: 520px;
+      background:#fff;
+      border-radius: 22px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.25);
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.4);
+    }
+    .modalHead{
+      padding: 14px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      border-bottom:1px solid #eee;
+    }
+    .modalHead .title{
+      font-weight:900;
+      font-size:16px;
+    }
+    .xbtn{
+      border:none;
+      background:transparent;
+      cursor:pointer;
+      font-size:18px;
+      font-weight:900;
+      opacity:.75;
+    }
+    .modalBody{
+      padding: 14px 16px 16px;
+    }
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin-bottom: 12px;
+    }
+    label{
+      font-size:12.5px;
+      color:#444;
+      font-weight:800;
+    }
+    input, textarea{
+      font-family: inherit;
+      border:1px solid #e3e3e3;
+      border-radius: 14px;
+      padding: 11px 12px;
+      font-size:14px;
+      outline:none;
+    }
+    textarea{
+      min-height: 120px;
+      resize: vertical;
+      line-height:1.6;
+    }
+    .modalFoot{
+      padding: 0 16px 16px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    /* Responsive */
+    @media (max-width: 720px){
+      .cover{ height: 230px; }
+      .meta .name{ font-size:24px; }
+    }
+    @media (max-width: 420px){
+      .avatar{ width:96px; height:96px; top:-48px; }
+      .meta{ padding-top: 58px; }
+      .grid{ grid-template-columns: repeat(2, 1fr); }       /* keep 2 per row */
+      .videoGrid{ grid-template-columns: repeat(2, 1fr); } /* keep 2 per row */
     }
   </style>
 </head>
 
 <body>
-  <div class="page-wrapper">
+  <div class="wrap">
+    <div class="topbar">
+      <button class="menuBtn" id="menuBtn" type="button" aria-label="תפריט">
+        <span class="menuIcon" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
 
-    <!-- כותרת עליונה -->
-    <header class="brand-header">
+      <div class="pill">🕯️ דף זיכרון אישי</div>
 
-      <div class="brand-badge">
-        <span class="icon">🕯️</span>
-        <span>דף זיכרון אישי מאת "הסיפור"</span>
+      <div class="logo">ה<span>ס</span>יפור</div>
+    </div>
+
+    <!-- Drawer -->
+    <div class="drawerBg" id="drawerBg" aria-hidden="true"></div>
+    <aside class="drawer" id="drawer" aria-label="תפריט צד">
+      <div class="drawerHead">
+        <div class="title">תפריט</div>
+        <button class="drawerClose" id="drawerClose" type="button" aria-label="סגירה">✕</button>
+      </div>
+      <div class="drawerList">
+        <a class="drawerItem"
+   href="https://wa.me/972584869014?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A0%D7%99%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%9C%D7%A8%D7%9B%D7%95%D7%A9%20%D7%91%D7%A8%D7%A7%D7%95%D7%93%20%D7%9C%D7%A4%D7%A8%D7%95%D7%A4%D7%99%D7%9C%20%D7%94%D7%A0%D7%A6%D7%97%D7%94"
+   target="_blank"
+   rel="noopener">
+          <div>
+            לרכישת ברקוד
+            <div class="sub">מעבר לעמוד רכישה</div>
+          </div>
+          <div>↗</div>
+        </a>
+      </div>
+    </aside>
+
+    <div class="card" id="card">
+
+      <!-- Cover -->
+      <div class="cover">
+        <img src="24.jpeg" alt="באנר משפחתי">
       </div>
 
-      <!-- כאן שמתי את האות ס בצבע האדום -->
-      <div class="brand-title">
-        ה<span class="red">ס</span>יפור
-      </div>
-
-      <div class="brand-subtitle">מקום אחד לסיפור החיים ולזיכרון שנשאר</div>
-    </header>
-
-    <!-- כרטיס -->
-    <main class="memorial-card">
-
-      <section class="name-block">
-        <h1>2 סבא אליאס ז"ל</h1>
-        <p class="dates">1929 – 2023</p>
-      </section>
-
-      <div class="divider"></div>
-
-      <section class="portrait-wrapper">
-        <div class="portrait-circle">
-          <img src="https://via.placeholder.com/500x500" alt="תמונה של סבא אליאס">
+      <!-- Profile head -->
+      <div class="profileHead">
+        <div class="avatar">
+          <img src="23.jpeg" alt="תמונת פרופיל">
         </div>
-      </section>
 
-      <h2 class="story-title">הסיפור של סבא אליאס ז"ל ❤️</h2>
+        <div class="meta">
+          <div class="small">לזכר</div>
+          <h1 class="name">אריק ז״ל</h1>
 
-      <section class="story-text">
-        <p>סבא אליאס היה אדם מלא חום, שתמיד ידע להפוך רגע קטן לזיכרון גדול.</p>
-        <p>הוא נולד למשפחה צנועה, אך עשירה בערכים של כבוד, עזרה הדדית ואהבה ללא תנאי.</p>
-        <p>כל בוקר היה פותח בקפה שחור קטן ובברכה ליום טוב יותר.</p>
-        <p>את הנכדים היה מקבל עם חיוך גדול וחיבוק שממלא את הלב.</p>
-        <p>הוא סיפר סיפורים ישנים מהכפר, וסיפורים אלה עברו מדור לדור.</p>
-        <p>בחגים היה יושב בראש השולחן ושומר על המנהגים המשפחתיים.</p>
-        <p>הוא תמיד היה עוזר, מתקן, מבשל ונותן מעצמו בלי לבקש דבר.</p>
-        <p>האמין שמילה טובה משנה יום שלם, ולא פספס הזדמנות לתת אחת.</p>
-        <p>גם בזמנים קשים שמר על שקט פנימי ועל אהבת אדם עמוקה.</p>
-        <p>זכרו ממשיך ללוות אותנו בכל מפגש, צחוק וסיפור משפחתי.</p>
-      </section>
+          <div class="quote">
+            <div class="qmark">״</div>
+            <div>אריק. אריקו. ריקו. ג'ונסון. </div>
+          </div>
 
-      <section class="gallery">
-        <div class="gallery-title">רגעים מהדרך</div>
-        <div class="gallery-grid">
-          <img src="https://via.placeholder.com/300x200" alt="תמונה 1">
-          <img src="https://via.placeholder.com/300x200" alt="תמונה 2">
-          <img src="https://via.placeholder.com/300x200" alt="תמונה 3">
+          <div class="actions">
+            <button class="btn secondary" id="btnShare" type="button">
+              <span class="icon">⤴️</span>
+              שיתוף
+            </button>
+
+            <button class="btn secondary" id="btnAddMemory" type="button">
+              <span class="icon">✍️</span>
+              הוספת זיכרון
+            </button>
+          </div>
         </div>
-      </section>
-
-      <p class="dedication">
-        לזכרו באהבה – המשפחה שזוכרת ומספרת את הסיפור שלו. 24
-      </p>
-
-      <div class="footer-link">
-        <a href="https://www.hasipur-il.com/" target="_blank">מעבר לאתר החנות</a>
       </div>
 
-    </main>
+      <!-- Tabs -->
+      <div class="tabs" id="tabs">
+        <button class="tab active" data-target="life">סיפור חיים</button>
+        <button class="tab" data-target="photos">תמונות</button>
+        <button class="tab" data-target="videos">סרטונים</button>
+        <button class="tab" data-target="memories">זיכרונות</button>
+        <button class="tab" data-target="recordings">הקלטות</button>
+        <button class="tab" data-target="songs">שירים</button>
+      </div>
+
+      <!-- Content -->
+      <div class="content">
+        <!-- Life -->
+<section class="section active" id="life">
+  <div class="h2">סיפור החיים</div>
+  <div class="story">
+אריק. אריקו. ריקו. ג'ונסון. נולד ב-2 באוגוסט 1969, נפל בעת מילוי תפקידו כרבש"צ קיבוץ בארי ב7.10.23, בן 54 בנופלו. בנם הקטן של יוחנן ורגינה. אח של רחלי ומאיר. אביהם של חן, תמר, הגר ונועה. בעלה של סיגל. יהודי. ישראלי. יליד קיבוץ בארי. אדם. 
+
+אריק. איש החיים הגדולים. של הצבעים הטובים. לכל מקום שהוא הגיע הוא הכניס אנרגיה, והשאיר חותם וטביעת אצבע. קולו הרם היה ביטוי קולי לליבו ולנתינתו האינסופית; ניסיון להגיע לכמה שיותר אנשים, לאחד כמה שיותר אנשים. החיוך של אריק, המאפיין אותו כל-כך, גם הוא היה כקול רם למרחקים ארוכים; "הכל עושים עם חיוך", הוא היה אומר, "הכל עושים באהבה". 
+
+אריק. הוא לא הסכים ללון אצל ההורים, כי הלינה המשותפת הייתה חוויה חברתית טובה עבורו. ואכן, מה שמתחיל בהתעקשות ללינה משותפת, ממשיך בבגרות לחברּות כערך עליון. ספורטאי בולט שידע לשחק בכל משחקי הכדור. מגיל צעיר מאוד הספורט האהוב עליו היה כדורסל, ולימים נחשב לאחד השחקנים הטובים בבארי. צלף קליעות שלוש בכדורסל, בכל מזג אוויר. עם נעליים או ללא נעליים. על פרקט או על בלטות. ידע לנצח ולהפסיד עד הסוף, עם כל הרגשות, מכדורסל ועד רמיקוב. 
+
+רחלי. הקשר המשפחתי הכי קרוב שלו היה איתך. נולדתם בהפרש של 11 חודשים אחד מהשנייה. התנהגתם כמו תאומים. הוא היה המשלים שלך. לא הייתם צריכים לדבר כדי לדעת מה כל אחד מכם צריך. תחנות חיים מקבילות: את ריכזת את תחום החינוך כשאריק היה בנעורים, כשאת היית ראש צח"י, הוא היה רבש"צ. אפילו עשיתם קורס עוזרי מאמני כדורסל ביחד. אפילו חלקתם אבעבועות רוח. בלתי נפרדים. 
+
+משפחה מלוכדת, חוויות ילדות אינסופיות ביחד עם מאיר, בנה של אמו מנישואיה הקודמים. אריק ידע איך לעטוף אותו, בדיוק כמו שאבא יוחנן עשה, והנה, מדור לדור, מאב לבנו ובתו, ככה רחלי ואריק גדלו לנתינה כערך מרכזי. 
+
+אריק. כבר בגיל 16 הוא התחיל לעבוד בגד"ש (בפלחה ובפרדס), ובגיל 18 כבר ניהל את הפרדסים. ויתר על שנת שירות לטובת שירות קרבי. למרות שהיה ספורטאי מצוין, בחר להתגייס לצנחנים. לאחר הצבא והטיול חזר אריק לקיבוץ ובמהרה מצא את ייעודו בעבודה עם נוער ואף שינה את תחום הנעורים בקיבוץ מקצה לקצה. אריק ונוער זה היה מגנט. הם אהבו אחד את השני. הוא דיבר בשפה שלהם והיה משוחח איתם בשעות הקטנות של הלילה. 
+
+אריק לא ויתר לנערים ולנערות למצות את כל היכולות שלהם. בטקסי גשר החבלים של הקיבוץ הוא היה עולה איתם ומתאמן איתם ותמיד היה אומר: "מי שלא מצליח זה מי שלא רוצה". באחד הטקסים אחת הילדות שברה את הרגל, והוא העלה אותה לגשר חבלים ועזר לה לקחת חלק בטקס. 
+
+לאחר מכן אריק הפך לרכז התרבות של הקיבוץ, ותמיד הצליח לרתום את כולם ולהגדיל ראש בעקבותיו. 
+
+סיגל, בשנת 2000 את נכנסת לאיזה צ'ט אינטרנטי ופגשת שם את בעלך ואב ילדייך. ככה פשוט. נכנסתם לחדר צ'ט משותף, והתכתבתם: אריק שאל אותך איפה את רואה את עצמך בעוד עשר שנים, וכשענית "נשואה עם שישה ילדים", הוא ישר כתב לך להתקשר אליו. בהתחלה לא הסכמת לתת לו את הטלפון שלך, ואת התקשרת אליו כדי לקבוע פגישה בפארק הלאומי ברמת גן. שעתיים לפני המפגש התקשרת להגיד לו שלא מתאים לך להגיע, והוא אמר 'מה, את אמיתית? אני כבר פה!' הייתה זאת אמא שלך ששיכנעה אותך ללכת. 
+
+אריק סיפר לך על הנעורים ועל מה שהוא עושה בשבילם, וזה קנה אותך. אמרת לו שאת באה מבית דתי והקיבוץ חילוני ואת לא יודעת אם זה יתאים, אבל אחרי חודש זאת את שהצעת לו נישואים, או כמו שאריק היה אומר: "את לא הצעת לי, את הודעת לי". 
+
+אריק. בן זוג קשוב. זוגיות שבנויה מהיחד, אבל גם מכל אחד לחוד. גב אינסופי. מעולם לא קורא לסיגל בשמות חיבה כמו ״מאמי״, אבל כן שולח לה הודעות כמו "אשתי היקרה והאהובה, תודה על מי שאת ועל מה שאת ומה שאת עושה בבית". מי צריך שמות חיבה כשיש כאלה הודעות? 
+
+ב-2001 נולד לכם בנכם הבכור, חן. אריק, שמאוד היה מחובר לאבא שלו, ביקש שאם יהיה לו בן יקראו לו על שם אביו, וכך היה. "חן" על שם יוחנן. חן ואריק, אריק וחן. משחקי כדורסל עד רדת החשכה. שעות של נהיגה, שעות של חוויות לאימונים ומשחקים. ניתוח מהלכים, מקצועי ונפשי. 
+
+שנה לאחר מכן, ב-2002, נולדת את, תמר. כשנולדת, אריק אמר לסיגל שעכשיו הוא יכול להיות רגוע, כי עכשיו יהיו בנות שיטפלו בו. היית קופצת למרחק ואצנית מצטיינת לקול תשואות אביך, וממש לפני כמה שבועות סיימת קורס קצינים וכולם עמדו ומחאו לך כפיים. אריק חלם על הרגע הזה, לקרוא לך ״המפקדת״ ולהצדיע לקצינה החדשה של מג"ב. 
+
+בשנת 2005 נולדת את, הגר. הילדה החכמה של הבית, כך הוא כינה אותך. הפרטנרית שלו למשחקי הפועל באר שבע ולצפייה משותפת במשחקי כדורסל. כשהלכתם ביחד למשחקים של חן, היית עושה סטטיסטיקה לכל המהלכים. היית מתקשרת אליו כשראיתם את המשחקים בנפרד כדי לדבר על המהלכים. אריק והגר, אב ובתו; תפקיד של מאמנת שירשת ממאמן. 
+
+נועה, האחות הקטנה. נולדת בשנת 2009, שחקנית כדור-רשת לאב גאה. בשנתיים האחרונות היו לו המון שעות איתך, הוא נהג לנסוע איתך לטיולים של בית הספר. כולם זכרו את אבא שלך, מצחיקן שמשתולל עם הילדים. 
+
+אריק. אבא לארבעה ילדים. אבא ומאמן בכפפה אחת. הישגים עם חיוכים. 
+
+אריק. אדם שמח שאהב ערבי שירה. את שירי ארץ ישראל הישנה, את אריק איינשטיין. ידע את כל המלים בעל פה. עם הזמן, בזכות סיגל, גם את "הפרויקט של רביבו". ביום הולדת 50 שלו הוא אירגן ערב שירה בציבור מאוד גדול וזייף בהנאה גדולה, נאמן להרגלו לא לקחת את עצמו ברצינות רבה. 
+
+במרץ 2019 אריק לקח על עצמו להיות רבש"צ. רחלי, שהייתה אז ראש צח"י, ידעה שאריק הוא האדם המתאים למשימה. הוא לקח את ההגנה על הבית צעד אחד קדימה ודאג שיחידות עלית יגיעו להתאמן בבארי, הוא היה ה-רבש"צ, בה"א הידיעה, של בארי. באפריל 2022 אריק קיבל הצטיינות ממפקד אוגדת עזה על פועלו. חברי בארי ידעו שאריק דואג להם באופן קבוע, אך גם לבמב״חים שהגיעו לקיבוץ באופן זמני ולחיילים שתפסו בגזרה. הבמב״חים מספרים שאריק היה מכניס אותם לקהילה, פותח את הבית עבורם ומארח ארוחות יחד עם סיגל, הכל בחיוך. מארח חיילים כאילו היו בניו. כניסה חופשית לבריכה, אוכל בכמויות, הם ידעו שהם יכולים להתקשר והוא ידאג לכל מה שהם צריכים. 
+
+אריק, בשבת בבוקר לקחת את האקדח ואת ה16-M, ואז יצאת. לפני כן אתה הסתכלת על סיגל ואמרת לה להתראות. זה לא היה אופייני לך, להתעכב רגע לפני הדלת. 
+
+אריק. אריקו. ריקו. ג'ונסון. 
+
+בן 54 בנופלו. בנם הקטן של יוחנן ורגינה. אח של רחלי ושל מאיר. אביהם של חן, תמר, הגר ונועה. בעלה של סיגל. יהודי. ישראלי. יליד קיבוץ בארי ויישאר בקיבוץ בארי לנצח. בקיבוץ בארי. הוקפץ ראשון, נהרג ראשון. אדם. משפחה בת חמש נפשות, קבוצת כדורסל שנותרה ללא המאמן שלה. 
+היה אדם ואיננו עוד. 
+
+יהי זכרו ברוך.
   </div>
+</section>
+
+
+        <!-- Photos -->
+<section class="section" id="photos">
+  <div class="h2">תמונות</div>
+
+  <div class="grid">
+<div class="media"><img src="20.jpeg" alt=""></div>
+<div class="media"><img src="21.jpeg" alt=""></div>
+<div class="media"><img src="22.jpeg" alt=""></div>
+<div class="media"><img src="23.jpeg" alt=""></div>
+<div class="media"><img src="24.jpeg" alt=""></div>
+<div class="media"><img src="25.jpeg" alt=""></div>
+<div class="media"><img src="26.jpeg" alt=""></div>
+<div class="media"><img src="27.jpeg" alt=""></div>
+<div class="media"><img src="28.jpeg" alt=""></div>
+<div class="media"><img src="29.jpeg" alt=""></div>
+<div class="media"><img src="30.jpeg" alt=""></div>
+<div class="media"><img src="31.jpeg" alt=""></div>
+<div class="media"><img src="32.jpeg" alt=""></div>
+<div class="media"><img src="33.jpeg" alt=""></div>
+<div class="media"><img src="34.jpeg" alt=""></div>
+<div class="media"><img src="35.jpeg" alt=""></div>
+<div class="media"><img src="36.jpeg" alt=""></div>
+<div class="media"><img src="37.jpeg" alt=""></div>
+<div class="media"><img src="38.jpeg" alt=""></div>
+<div class="media"><img src="39.jpeg" alt=""></div>
+<div class="media"><img src="40.jpeg" alt=""></div>
+<div class="media"><img src="41.jpeg" alt=""></div>
+<div class="media"><img src="42.jpeg" alt=""></div>
+<div class="media"><img src="43.jpeg" alt=""></div>
+<div class="media"><img src="44.jpeg" alt=""></div>
+<div class="media"><img src="45.jpeg" alt=""></div>
+<div class="media"><img src="46.jpeg" alt=""></div>
+<div class="media"><img src="47.jpeg" alt=""></div>
+<div class="media"><img src="48.jpeg" alt=""></div>
+<div class="media"><img src="49.jpeg" alt=""></div>
+<div class="media"><img src="50.jpeg" alt=""></div>
+<div class="media"><img src="51.jpeg" alt=""></div>
+<div class="media"><img src="52.jpeg" alt=""></div>
+<div class="media"><img src="53.jpeg" alt=""></div>
+<div class="media"><img src="54.jpeg" alt=""></div>
+<div class="media"><img src="55.jpeg" alt=""></div>
+<div class="media"><img src="56.jpeg" alt=""></div>
+<div class="media"><img src="57.jpeg" alt=""></div>
+<div class="media"><img src="58.jpeg" alt=""></div>
+<div class="media"><img src="59.jpeg" alt=""></div>
+<div class="media"><img src="60.jpeg" alt=""></div>
+<div class="media"><img src="61.jpeg" alt=""></div>
+<div class="media"><img src="62.jpeg" alt=""></div>
+<div class="media"><img src="63.jpeg" alt=""></div>
+  </div>
+</section>
+
+
+        <!-- Videos -->
+        <section class="section" id="videos">
+          <div class="h2">סרטונים</div>
+
+          <div class="note" style="margin-top:-4px;">
+            כדי להוסיף סרטון - לחצו על הכפתור מתחת.<br>
+            <strong>שימו לב:</strong> אחרי שנקבל את הבקשה בוואצאפ, נוודא מול בעל העמוד (הלקוח שרכש) שהוא מאשר את הבקשה - ורק אז נוסיף. אם לא יאשר, לא יתווסף.
+          </div>
+
+          <button class="btn secondary" type="button" id="sendWhatsappSongs" style="margin-top:10px;">
+            <span class="icon">💬</span>
+            שליחה לוואטסאפ
+          </button>
+
+          <div class="audioList">
+            <div class="note" style="margin-top:8px;">
+              אין סרטונים כרגע
+            </div>
+          </div>
+        </section>
+
+
+        <!-- Memories -->
+        <section class="section" id="memories">
+          <div class="memoriesTop">
+            <div>
+              <div class="h2" style="margin:6px 0 4px;">זיכרונות</div>
+              <div class="note">
+               יש בחירה בין לשמור את הזיכרון רק במכשיר של מי שכתב או לשלוח אלינו לוואצאפ - ונוסיף את זה באופן ציבורי לכולם.<br>
+                <strong>שימו לב:</strong> אחרי שנקבל את הבקשה בוואצאפ, נוודא מול בעל העמוד (הלקוח שרכש) שהוא מאשר את הבקשה - ורק אז נוסיף. אם לא יאשר, לא יתווסף.
+              </div>
+            </div>
+
+            <button class="btn primary" type="button" id="btnAddMemory2">
+              <span class="icon">＋</span>
+              הוספת זיכרון
+            </button>
+          </div>
+
+         <div class="memList" id="memList">
+  <div class="note" style="margin-top:10px;">זיכרונות שנשמרו לכולם:</div>
+           
+         </div>
+
+            
+        </section>
+
+        <!-- Recordings -->
+        <section class="section" id="recordings">
+          <div class="h2">הקלטות</div>
+
+          <div class="note" style="margin-top:-4px;">
+            כדי להוסיף הקלטה - לחצו על הכפתור מתחת.<br>
+            <strong>שימו לב:</strong> אחרי שנקבל את הבקשה בוואצאפ, נוודא מול בעל העמוד (הלקוח שרכש) שהוא מאשר את הבקשה - ורק אז נוסיף. אם לא יאשר, לא יתווסף.
+          </div>
+
+          <button class="btn secondary" type="button" id="sendWhatsappRecordings" style="margin-top:10px;">
+            <span class="icon">💬</span>
+            שליחה לוואטסאפ
+          </button>
+
+          <div class="audioList">
+            <div class="note" style="margin-top:8px;">
+              אין הקלטה כרגע
+            </div>
+          </div>
+
+        </section>
+
+        <!-- Songs -->
+        <section class="section" id="songs">
+          <div class="h2">שירים</div>
+
+          <div class="note" style="margin-top:-4px;">
+            כדי להוסיף שיר - לחצו על הכפתור מתחת.<br>
+            <strong>שימו לב:</strong> אחרי שנקבל את הבקשה בוואצאפ, נוודא מול בעל העמוד (הלקוח שרכש) שהוא מאשר את הבקשה - ורק אז נוסיף. אם לא יאשר, לא יתווסף.
+          </div>
+
+          <button class="btn secondary" type="button" id="sendWhatsappSongs" style="margin-top:10px;">
+            <span class="icon">💬</span>
+            שליחה לוואטסאפ
+          </button>
+
+          <div class="audioList">
+            <div class="note" style="margin-top:8px;">
+              אין שיר כרגע
+            </div>
+          </div>
+
+        </section>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal: Add Memory -->
+  <div class="modalBg" id="modalBg" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="הוספת זיכרון">
+      <div class="modalHead">
+        <div class="title">הוספת זיכרון</div>
+        <button class="xbtn" id="modalClose" type="button">✕</button>
+      </div>
+
+      <div class="modalBody">
+        <div class="field">
+          <label for="memName">שם (לא חובה)</label>
+          <input id="memName" type="text" placeholder="לדוגמה: משפחת לוי">
+        </div>
+
+        <div class="field">
+          <label for="memText">הזיכרון שלך</label>
+          <textarea id="memText" placeholder="כתבו כמה מילים מהלב..."></textarea>
+        </div>
+
+        <div class="note" style="margin-top:-4px;">
+          הכפתור "שמירה כאן" - יבצע שמירה לזיכרון רק במכשיר הזה. <br> הכפתור "שליחה לווטסאפ" - ישלח לנו בקשה ונוודא מול בעל העמוד את האישור להוסיף לכולם.<br>
+          <strong>שימו לב:</strong> אחרי קבלת הבקשה בוואצאפ אנחנו נוודא מול בעל העמוד (הלקוח שרכש) שהוא מאשר את הבקשה - ורק אז נוסיף. אם לא יאשר, לא יתווסף.
+        </div>
+      </div>
+
+      <div class="modalFoot">
+        <button class="btn primary" type="button" id="saveLocal">שמירה כאן</button>
+        <button class="btn secondary" type="button" id="sendWhatsapp">שליחה לוואטסאפ</button>
+        <button class="btn secondary" type="button" id="cancelModal">ביטול</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== Tabs =====
+    const tabs = document.querySelectorAll(".tab");
+    const sections = document.querySelectorAll(".section");
+
+    function activateTab(targetId){
+      tabs.forEach(t => t.classList.toggle("active", t.dataset.target === targetId));
+      sections.forEach(s => s.classList.toggle("active", s.id === targetId));
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        activateTab(tab.dataset.target);
+        document.getElementById("tabs").scrollIntoView({behavior:"smooth", block:"start"});
+      });
+    });
+
+    // ===== Drawer =====
+    const menuBtn = document.getElementById("menuBtn");
+    const drawerBg = document.getElementById("drawerBg");
+    const drawerClose = document.getElementById("drawerClose");
+
+    function openDrawer(){
+      drawerBg.classList.add("open");
+      drawerBg.setAttribute("aria-hidden","false");
+      document.body.style.overflow = "hidden";
+    }
+    function closeDrawer(){
+      drawerBg.classList.remove("open");
+      drawerBg.setAttribute("aria-hidden","true");
+      document.body.style.overflow = "";
+    }
+
+    menuBtn.addEventListener("click", openDrawer);
+    drawerClose.addEventListener("click", closeDrawer);
+    drawerBg.addEventListener("click", closeDrawer);
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape") closeDrawer();
+    });
+
+    // ===== Share =====
+    const btnShare = document.getElementById("btnShare");
+    btnShare.addEventListener("click", async () => {
+      const url = window.location.href;
+
+      if (navigator.share) {
+        try{
+          await navigator.share({ title: document.title, text: "דף זיכרון", url });
+          return;
+        } catch(e){}
+      }
+
+      try{
+        await navigator.clipboard.writeText(url);
+        alert("הקישור הועתק ללוח!");
+      } catch(e){
+        prompt("העתיקו את הקישור:", url);
+      }
+    });
+
+    // ===== Modal =====
+    const modalBg = document.getElementById("modalBg");
+    const openers = [document.getElementById("btnAddMemory"), document.getElementById("btnAddMemory2")];
+    const modalClose = document.getElementById("modalClose");
+    const cancelModal = document.getElementById("cancelModal");
+    const memName = document.getElementById("memName");
+    const memText = document.getElementById("memText");
+
+    function openModal(){
+      modalBg.classList.add("open");
+      modalBg.setAttribute("aria-hidden", "false");
+      memText.focus();
+    }
+    function closeModal(){
+      modalBg.classList.remove("open");
+      modalBg.setAttribute("aria-hidden", "true");
+    }
+
+    openers.forEach(btn => btn.addEventListener("click", () => {
+      activateTab("memories");
+      document.getElementById("tabs").scrollIntoView({behavior:"smooth", block:"start"});
+      setTimeout(openModal, 220);
+    }));
+
+    modalClose.addEventListener("click", closeModal);
+    cancelModal.addEventListener("click", closeModal);
+    modalBg.addEventListener("click", (e) => { if(e.target === modalBg) closeModal(); });
+    document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeModal(); });
+
+    // ===== Memories (LocalStorage) =====
+    const memList = document.getElementById("memList");
+    const saveLocal = document.getElementById("saveLocal");
+
+    function formatDate(d){
+      const dd = String(d.getDate()).padStart(2,'0');
+      const mm = String(d.getMonth()+1).padStart(2,'0');
+      const yyyy = d.getFullYear();
+      return `${dd}/${mm}/${yyyy}`;
+    }
+
+    function renderMemoryItem(item){
+      const box = document.createElement("div");
+      box.className = "memItem";
+      box.innerHTML = `
+        <div class="top">
+          <div>${escapeHtml(item.name || "אורח/ת")}</div>
+          <div class="date">${escapeHtml(item.date)}</div>
+        </div>
+        <div class="text">${escapeHtml(item.text)}</div>
+      `;
+      return box;
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    const STORAGE_KEY = "hasipur_memories_v1";
+
+    function loadMemories(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return [];
+        const arr = JSON.parse(raw);
+        if(!Array.isArray(arr)) return [];
+        return arr;
+      }catch(e){
+        return [];
+      }
+    }
+
+    function saveMemories(arr){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+    }
+
+    function paintSavedMemories(){
+      const arr = loadMemories();
+      if(!arr.length) return;
+
+      const sep = document.createElement("div");
+      sep.className = "note";
+      sep.style.marginTop = "10px";
+      sep.textContent = "זיכרונות שנשמרו במכשיר הזה:";
+      memList.appendChild(sep);
+
+      arr.forEach(item => {
+        memList.appendChild(renderMemoryItem(item));
+      });
+    }
+
+    paintSavedMemories();
+
+    saveLocal.addEventListener("click", () => {
+      const name = (memName.value || "").trim();
+      const text = (memText.value || "").trim();
+
+      if(text.length < 2){
+        alert("רשמו לפחות כמה מילים 🙂");
+        return;
+      }
+
+      const item = { name, text, date: formatDate(new Date()) };
+      const arr = loadMemories();
+      arr.unshift(item);
+      saveMemories(arr);
+
+      memList.appendChild(renderMemoryItem(item));
+
+      memName.value = "";
+      memText.value = "";
+      closeModal();
+
+      alert("נשמר! (במכשיר הזה). אם תרצו שזה יופיע לכולם — שלחו אליכם לוואטסאפ.");
+    });
+
+    // ===== WhatsApp send (Memories) =====
+    const sendWhatsapp = document.getElementById("sendWhatsapp");
+    sendWhatsapp.addEventListener("click", () => {
+      const name = (memName.value || "").trim();
+      const text = (memText.value || "").trim();
+
+      if(text.length < 2){
+        alert("רשמו קודם את הזיכרון 🙂");
+        return;
+      }
+
+      const PHONE = "972584869014"; // <-- לשנות כאן
+
+      const msg =
+        `שלום, אני רוצה להוסיף זיכרון לדף ההנצחה:\n` +
+        `שם: ${name || "ללא"}\n` +
+        `זיכרון: ${text}\n\n` +
+        `חשוב: לאחר קבלת ההודעה, תאשרו זאת מול בעל העמוד (הלקוח שרכש). אם יאשר - תוסיפו. אם לא - לא.\n` +
+        `קישור לדף: ${window.location.href}`;
+
+      const url = `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
+      window.open(url, "_blank");
+    });
+
+    // ===== WhatsApp send (Recordings & Songs) =====
+    const PHONE = "972584869014"; // <-- אותו מספר (לשנות כאן אם צריך)
+
+    const sendWhatsappRecordings = document.getElementById("sendWhatsappRecordings");
+    sendWhatsappRecordings.addEventListener("click", () => {
+      const msg =
+        `שלום, אני רוצה להוסיף הקלטה לדף ההנצחה.\n` +
+        `אנא כתבו לי כאן את שם ההקלטה + צרפו את הקובץ (MP3) או קישור.\n\n` +
+        `חשוב: לאחר קבלת ההודעה, תאשרו זאת מול בעל העמוד (הלקוח שרכש). אם יאשר - תוסיפו. אם לא - לא.\n` +
+        `קישור לדף: ${window.location.href}`;
+      const url = `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
+      window.open(url, "_blank");
+    });
+
+    const sendWhatsappSongs = document.getElementById("sendWhatsappSongs");
+    sendWhatsappSongs.addEventListener("click", () => {
+      const msg =
+        `שלום, אני רוצה להוסיף שיר לדף ההנצחה.\n` +
+        `אנא כתבו לי כאן את שם השיר + קישור (יוטיוב/ספוטיפיי) או קובץ (MP3).\n\n` +
+        `חשוב: לאחר קבלת ההודעה, תאשרו זאת מול בעל העמוד (הלקוח שרכש). אם יאשר - תוסיפו. אם לא - לא.\n` +
+        `קישור לדף: ${window.location.href}`;
+      const url = `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
+      window.open(url, "_blank");
+    });
+
+    // ===== YouTube: sharp thumbnail + play button -> loads iframe on click =====
+    document.querySelectorAll(".ytCard").forEach(card => {
+      card.addEventListener("click", () => {
+        const id = card.getAttribute("data-yt");
+        if(!id) return;
+
+        card.innerHTML = `
+          <iframe class="ytFrame"
+            src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0&playsinline=1"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        `;
+      }, { once:true });
+    });
+  </script>
 </body>
 </html>
